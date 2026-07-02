@@ -45,11 +45,11 @@
 
 ## 👥 Команда
 
-| Имя               | Роль        | GitHub                                 |
-| ----------------- | ----------- | -------------------------------------- |
-| **Иван Иванов**   | Team Lead   | [@ivanov](https://github.com/ivanov)   |
-| **Пётр Петров**   | Разработчик | [@petrov](https://github.com/petrov)   |
-| **Сидор Сидоров** | Разработчик | [@sidorov](https://github.com/sidorov) |
+| Имя                 | Роль        | GitHub                                       |
+| ------------------- | ----------- | -------------------------------------------- |
+| **Анна Демьянович** | Team Lead   | [@theFoxTale](https://github.com/theFoxTale) |
+| **Ульяна**          | Разработчик | [@Ulya10](https://github.com/Ulya10/)        |
+| **Кристина**        | Разработчик | [@Pchyolan](https://github.com/Pchyolan/)    |
 
 ## 🧪 Установка и запуск
 
