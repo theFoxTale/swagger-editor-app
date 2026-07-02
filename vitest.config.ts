@@ -10,7 +10,21 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
-      exclude: ['node_modules/', 'vitest.config.ts', 'next-env.d.ts'],
+      exclude: [
+        'node_modules/',
+        'vitest.config.ts',
+        'next-env.d.ts',
+        '**/*.test.ts',
+        '**/*.test.tsx',
+        '**/tests/**',
+      ],
+      // Минимальный порог покрытия
+      thresholds: {
+        statements: 80,
+        branches: 80,
+        functions: 80,
+        lines: 80,
+      },
     },
   },
 });
