@@ -7,6 +7,7 @@
 Проект разработан в рамках курса [RS School](https://rs.school/) и использует один из SSR-фреймворков для обхода CORS и серверного рендеринга.
 
 Описание задания:
+
 - [RU](./docs/task/final_ru.md)
 - [ENG](./docs/task/final.md)
 
@@ -44,19 +45,21 @@
 
 ## 👥 Команда
 
-| Имя | Роль | GitHub |
-|-----|------|--------|
-| **Иван Иванов** | Team Lead | [@ivanov](https://github.com/ivanov) |
-| **Пётр Петров** | Разработчик | [@petrov](https://github.com/petrov) |
+| Имя               | Роль        | GitHub                                 |
+| ----------------- | ----------- | -------------------------------------- |
+| **Иван Иванов**   | Team Lead   | [@ivanov](https://github.com/ivanov)   |
+| **Пётр Петров**   | Разработчик | [@petrov](https://github.com/petrov)   |
 | **Сидор Сидоров** | Разработчик | [@sidorov](https://github.com/sidorov) |
 
 ## 🧪 Установка и запуск
 
 ### Требования
+
 - Node.js (v18 или выше)
 - npm
 
 ### Клонирование репозитория
+
 ```bash
 git clone https://github.com/theFoxTale/swagger-editor-app
 cd swagger-editor-app
