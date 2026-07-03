@@ -32,7 +32,7 @@
 
 ## 🛠 Технологии
 
-- **Фреймворк:** [Next.js (App Router)](https://nextjs.org/docs/app) (или другой из списка)
+- **Фреймворк:** [Next.js (App Router)](https://nextjs.org/docs/app)
 - **Язык:** TypeScript
 - **Стилизация:** CSS Modules
 - **Управление состоянием:** [Zustand](https://zustand-demo.pmnd.rs/)
