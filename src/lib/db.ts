@@ -1,4 +1,5 @@
 import 'server-only';
+import { supabase } from './supabase';
 
 const mockRequests = [
   {
@@ -27,11 +28,27 @@ const mockRequests = [
   },
 ];
 
+// export const db = {
+//   query: {
+//     requests: {
+//       findMany: () => {
+//         return mockRequests;
+//       },
+//     },
+//   },
+// };
+
 export const db = {
   query: {
     requests: {
-      findMany: () => {
-        return mockRequests;
+      findMany: async () => {
+        const { data, error } = await supabase
+          .from('request_history')
+          .select('*')
+          .order('timestamp', { ascending: false });
+
+        if (error) throw new Error(error.message);
+        return data;
       },
     },
   },
