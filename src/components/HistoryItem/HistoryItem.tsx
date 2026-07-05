@@ -1,9 +1,17 @@
 import Link from 'next/link';
 
-export default function HistoryItem({ item }) {
+import { RequestHistory } from '@/types/history';
+import './HistoryItem.css';
+
+interface Props {
+  item: RequestHistory;
+  isSelected: boolean;
+}
+
+export default function HistoryItem({ item, isSelected }: Props) {
   return (
-    <li className="history-item">
-      <Link href={`/history?id=${item.id}`}>
+    <li className={`history-item ${isSelected ? 'history-item-selected' : ''}`}>
+      <Link href={isSelected ? '/history' : `/history?id=${item.id}`}>
         <span>id: {item.id}</span>
         <span>method:{item.method}</span>
       </Link>

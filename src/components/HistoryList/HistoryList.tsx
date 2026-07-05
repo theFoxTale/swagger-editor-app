@@ -1,9 +1,17 @@
+import { RequestHistory } from '@/types/history';
+
 import HistoryItem from '../HistoryItem/HistoryItem';
-export default function HistoryList({ requests }) {
+import './HistoryList.css';
+
+interface Props {
+  requests: RequestHistory[];
+  selectedId: number | null;
+}
+export default function HistoryList({ requests, selectedId }: Props) {
   return (
     <ul>
       {requests.map((item) => (
-        <HistoryItem item={item} key={item.id} />
+        <HistoryItem item={item} key={item.id} isSelected={selectedId === item.id} />
       ))}
     </ul>
   );
