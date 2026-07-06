@@ -14,18 +14,22 @@ export default async function HistoryPage({ searchParams }: Props) {
     redirect('/auth/sign-in');
   }
   const { id } = await searchParams;
-  //const requests = await db.query.requests.findMany();
 
   const requests = await db.query.requests.findMany();
   console.log('Requests from Supabase:', requests);
   const selected = requests.find((item) => item.id === Number(id)) || null;
-  console.log(id);
+
   return (
-    <div>
-      <h2>History</h2>
+    <div className="history">
+      <h2 className="history-title">History</h2>
+
       <div className="history-wrapper">
-        <HistoryList requests={requests} selectedId={selected?.id || null} />
-        {selected && <HistoryDetails item={selected} />}
+        <div className="history-list-container">
+          <HistoryList requests={requests} selectedId={selected?.id || null} />
+        </div>
+        <div className="history-details-container">
+          {selected && <HistoryDetails item={selected} />}
+        </div>
       </div>
     </div>
   );

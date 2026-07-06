@@ -1,8 +1,13 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import './CloseHistoryBtn.css';
 
 export default function CloseHistoryBtn() {
   const router = useRouter();
-  return <button onClick={() => router.push('/history')}>Close</button>;
+  return (
+    <button className="close-history-btn" onClick={() => router.push('/history')}>
+      ✕
+    </button>
+  );
 }

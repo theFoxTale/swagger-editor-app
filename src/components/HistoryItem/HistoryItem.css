@@ -1,3 +1,29 @@
+.history-item {
+  border-bottom: 1px solid rgb(223 225 227);
+  list-style: none;
+}
+
 .history-item-selected {
-  border: 1px solid blue;
+  border: 2px solid rgb(17 159 219);
+  border-radius: 8px;
+  background-color: rgb(129 213 255 / 24.4%);
+}
+
+.history-item-link {
+  display: grid;
+  grid-template-columns: 1.5fr 0.7fr 1.5fr 0.7fr 0.8fr 0.8fr 0.8fr 1fr;
+  gap: 8px;
+  align-items: center;
+
+  padding: 10px 16px;
+
+  color: inherit;
+  text-decoration: none;
+}
+
+.history-item-cell {
+  overflow: hidden;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
