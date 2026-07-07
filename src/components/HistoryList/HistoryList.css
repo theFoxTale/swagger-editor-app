@@ -75,3 +75,13 @@
   cursor: pointer;
   color: rgb(17 159 219);
 }
+
+.history-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 200px;
+
+  font-size: 16px;
+}

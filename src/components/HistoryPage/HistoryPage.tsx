@@ -16,7 +16,6 @@ export default async function HistoryPage({ searchParams }: Props) {
 
   try {
     requests = await db.query.requests.findMany();
-    //console.log('Requests from Supabase:', requests);
   } catch (_) {
     error = 'Failed to load history. Please try again later.';
   }
