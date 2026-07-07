@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import { RequestHistory } from '@/types/history';
 
 import HistoryItem from '../HistoryItem/HistoryItem';
@@ -8,6 +10,18 @@ interface Props {
   selectedId: number | null;
 }
 export default function HistoryList({ requests, selectedId }: Props) {
+  if (requests.length === 0) {
+    return (
+      <div className="history-empty">
+        <p>No executed requests yet</p>
+        <p>
+          <Link className="history-back" href="/">
+            Go to Editor
+          </Link>
+        </p>
+      </div>
+    );
+  }
   return (
     <div className="history-list">
       <div className="history-list-header">

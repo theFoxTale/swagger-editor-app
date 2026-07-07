@@ -1,4 +1,9 @@
 .history {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  height: 100vh;
   margin: 10px;
   padding: 20px;
   border: 1px solid rgb(129 213 255 / 24.4%);
@@ -55,4 +60,18 @@
 .history-list-body {
   margin: 0;
   padding: 0;
+}
+
+.history-empty {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.history-empty p {
+  margin: 10px 0;
+}
+
+.history-back {
+  cursor: pointer;
+  color: rgb(17 159 219);
 }
