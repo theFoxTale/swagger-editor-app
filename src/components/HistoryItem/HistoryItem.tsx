@@ -19,8 +19,8 @@ export default function HistoryItem({ item, isSelected }: Props) {
         <span className="history-item-cell history-item-endpoint">{item.endpoint}</span>
         <span className="history-item-cell history-item-status">{item.status}</span>
         <span className="history-item-cell history-item-duration">{item.request_duration}ms</span>
-        <span className="history-item-cell history-item-req-size">{item.request_size}B</span>
-        <span className="history-item-cell history-item-res-size">{item.response_size}B</span>
+        <span className="history-item-cell history-item-request-size">{item.request_size}B</span>
+        <span className="history-item-cell history-item-response-size">{item.response_size}B</span>
         <span className="history-item-cell history-item-error">{item.error || '—'}</span>
       </Link>
     </li>

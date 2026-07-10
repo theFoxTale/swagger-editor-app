@@ -29,10 +29,10 @@ export default function HistoryList({ requests, selectedId }: Props) {
         <span>Method</span>
         <span>Endpoint</span>
         <span>Status</span>
-        <span>Duration</span>
-        <span>Req Size</span>
-        <span>Res Size</span>
-        <span>Error</span>
+        <span className="history-header-duration">Duration</span>
+        <span className="history-header-request-size">Req Size</span>
+        <span className="history-header-response-size">Res Size</span>
+        <span className="history-header-error">Error</span>
       </div>
 
       <ul className="history-list-body">

@@ -59,3 +59,12 @@
 .history-details-row-error {
   color: #c00;
 }
+
+@media (width <= 640px) {
+  .history-details-row {
+    flex-direction: column;
+    gap: 2px;
+    padding: 5px;
+    font-size: 14px;
+  }
+}
