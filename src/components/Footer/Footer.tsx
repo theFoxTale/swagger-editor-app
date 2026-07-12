@@ -1,12 +1,15 @@
+'use client';
+
 import Link from 'next/link';
-import { getLocale } from '@/locales';
+
+import { useTranslation } from '@/hooks';
+
 import styles from './Footer.module.css';
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
 
-  const locale = getLocale('ru');
-  const lang = locale.header;
+  const lang = useTranslation().header;
 
   return (
     <footer className={styles.footer}>

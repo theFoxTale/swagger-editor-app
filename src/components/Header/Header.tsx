@@ -3,7 +3,8 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
-import { getLocale } from '@/locales';
+import { useTranslation } from '@/hooks';
+import { useLanguageStore } from '@/store';
 
 import styles from './Header.module.css';
 
@@ -14,8 +15,8 @@ export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(MOCK_AUTH);
 
-  const locale = getLocale('ru');
-  const lang = locale.header;
+  const { language, toggleLanguage } = useLanguageStore();
+  const lang = useTranslation().header;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -54,8 +55,18 @@ export const Header = () => {
 
       <div className={styles.buttonsContainer}>
         <div className={styles.languageSwitcher}>
-          <button className={`${styles.langBtn} ${styles.active}`}>{lang.language.ru}</button>
-          <button className={styles.langBtn}>{lang.language.en}</button>
+          <button
+            className={`${styles.langBtn} ${language === 'ru' ? styles.active : ''}`}
+            onClick={toggleLanguage}
+          >
+            {lang.language.ru}
+          </button>
+          <button
+            className={`${styles.langBtn} ${language === 'en' ? styles.active : ''}`}
+            onClick={toggleLanguage}
+          >
+            {lang.language.en}
+          </button>
         </div>
 
         <div className={styles.authButtons}>
