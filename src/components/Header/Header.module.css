@@ -52,6 +52,31 @@
   opacity: 0.7;
 }
 
+.logoWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.logoLink {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+
+  color: var(--foreground);
+  text-decoration: none;
+}
+
+.logoIcon {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.logoText {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
 .authButtons {
   display: flex;
   gap: 0.75rem;

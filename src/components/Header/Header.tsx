@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
@@ -42,9 +43,19 @@ export const Header = () => {
   return (
     <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
       {/* Логотип / название */}
-      <Link href="/" className={styles.logo}>
-        {headerLang.logo}
-      </Link>
+      <div className={styles.logoWrapper}>
+        <Link href="/" className={styles.logoLink}>
+          <Image
+            src="/logo-transparent.png"
+            alt="SwaggerUI logo"
+            width={32}
+            height={32}
+            priority
+            className={styles.logoIcon}
+          />
+          <span className={styles.logoText}>{headerLang.logo}</span>
+        </Link>
+      </div>
 
       {/* Навигация */}
       <nav className={styles.nav}>

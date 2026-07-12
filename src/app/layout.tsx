@@ -19,6 +19,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'Swagger/OpenAPI UI',
   description: 'Редактор и просмотрщик OpenAPI спецификаций',
+  icons: {
+    icon: '/logo-dark.png',
+  },
 };
 
 export default function RootLayout({
