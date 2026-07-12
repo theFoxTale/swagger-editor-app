@@ -2,8 +2,9 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
+import { Button, Nav, ThemeToggle } from '@/components';
 import { useTranslation } from '@/hooks';
 import { useLanguageStore } from '@/store';
 
@@ -16,16 +17,26 @@ export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(MOCK_AUTH);
 
-  const { language, toggleLanguage } = useLanguageStore();
+  const { language, setLanguage } = useLanguageStore();
   const { headerLang } = useTranslation();
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const navLinks = useMemo(
+    () => [
+      { label: headerLang.nav.editor, href: '/' },
+      ...(isAuthenticated ? [{ label: headerLang.nav.history, href: '/history' }] : []),
+      { label: headerLang.nav.about, href: '/about' },
+    ],
+    [headerLang.nav, isAuthenticated]
+  );
 
   const handleSignIn = () => {
     window.location.href = '/auth/sign-in';
@@ -48,8 +59,8 @@ export const Header = () => {
           <Image
             src="/logo-transparent.png"
             alt="SwaggerUI logo"
-            width={32}
-            height={32}
+            width={28}
+            height={28}
             priority
             className={styles.logoIcon}
           />
@@ -62,23 +73,23 @@ export const Header = () => {
       </div>
 
       {/* Навигация */}
-      <nav className={styles.nav}>
-        <Link href="/">{headerLang.nav.editor}</Link>
-        <Link href="/about">{headerLang.nav.about}</Link>
-        {isAuthenticated && <Link href="/history">{headerLang.nav.history}</Link>}
-      </nav>
+      <Nav links={navLinks} className={styles.nav} />
 
-      <div className={styles.buttonsContainer}>
-        <div className={styles.languageSwitcher}>
+      <div className={styles.actions}>
+        <div className={styles.languageSwitcher} role="group" aria-label="Language">
           <button
-            className={`${styles.langBtn} ${language === 'ru' ? styles.active : ''}`}
-            onClick={toggleLanguage}
+            type="button"
+            className={`${styles.langBtn} ${language === 'ru' ? styles.langBtnActive : ''}`}
+            onClick={() => setLanguage('ru')}
+            aria-pressed={language === 'ru'}
           >
             {headerLang.language.ru}
           </button>
           <button
-            className={`${styles.langBtn} ${language === 'en' ? styles.active : ''}`}
-            onClick={toggleLanguage}
+            type="button"
+            className={`${styles.langBtn} ${language === 'en' ? styles.langBtnActive : ''}`}
+            onClick={() => setLanguage('en')}
+            aria-pressed={language === 'en'}
           >
             {headerLang.language.en}
           </button>
@@ -87,21 +98,21 @@ export const Header = () => {
         <div className={styles.authButtons}>
           {!isAuthenticated ? (
             <>
-              <button className={styles.button} onClick={handleSignIn}>
+              <Button variant="secondary" size="sm" onClick={handleSignIn}>
                 {headerLang.auth.signIn}
-              </button>
-              <button className={`${styles.button} ${styles.buttonPrimary}`} onClick={handleSignUp}>
+              </Button>
+              <Button variant="primary" size="sm" onClick={handleSignUp}>
                 {headerLang.auth.signUp}
-              </button>
+              </Button>
             </>
           ) : (
-            <>
-              <button className={styles.button} onClick={handleLogout}>
-                {headerLang.auth.logout}
-              </button>
-            </>
+            <Button variant="danger" size="sm" onClick={handleLogout}>
+              {headerLang.auth.logout}
+            </Button>
           )}
         </div>
+
+        <ThemeToggle />
       </div>
     </header>
   );

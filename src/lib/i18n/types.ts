@@ -64,6 +64,10 @@ export interface HeaderTranslation {
     ru: string;
     en: string;
   };
+  theme: {
+    switchToLight: string;
+    switchToDark: string;
+  };
 }
 
 export interface HistoryTranslation {

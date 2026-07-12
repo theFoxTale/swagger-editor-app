@@ -13,10 +13,12 @@ export const Footer = () => {
 
   return (
     <footer className={styles.footer}>
-      <span>
+      <span className={styles.copyright}>
         © {currentYear} {headerLang.logo}
       </span>
-      <Link href="/about">{headerLang.nav.about}</Link>
+      <Link href="/about" className={styles.link}>
+        {headerLang.nav.about}
+      </Link>
     </footer>
   );
 };

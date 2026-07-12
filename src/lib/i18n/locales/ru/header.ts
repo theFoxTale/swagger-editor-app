@@ -17,4 +17,8 @@ export const header: HeaderTranslation = {
     ru: 'RU',
     en: 'EN',
   },
+  theme: {
+    switchToLight: 'Переключить на светлую тему',
+    switchToDark: 'Переключить на тёмную тему',
+  },
 };
