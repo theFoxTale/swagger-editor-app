@@ -1,0 +1,36 @@
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 1rem 1.5rem;
+  border-top: 1px solid rgb(0 0 0 / 5%);
+
+  font-size: 0.875rem;
+  color: var(--foreground);
+
+  opacity: 0.8;
+  background: var(--footer-bg);
+}
+
+.footer a {
+  color: var(--foreground);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+  opacity: 0.6;
+}
+
+/* Адаптивность */
+@media (width <= 480px) {
+  .footer {
+    flex-direction: column;
+    gap: 0.3rem;
+    text-align: center;
+  }
+}
