@@ -9,14 +9,14 @@ import styles from './Footer.module.css';
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
 
-  const lang = useTranslation().header;
+  const { headerLang } = useTranslation();
 
   return (
     <footer className={styles.footer}>
       <span>
-        © {currentYear} {lang.logo}
+        © {currentYear} {headerLang.logo}
       </span>
-      <Link href="/about">{lang.nav.about}</Link>
+      <Link href="/about">{headerLang.nav.about}</Link>
     </footer>
   );
 };

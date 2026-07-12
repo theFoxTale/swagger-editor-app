@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-type Language = 'ru' | 'en';
+import { Language } from '@/lib';
 
 interface LanguageStore {
   language: Language;

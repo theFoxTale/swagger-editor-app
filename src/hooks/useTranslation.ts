@@ -1,9 +1,9 @@
 'use client';
 
-import { getLocale, type LocaleContent } from '@/locales';
+import { en, ru, type Translation } from '@/lib';
 import { useLanguageStore } from '@/store/useLanguageStore';
 
-export function useTranslation(): LocaleContent {
+export function useTranslation(): Translation {
   const language = useLanguageStore((state) => state.language);
-  return getLocale(language);
+  return language === 'ru' ? ru : en;
 }

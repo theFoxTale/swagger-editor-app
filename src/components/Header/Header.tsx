@@ -16,7 +16,7 @@ export const Header = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(MOCK_AUTH);
 
   const { language, toggleLanguage } = useLanguageStore();
-  const lang = useTranslation().header;
+  const { headerLang } = useTranslation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,14 +43,14 @@ export const Header = () => {
     <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
       {/* Логотип / название */}
       <Link href="/" className={styles.logo}>
-        {lang.logo}
+        {headerLang.logo}
       </Link>
 
       {/* Навигация */}
       <nav className={styles.nav}>
-        <Link href="/">{lang.nav.editor}</Link>
-        <Link href="/about">{lang.nav.about}</Link>
-        {isAuthenticated && <Link href="/history">{lang.nav.history}</Link>}
+        <Link href="/">{headerLang.nav.editor}</Link>
+        <Link href="/about">{headerLang.nav.about}</Link>
+        {isAuthenticated && <Link href="/history">{headerLang.nav.history}</Link>}
       </nav>
 
       <div className={styles.buttonsContainer}>
@@ -59,13 +59,13 @@ export const Header = () => {
             className={`${styles.langBtn} ${language === 'ru' ? styles.active : ''}`}
             onClick={toggleLanguage}
           >
-            {lang.language.ru}
+            {headerLang.language.ru}
           </button>
           <button
             className={`${styles.langBtn} ${language === 'en' ? styles.active : ''}`}
             onClick={toggleLanguage}
           >
-            {lang.language.en}
+            {headerLang.language.en}
           </button>
         </div>
 
@@ -73,16 +73,16 @@ export const Header = () => {
           {!isAuthenticated ? (
             <>
               <button className={styles.button} onClick={handleSignIn}>
-                {lang.auth.signIn}
+                {headerLang.auth.signIn}
               </button>
               <button className={`${styles.button} ${styles.buttonPrimary}`} onClick={handleSignUp}>
-                {lang.auth.signUp}
+                {headerLang.auth.signUp}
               </button>
             </>
           ) : (
             <>
               <button className={styles.button} onClick={handleLogout}>
-                {lang.auth.logout}
+                {headerLang.auth.logout}
               </button>
             </>
           )}

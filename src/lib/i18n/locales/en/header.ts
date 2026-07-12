@@ -1,0 +1,19 @@
+import type { HeaderTranslation } from '../../types';
+
+export const header: HeaderTranslation = {
+  logo: 'SwaggerUI',
+  nav: {
+    editor: 'Editor',
+    about: 'About',
+    history: 'History',
+  },
+  auth: {
+    signIn: 'Sign In',
+    signUp: 'Sign Up',
+    logout: 'Logout',
+  },
+  language: {
+    ru: 'RU',
+    en: 'EN',
+  },
+};
