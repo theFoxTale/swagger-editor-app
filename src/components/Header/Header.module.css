@@ -72,9 +72,18 @@
   object-fit: contain;
 }
 
+.logoTextContainer {
+  display: flex;
+  flex-direction: column;
+}
+
 .logoText {
   font-size: 1.2rem;
   font-weight: 600;
+}
+
+.logoDescription {
+  font-size: 0.8rem;
 }
 
 .authButtons {

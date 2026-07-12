@@ -49,6 +49,7 @@ export interface EditorTranslation {
 
 export interface HeaderTranslation {
   logo: string;
+  description: string;
   nav: {
     editor: string;
     about: string;

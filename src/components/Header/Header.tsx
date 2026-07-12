@@ -53,7 +53,11 @@ export const Header = () => {
             priority
             className={styles.logoIcon}
           />
-          <span className={styles.logoText}>{headerLang.logo}</span>
+
+          <div className={styles.logoTextContainer}>
+            <span className={styles.logoText}>{headerLang.logo}</span>
+            <span className={styles.logoDescription}>{headerLang.description}</span>
+          </div>
         </Link>
       </div>
 

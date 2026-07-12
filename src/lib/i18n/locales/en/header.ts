@@ -2,6 +2,7 @@ import type { HeaderTranslation } from '../../types';
 
 export const header: HeaderTranslation = {
   logo: 'SwaggerUI',
+  description: 'OpenAPI Editor',
   nav: {
     editor: 'Editor',
     about: 'About',
