@@ -3,14 +3,19 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
+import { getLocale } from '@/locales';
+
 import styles from './Header.module.css';
 
 //TODO - заменить на Zustand
-const MOCK_AUTH = false;
+const MOCK_AUTH = true;
 
 export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(MOCK_AUTH);
+
+  const locale = getLocale('ru');
+  const lang = locale.header;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,47 +38,40 @@ export const Header = () => {
     setIsAuthenticated(false);
   };
 
-  const handleHistory = () => {
-    window.location.href = '/history';
-  };
-
   return (
     <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
       {/* Логотип / название */}
       <Link href="/" className={styles.logo}>
-        SwaggerUI
+        {lang.logo}
       </Link>
 
       {/* Навигация */}
       <nav className={styles.nav}>
-        <Link href="/">Редактор</Link>
-        <Link href="/about">О проекте</Link>
-        {isAuthenticated && <Link href="/history">История</Link>}
+        <Link href="/">{lang.nav.editor}</Link>
+        <Link href="/about">{lang.nav.about}</Link>
+        {isAuthenticated && <Link href="/history">{lang.nav.history}</Link>}
       </nav>
 
       <div className={styles.buttonsContainer}>
         <div className={styles.languageSwitcher}>
-          <button className={`${styles.langBtn} ${styles.active}`}>RU</button>
-          <button className={styles.langBtn}>EN</button>
+          <button className={`${styles.langBtn} ${styles.active}`}>{lang.language.ru}</button>
+          <button className={styles.langBtn}>{lang.language.en}</button>
         </div>
 
         <div className={styles.authButtons}>
           {!isAuthenticated ? (
             <>
               <button className={styles.button} onClick={handleSignIn}>
-                Войти
+                {lang.auth.signIn}
               </button>
               <button className={`${styles.button} ${styles.buttonPrimary}`} onClick={handleSignUp}>
-                Зарегистрироваться
+                {lang.auth.signUp}
               </button>
             </>
           ) : (
             <>
-              <button className={styles.button} onClick={handleHistory}>
-                История
-              </button>
               <button className={styles.button} onClick={handleLogout}>
-                Выйти
+                {lang.auth.logout}
               </button>
             </>
           )}
