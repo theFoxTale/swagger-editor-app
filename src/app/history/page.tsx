@@ -15,9 +15,9 @@ export default async function HistoryPageContainer({ searchParams }: Props) {
   }
 
   // const cookieStore = await cookies();
-  // const token = cookieStore.get('token')?.value;
+  // const userId = cookieStore.get('userId')?.value;
 
-  // if (!token) {
+  // if (!userId) {
   //   redirect('/');
   // }
 

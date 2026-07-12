@@ -18,7 +18,7 @@ export default async function signIn(formData: FormData) {
     return { error: 'Invalid email or password' };
   }
   const cookieStore = await cookies();
-  cookieStore.set('token', data.id.toString(), { httpOnly: true, secure: true });
+  cookieStore.set('userId', data.id.toString(), { httpOnly: true, secure: true });
 
   redirect('/');
 }

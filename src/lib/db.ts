@@ -45,6 +45,7 @@ export const db = {
         try {
           const { data, error } = await supabase
             .from('request_history')
+            //          .eq('user_id', userId)
             .select('*')
             .order('timestamp', { ascending: false });
 
