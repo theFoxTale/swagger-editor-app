@@ -44,38 +44,6 @@ body {
   min-height: 100vh;
 }
 
-.header {
-  position: sticky;
-  z-index: 100;
-  top: 0;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  height: 64px;
-  padding: 0 1.5rem;
-  border-bottom: 1px solid rgb(0 0 0 / 5%);
-
-  background: var(--header-bg);
-
-  transition:
-    box-shadow 0.2s,
-    background 0.2s;
-}
-
-.headerScrolled {
-  background: rgb(255 255 255 / 90%);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
-}
-
-@media (prefers-color-scheme: dark) {
-  .headerScrolled {
-    background: rgb(10 10 10 / 90%);
-  }
-}
-
 .main {
   display: flex;
   flex: 1;

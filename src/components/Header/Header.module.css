@@ -1,0 +1,146 @@
+.header {
+  position: sticky;
+  z-index: 100;
+  top: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  height: 64px;
+  padding: 0 1.5rem;
+  border-bottom: 1px solid rgb(0 0 0 / 5%);
+
+  background: var(--header-bg);
+
+  transition:
+    box-shadow 0.3s,
+    background 0.3s;
+}
+
+/* Когда шапка зафиксирована (скролл) */
+.scrolled {
+  background: rgb(255 255 255 / 92%);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
+}
+
+/* Для тёмной темы */
+@media (prefers-color-scheme: dark) {
+  .scrolled {
+    background: rgb(10 10 10 / 92%);
+    box-shadow: 0 2px 8px rgb(0 0 0 / 40%);
+  }
+}
+
+.nav {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.nav a {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--foreground);
+  text-decoration: none;
+
+  transition: opacity 0.2s;
+}
+
+.nav a:hover {
+  opacity: 0.7;
+}
+
+.authButtons {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.button {
+  cursor: pointer;
+
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--foreground);
+  border-radius: 4px;
+
+  font-size: 0.9rem;
+  color: var(--foreground);
+
+  background: transparent;
+
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+
+.button:hover {
+  color: var(--background);
+  background: var(--foreground);
+}
+
+.buttonPrimary {
+  color: var(--background);
+  background: var(--foreground);
+}
+
+.buttonPrimary:hover {
+  opacity: 0.8;
+}
+
+.buttonsContainer {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.languageSwitcher {
+  display: flex;
+  gap: 0.3rem;
+  margin-left: 1rem;
+}
+
+.langBtn {
+  cursor: pointer;
+
+  padding: 0.2rem 0.5rem;
+  border: 1px solid var(--foreground);
+  border-radius: 3px;
+
+  font-size: 0.8rem;
+  color: var(--foreground);
+
+  background: transparent;
+}
+
+.langBtn.active {
+  color: var(--background);
+  background: var(--foreground);
+}
+
+.logo {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--foreground);
+  text-decoration: none;
+}
+
+/* Адаптивность */
+@media (width <= 600px) {
+  .header {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    height: auto;
+    padding: 0.5rem 1rem;
+  }
+
+  .nav {
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+
+  .authButtons {
+    gap: 0.4rem;
+  }
+}
