@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic';
 import { redirect } from 'next/navigation';
+//import { cookies } from 'next/headers';
 
 const HistoryPage = dynamic(() => import('@/components/HistoryPage/HistoryPage'), { ssr: true });
 
@@ -12,6 +13,13 @@ export default async function HistoryPageContainer({ searchParams }: Props) {
   if (!isAuthenticated) {
     redirect('/');
   }
+
+  // const cookieStore = await cookies();
+  // const token = cookieStore.get('token')?.value;
+
+  // if (!token) {
+  //   redirect('/');
+  // }
 
   return <HistoryPage searchParams={searchParams} />;
 }
