@@ -2,21 +2,22 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 
 import { Button, Nav, ThemeToggle } from '@/components';
 import { useTranslation } from '@/hooks';
-import { useLanguageStore } from '@/store';
+import { useAuthStore, useLanguageStore } from '@/store';
 
 import styles from './Header.module.css';
-
-//TODO - заменить на Zustand
-const MOCK_AUTH = true;
+import { HeaderLogoutSkeleton } from './HeaderLogoutSkeleton';
+import { HeaderSignInSkeleton } from './HeaderSignInSkeleton';
 
 export const Header = () => {
+  const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(MOCK_AUTH);
 
+  const { isAuthenticated, isLoading, login, logout } = useAuthStore();
   const { language, setLanguage } = useLanguageStore();
   const { headerLang } = useTranslation();
 
@@ -38,18 +39,28 @@ export const Header = () => {
     [headerLang.nav, isAuthenticated]
   );
 
-  const handleSignIn = () => {
-    window.location.href = '/auth/sign-in';
+  const handleSignIn = async () => {
+    // TODO: убрать когда будет реальная авторизация
+    await login('test@example.com', 'Test123!');
+    void router.push('/auth/sign-in');
   };
 
   const handleSignUp = () => {
-    window.location.href = '/auth/sign-up';
+    void router.push('/auth/sign-up');
   };
 
   const handleLogout = () => {
-    //TODO - заменить на Zustand
-    setIsAuthenticated(false);
+    logout();
+    void router.push('/');
   };
+
+  if (isLoading && isAuthenticated) {
+    return <HeaderSignInSkeleton />;
+  }
+
+  if (isLoading && !isAuthenticated) {
+    return <HeaderLogoutSkeleton />;
+  }
 
   return (
     <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
@@ -76,6 +87,7 @@ export const Header = () => {
       <Nav links={navLinks} className={styles.nav} />
 
       <div className={styles.actions}>
+        {/* Выбор языка */}
         <div className={styles.languageSwitcher} role="group" aria-label="Language">
           <button
             type="button"
@@ -95,6 +107,7 @@ export const Header = () => {
           </button>
         </div>
 
+        {/* Кнопки авторизации */}
         <div className={styles.authButtons}>
           {!isAuthenticated ? (
             <>

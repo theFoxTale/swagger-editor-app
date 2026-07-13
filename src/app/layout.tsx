@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
+import Script from 'next/script';
 
 import { ReactNode } from 'react';
 
-import { Footer, Header, ThemeProvider } from '@/components';
+import { AuthInitializer, Footer, Header, ThemeProvider } from '@/components';
+import { themeInitScript } from '@/lib';
 
 import './globals.css';
 
@@ -37,8 +39,16 @@ export default function RootLayout({
       data-theme="dark"
       suppressHydrationWarning
     >
+      <head>
+        <Script
+          id="theme-init"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: themeInitScript }}
+        />
+      </head>
       <body>
         <ThemeProvider>
+          <AuthInitializer />
           <div className="rootLayout">
             <Header />
             <main className="main">{children}</main>

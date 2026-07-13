@@ -1,3 +1,4 @@
+export * from './AuthInitializer/AuthInitializer';
 export * from './Editor/Editor';
 export * from './Footer/Footer';
 export * from './Header/Header';
