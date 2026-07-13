@@ -1,0 +1,133 @@
+.history {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  height: 100vh;
+  margin: 10px;
+  padding: 20px;
+  border: 1px solid rgb(129 213 255 / 24.4%);
+  border-radius: 8px;
+
+  color: var(--foreground);
+
+  background-color: var(--background);
+}
+
+.history-wrapper {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.history-list-container {
+  flex: 1;
+  min-width: 0;
+}
+
+.history-wrapper:has(.history-details-container:not(:empty)) .history-list-container {
+  flex: 0 0 65%;
+}
+
+.history-details-container {
+  top: 20px;
+  flex: 0 0 35%;
+  animation: slide-in 0.3s ease;
+}
+
+.history-details-container:empty {
+  display: none;
+}
+
+.history-title {
+  margin-bottom: 20px;
+  font-size: 30px;
+}
+
+.history-list-header {
+  display: grid;
+  grid-template-columns: 1.5fr 0.7fr 1.5fr 0.7fr 0.8fr 0.8fr 0.8fr 1fr;
+  gap: 8px;
+
+  padding: 10px 16px;
+  border-bottom: 2px solid #ccc;
+
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.history-list-body {
+  margin: 0;
+  padding: 0;
+}
+
+.history-empty {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.history-empty p {
+  margin: 10px 0;
+}
+
+.history-back {
+  cursor: pointer;
+  color: rgb(17 159 219);
+}
+
+.history-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 200px;
+
+  font-size: 16px;
+}
+
+@media (width <= 1024px) {
+  .history-wrapper {
+    flex-direction: column;
+  }
+
+  .history-wrapper:has(.history-details-container:not(:empty)) .history-list-container {
+    flex: 1;
+  }
+
+  .history-details-container {
+    position: static;
+    flex: 1;
+    width: 100%;
+  }
+
+  .history-list-header {
+    grid-template-columns: 1fr 0.7fr 1.5fr 0.7fr 0.8fr;
+  }
+
+  .history-header-request-size,
+  .history-header-response-size,
+  .history-header-error {
+    display: none;
+  }
+}
+
+@media (width <= 640px) {
+  .history {
+    margin: 4px;
+    padding: 8px;
+  }
+
+  .history-title {
+    font-size: 20px;
+  }
+
+  .history-header-duration {
+    display: none;
+  }
+
+  .history-list-header,
+  .history-item-link {
+    padding: 5px 8px;
+  }
+}
