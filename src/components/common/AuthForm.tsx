@@ -96,101 +96,121 @@ export const AuthForm = ({ mode }: AuthFormProps) => {
   };
 
   return (
-    <section className="mx-auto w-full max-w-md rounded-2xl border border-gray-200 bg-white p-8 shadow-lg">
-      <div className="mb-8 text-center">
-        <h1 className="text-3xl font-bold text-gray-900">
-          {isSignUp ? 'Create Account' : 'Sign In'}
-        </h1>
+    <section className="relative mx-auto w-full max-w-xl overflow-hidden rounded-2xl border border-cyan-500/50 bg-[#050816]/95 p-8 shadow-[0_0_40px_rgba(0,212,255,0.15)]">
+      <div className="pointer-events-none absolute -left-24 -top-24 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-24 -right-24 h-56 w-56 rounded-full bg-purple-600/15 blur-3xl" />
 
-        <p className="mt-2 text-sm text-gray-500">
-          {isSignUp
-            ? 'Create an account to save schemas and view request history.'
-            : 'Sign in to access your saved schemas and request history.'}
-        </p>
-      </div>
+      <div className="relative">
+        <div className="mb-8 text-center">
+          <p className="mb-2 text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">
+            Swagger / OpenAPI UI
+          </p>
 
-      <form onSubmit={handleSubmit} className="space-y-5">
-        <div>
-          <label htmlFor="email" className="mb-2 block text-sm font-medium text-gray-700">
-            Email
-          </label>
+          <h1 className="text-3xl font-bold text-white">
+            {isSignUp ? 'Create your account' : 'Welcome back'}
+          </h1>
 
-          <input
-            id="email"
-            type="email"
-            autoComplete="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 outline-none transition focus:border-blue-500"
-            placeholder="example@mail.com"
-          />
+          <p className="mt-3 text-sm text-slate-400">
+            {isSignUp
+              ? 'Join Swagger/OpenAPI UI and start building better APIs.'
+              : 'Sign in to continue working with your API schemas.'}
+          </p>
         </div>
 
-        <div>
-          <label htmlFor="password" className="mb-2 block text-sm font-medium text-gray-700">
-            Password
-          </label>
-
-          <input
-            id="password"
-            type="password"
-            autoComplete={isSignUp ? 'new-password' : 'current-password'}
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 outline-none transition focus:border-blue-500"
-            placeholder="Enter your password"
-          />
-        </div>
-
-        {isSignUp && (
+        <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label
-              htmlFor="confirm-password"
-              className="mb-2 block text-sm font-medium text-gray-700"
-            >
-              Confirm Password
+            <label htmlFor="email" className="mb-2 block text-sm font-medium text-slate-300">
+              Email address
             </label>
 
             <input
-              id="confirm-password"
-              type="password"
-              autoComplete="new-password"
-              value={confirmPassword}
-              onChange={(event) => setConfirmPassword(event.target.value)}
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 outline-none transition focus:border-blue-500"
-              placeholder="Repeat your password"
+              id="email"
+              type="email"
+              autoComplete="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              className="w-full rounded-lg border border-slate-700 bg-[#080d1c] px-4 py-3 text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(34,211,238,0.15)]"
+              placeholder="example@mail.com"
             />
           </div>
-        )}
 
-        {error && (
-          <p role="alert" className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">
-            {error}
-          </p>
-        )}
+          <div>
+            <label htmlFor="password" className="mb-2 block text-sm font-medium text-slate-300">
+              Password
+            </label>
 
-        {success && (
-          <p className="rounded-lg bg-green-50 px-4 py-3 text-sm text-green-700">{success}</p>
-        )}
+            <input
+              id="password"
+              type="password"
+              autoComplete={isSignUp ? 'new-password' : 'current-password'}
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              className="w-full rounded-lg border border-slate-700 bg-[#080d1c] px-4 py-3 text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(34,211,238,0.15)]"
+              placeholder="Enter your password"
+            />
+          </div>
 
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="w-full rounded-lg bg-gray-900 py-3 font-semibold text-white transition hover:bg-gray-700 disabled:cursor-not-allowed disabled:opacity-60"
-        >
-          {isLoading ? 'Please wait...' : isSignUp ? 'Create Account' : 'Sign In'}
-        </button>
-      </form>
+          {isSignUp && (
+            <div>
+              <label
+                htmlFor="confirm-password"
+                className="mb-2 block text-sm font-medium text-slate-300"
+              >
+                Confirm password
+              </label>
 
-      <p className="mt-6 text-center text-sm text-gray-500">
-        {isSignUp ? 'Already have an account?' : "Don't have an account?"}{' '}
-        <Link
-          href={isSignUp ? '/auth/sign-in' : '/auth/sign-up'}
-          className="font-semibold text-gray-900 underline"
-        >
-          {isSignUp ? 'Sign In' : 'Sign Up'}
-        </Link>
-      </p>
+              <input
+                id="confirm-password"
+                type="password"
+                autoComplete="new-password"
+                value={confirmPassword}
+                onChange={(event) => setConfirmPassword(event.target.value)}
+                className="w-full rounded-lg border border-slate-700 bg-[#080d1c] px-4 py-3 text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(34,211,238,0.15)]"
+                placeholder="Repeat your password"
+              />
+            </div>
+          )}
+
+          {error && (
+            <p
+              role="alert"
+              className="rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300"
+            >
+              {error}
+            </p>
+          )}
+
+          {success && (
+            <p className="rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-300">
+              {success}
+            </p>
+          )}
+
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="w-full cursor-pointer rounded-lg bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 py-3 font-semibold text-white shadow-[0_0_20px_rgba(34,211,238,0.25)] transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {isLoading ? 'Please wait...' : isSignUp ? 'Sign Up' : 'Sign In'}
+          </button>
+        </form>
+
+        <div className="my-6 flex items-center gap-4">
+          <div className="h-px flex-1 bg-slate-800" />
+          <span className="text-xs uppercase tracking-wider text-slate-600">OpenAPI</span>
+          <div className="h-px flex-1 bg-slate-800" />
+        </div>
+
+        <p className="text-center text-sm text-slate-400">
+          {isSignUp ? 'Already have an account?' : "Don't have an account?"}{' '}
+          <Link
+            href={isSignUp ? '/auth/sign-in' : '/auth/sign-up'}
+            className="font-semibold text-cyan-400 transition hover:text-cyan-300"
+          >
+            {isSignUp ? 'Sign In' : 'Sign Up'}
+          </Link>
+        </p>
+      </div>
     </section>
   );
 };

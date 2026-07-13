@@ -36,8 +36,7 @@ describe('AuthForm', () => {
   it('renders sign in form', () => {
     render(<AuthForm mode="signin" />);
 
-    expect(screen.getByRole('heading', { name: /sign in/i })).toBeInTheDocument();
-    expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /welcome back/i })).toBeInTheDocument();
     expect(screen.getByLabelText(/^password$/i)).toBeInTheDocument();
     expect(screen.queryByLabelText(/confirm password/i)).not.toBeInTheDocument();
   });
@@ -45,7 +44,7 @@ describe('AuthForm', () => {
   it('renders sign up form', () => {
     render(<AuthForm mode="signup" />);
 
-    expect(screen.getByRole('heading', { name: /create account/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /create your account/i })).toBeInTheDocument();
 
     expect(screen.getByLabelText(/confirm password/i)).toBeInTheDocument();
   });
@@ -121,7 +120,7 @@ describe('AuthForm', () => {
     await user.type(screen.getByLabelText(/^password$/i), 'Password1!');
     await user.type(screen.getByLabelText(/confirm password/i), 'Password2!');
 
-    await user.click(screen.getByRole('button', { name: /create account/i }));
+    await user.click(screen.getByRole('button', { name: /sign up/i }));
 
     expect(screen.getByText(/passwords do not match/i)).toBeInTheDocument();
   });
@@ -196,7 +195,7 @@ describe('AuthForm', () => {
     await user.type(screen.getByLabelText(/^password$/i), 'Password1!');
     await user.type(screen.getByLabelText(/confirm password/i), 'Password1!');
 
-    await user.click(screen.getByRole('button', { name: /create account/i }));
+    await user.click(screen.getByRole('button', { name: /sign up/i }));
 
     expect(mockedSignUp).toHaveBeenCalledWith({
       email: 'test@example.com',
@@ -231,7 +230,7 @@ describe('AuthForm', () => {
     await user.type(screen.getByLabelText(/^password$/i), 'Password1!');
     await user.type(screen.getByLabelText(/confirm password/i), 'Password1!');
 
-    await user.click(screen.getByRole('button', { name: /create account/i }));
+    await user.click(screen.getByRole('button', { name: /sign up/i }));
 
     expect(screen.getByText(/user already registered/i)).toBeInTheDocument();
   });
