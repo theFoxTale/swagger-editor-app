@@ -108,5 +108,5 @@ dist
 # PHP Storm IDE files
 .idea/
 
-# Stylelint cache
+# StyleLint cache
 .stylelintcache

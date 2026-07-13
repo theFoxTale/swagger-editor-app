@@ -9,7 +9,13 @@ const config = {
     'at-rule-no-unknown': [
       true,
       {
-        ignoreAtRules: ['tailwind', 'apply', 'variants', 'responsive', 'screen', 'theme',],
+        ignoreAtRules: ['tailwind', 'apply', 'variants', 'responsive', 'screen', 'theme'],
+      },
+    ],
+    'selector-class-pattern': [
+      '^[a-z][a-zA-Z0-9]+$',
+      {
+        message: 'Expected class selector to be camelCase for CSS Modules',
       },
     ],
   },

@@ -1,3 +1,8 @@
+'use client';
+
+import { useTranslation } from '@/hooks';
+
 export const Editor = () => {
-  return <div>Editor</div>;
+  const { editorLang } = useTranslation();
+  return <div>{editorLang.title}</div>;
 };

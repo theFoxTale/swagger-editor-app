@@ -1,0 +1,279 @@
+.header {
+  position: sticky;
+  z-index: 100;
+  top: 0;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+
+  min-height: var(--header-height);
+  padding: 0.5rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+
+  background: var(--header-bg);
+
+  transition:
+    box-shadow var(--transition-normal),
+    background var(--transition-normal),
+    border-color var(--transition-normal);
+}
+
+.scrolled {
+  border-bottom-color: var(--border-color);
+  background: var(--header-bg-scrolled);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-header);
+}
+
+.logoWrapper {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.logoLink {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+
+  color: var(--foreground);
+  text-decoration: none;
+
+  transition: opacity var(--transition-fast);
+}
+
+.logoLink:hover {
+  opacity: 0.9;
+}
+
+.logoLink:focus-visible {
+  border-radius: var(--radius-md);
+  outline: 2px solid var(--accent-cyan);
+  outline-offset: 4px;
+}
+
+.logoIcon {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.logoTextContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.logoText {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.logoDescription {
+  font-size: 0.6rem;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.nav {
+  flex: 1;
+  justify-content: center;
+}
+
+.actions {
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  align-items: center;
+}
+
+.languageSwitcher {
+  overflow: hidden;
+  display: inline-flex;
+
+  border: 1px solid var(--border-color-strong);
+  border-radius: var(--radius-md);
+
+  background: var(--surface-elevated);
+}
+
+.langBtn {
+  cursor: pointer;
+
+  padding: 0.3rem 0.6rem;
+  border: none;
+
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+
+  background: transparent;
+
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.langBtn + .langBtn {
+  border-left: 1px solid var(--border-color-strong);
+}
+
+.langBtn:focus-visible {
+  z-index: 1;
+  outline: 2px solid var(--accent-cyan);
+  outline-offset: -2px;
+}
+
+.langBtn:hover:not(.langBtnActive) {
+  color: var(--foreground);
+  background: var(--surface-hover);
+}
+
+.langBtnActive {
+  color: var(--accent-cyan);
+  background: var(--surface-hover);
+  box-shadow: inset 0 -2px 0 var(--accent-cyan);
+}
+
+.authButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+
+  transition:
+    opacity var(--transition-normal),
+    transform var(--transition-normal);
+}
+
+/* Skeleton styles */
+.header.skeleton {
+  pointer-events: none;
+  user-select: none;
+}
+
+.skeletonBox {
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
+  background: var(--surface-elevated);
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-pulse {
+  0% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.6;
+  }
+}
+
+.skeletonLogo {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-md);
+}
+
+.skeletonText {
+  width: 100px;
+  height: 1.2rem;
+}
+
+.skeletonTextSmall {
+  width: 90px;
+  height: 0.8rem;
+}
+
+.skeletonList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 1.5rem;
+  align-items: center;
+}
+
+.skeletonNavLink {
+  width: 52px;
+  height: 0.9rem;
+  border-radius: var(--radius-sm);
+}
+
+.skeletonLanguageSwitcher {
+  width: 5rem;
+  height: 1.8rem;
+  border-radius: var(--radius-md);
+}
+
+.skeletonButton {
+  width: 4.3rem;
+  height: 1.8rem;
+  border-radius: var(--radius-md);
+}
+
+.skeletonThemeToggle {
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--radius-md);
+}
+
+/* Адаптивность */
+@media (width <= 768px) {
+  .header {
+    gap: 0.75rem 1rem;
+    padding: 0.625rem 1rem;
+  }
+
+  .nav {
+    flex: 1 1 100%;
+    justify-content: flex-start;
+    order: 3;
+  }
+
+  .actions {
+    margin-left: auto;
+  }
+
+  .skeletonList {
+    gap: 0.25rem 1.25rem;
+  }
+
+  .skeletonNavLink {
+    width: 44px;
+  }
+}
+
+@media (width <= 480px) {
+  .logoDescription {
+    display: none;
+  }
+
+  .actions {
+    flex: 1 1 100%;
+    justify-content: space-between;
+  }
+
+  .skeletonTextSmall {
+    display: none;
+  }
+
+  .skeletonButton {
+    width: 3.5rem;
+    height: 1.7rem;
+  }
+}

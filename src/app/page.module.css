@@ -1,0 +1,37 @@
+.container {
+  display: flex;
+  flex: 1;
+
+  height: 100%;
+  min-height: 0;
+
+  background: var(--background);
+}
+
+.editorPanel {
+  overflow: auto;
+  flex: 1;
+
+  padding: 1rem;
+  border-right: 1px solid var(--panel-border);
+
+  background: var(--panel-bg);
+}
+
+.viewerPanel {
+  overflow: auto;
+  flex: 1;
+  padding: 1rem;
+  background: var(--panel-bg);
+}
+
+@media (width <= 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .editorPanel {
+    border-right: none;
+    border-bottom: 1px solid var(--panel-border);
+  }
+}
