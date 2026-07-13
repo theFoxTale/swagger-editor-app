@@ -41,6 +41,12 @@ export interface AuthTranslation {
 export interface CommonTranslation {
   error: string;
   loading: string;
+  unauthorized: {
+    title: string;
+    description: string;
+    goHome: string;
+    signIn: string;
+  };
 }
 
 export interface EditorTranslation {

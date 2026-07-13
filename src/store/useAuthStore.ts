@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { getAuthCookie, removeAuthCookie, setAuthCookie } from '@/lib';
 
 interface AuthState {
   isAuthenticated: boolean;
@@ -15,7 +16,7 @@ interface AuthState {
 
 export const useAuthStore = create<AuthState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       isAuthenticated: false,
       isLoading: true,
       user: null,
@@ -25,6 +26,10 @@ export const useAuthStore = create<AuthState>()(
         set({ isLoading: true });
         // TODO: переделать на реальный запрос к серверу
         await new Promise((resolve) => setTimeout(resolve, 800));
+
+        const mockToken = 'mock-token-' + Date.now();
+        setAuthCookie(mockToken);
+
         set({
           isAuthenticated: true,
           user: { email },
@@ -37,6 +42,9 @@ export const useAuthStore = create<AuthState>()(
         set({ isLoading: true });
         // TODO: переделать на реальный запрос к серверу
         await new Promise((resolve) => setTimeout(resolve, 800));
+
+        removeAuthCookie();
+
         set({
           isAuthenticated: false,
           user: null,
@@ -46,9 +54,13 @@ export const useAuthStore = create<AuthState>()(
       },
 
       checkAuth: () => {
-        const state = get();
-        if (state.token) {
-          set({ isAuthenticated: true, isLoading: false });
+        const token = getAuthCookie();
+        if (token) {
+          set({
+            isAuthenticated: true,
+            token,
+            isLoading: false,
+          });
         } else {
           set({ isLoading: false });
         }
@@ -57,9 +69,7 @@ export const useAuthStore = create<AuthState>()(
     {
       name: 'swagger-auth-storage',
       partialize: (state) => ({
-        token: state.token,
         user: state.user,
-        isAuthenticated: state.isAuthenticated,
       }),
     }
   )
