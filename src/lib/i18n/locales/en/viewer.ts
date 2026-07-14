@@ -2,7 +2,11 @@ import type { ViewerTranslation } from '../../types';
 
 export const viewer: ViewerTranslation = {
   title: 'Viewer',
-  emptySchema: 'Load a valid OpenAPI schema in the editor to preview endpoints.',
+  emptySchemaTitle: 'No schema to preview',
+  emptySchema: 'Paste or type a valid OpenAPI schema in the editor to populate endpoints here.',
+  invalidSchemaTitle: 'Schema is invalid',
+  invalidSchema: 'Fix the errors in the editor to update the viewer.',
+  invalidSchemaHint: 'Validation errors are shown under the editor panel.',
   baseUrl: 'Base URL',
   endpointsLabel: 'API endpoints',
   emptyEndpoints: 'No endpoints found in this schema.',

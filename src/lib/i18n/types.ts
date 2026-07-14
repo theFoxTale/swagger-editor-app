@@ -103,7 +103,11 @@ export interface HistoryTranslation {
 
 export interface ViewerTranslation {
   title: string;
+  emptySchemaTitle: string;
   emptySchema: string;
+  invalidSchemaTitle: string;
+  invalidSchema: string;
+  invalidSchemaHint: string;
   baseUrl: string;
   endpointsLabel: string;
   emptyEndpoints: string;

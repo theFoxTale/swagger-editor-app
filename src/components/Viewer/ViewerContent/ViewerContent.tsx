@@ -1,22 +1,29 @@
 'use client';
 
-import { useTranslation } from '@/hooks';
 import { getServerUrl, type ExtractedEndpoints } from '@/lib/openapi';
 
 import { EndpointList } from '../EndpointList';
-
-import styles from '../Viewer.module.css';
+import { ViewerEmptyState, type ViewerSchemaState } from '../ViewerEmptyState';
 import { ViewerHeader } from '../ViewerHeader';
 
 export interface ViewerContentProps {
   extracted: ExtractedEndpoints | null;
+  schemaState: ViewerSchemaState | 'ready';
+  validationErrors?: string[];
 }
 
-export const ViewerContent = ({ extracted }: ViewerContentProps) => {
-  const { viewerLang } = useTranslation();
-
-  if (!extracted) {
-    return <p className={styles.placeholder}>{viewerLang.emptySchema}</p>;
+export const ViewerContent = ({
+  extracted,
+  schemaState,
+  validationErrors = [],
+}: ViewerContentProps) => {
+  if (schemaState !== 'ready' || !extracted) {
+    return (
+      <ViewerEmptyState
+        state={schemaState === 'ready' ? 'empty' : schemaState}
+        validationErrors={validationErrors}
+      />
+    );
   }
 
   const serverUrl = getServerUrl(extracted);

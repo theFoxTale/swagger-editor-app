@@ -2,7 +2,12 @@ import type { ViewerTranslation } from '../../types';
 
 export const viewer: ViewerTranslation = {
   title: 'Просмотр',
-  emptySchema: 'Загрузите корректную OpenAPI-схему в редакторе, чтобы увидеть эндпоинты.',
+  emptySchemaTitle: 'Нет схемы для предпросмотра',
+  emptySchema:
+    'Вставьте или введите корректную OpenAPI-схему в редакторе, чтобы увидеть эндпоинты.',
+  invalidSchemaTitle: 'Схема некорректна',
+  invalidSchema: 'Исправьте ошибки в редакторе, чтобы обновить просмотр.',
+  invalidSchemaHint: 'Ошибки валидации показаны под панелью редактора.',
   baseUrl: 'Базовый URL',
   endpointsLabel: 'Эндпоинты API',
   emptyEndpoints: 'В этой схеме нет эндпоинтов.',
