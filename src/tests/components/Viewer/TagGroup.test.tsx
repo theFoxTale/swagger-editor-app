@@ -5,6 +5,18 @@ import { describe, expect, it, vi } from 'vitest';
 import { getTagAccentClass, TagGroup } from '@/components/Viewer/TagGroup/TagGroup';
 import type { Operation, TagGroup as TagGroupData } from '@/lib/openapi';
 
+vi.mock('@/hooks', () => ({
+  useTranslation: () => ({
+    viewerLang: {
+      requiresAuth: 'Requires authentication',
+      tagGroupLabel: '{name} tag group',
+      operationsCount: '{count} operations',
+      expandEndpoint: 'Show endpoint details for {method} {path}',
+      collapseEndpoint: 'Hide endpoint details for {method} {path}',
+    },
+  }),
+}));
+
 const createOperation = (overrides: Partial<Operation> = {}): Operation => ({
   id: 'listPets',
   method: 'get',
@@ -42,7 +54,7 @@ describe('TagGroup', () => {
 
     expect(screen.getByText('pet')).toBeInTheDocument();
     expect(screen.getByText('Everything about your Pets')).toBeInTheDocument();
-    expect(screen.getByText('2')).toBeInTheDocument();
+    expect(screen.getByLabelText('2 operations')).toBeInTheDocument();
   });
 
   it('starts collapsed by default and can expand to show endpoints', async () => {
@@ -82,7 +94,7 @@ describe('TagGroup', () => {
 
     render(<TagGroup group={createGroup()} defaultOpen onToggleOperation={onToggleOperation} />);
 
-    await user.click(screen.getByRole('button', { name: 'GET /pets' }));
+    await user.click(screen.getByRole('button', { name: 'Show endpoint details for GET /pets' }));
 
     expect(onToggleOperation).toHaveBeenCalledWith('listPets');
   });
@@ -98,5 +110,17 @@ describe('TagGroup', () => {
     );
 
     expect(screen.getByText('Details for listPets')).toBeInTheDocument();
+  });
+
+  it('collapses on Escape when open', async () => {
+    const user = userEvent.setup();
+    const onOpenChange = vi.fn();
+
+    render(<TagGroup group={createGroup()} open onOpenChange={onOpenChange} />);
+
+    screen.getByRole('button', { name: 'pet tag group' }).focus();
+    await user.keyboard('{Escape}');
+
+    expect(onOpenChange).toHaveBeenCalledWith(false);
   });
 });

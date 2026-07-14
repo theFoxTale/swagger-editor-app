@@ -1,7 +1,9 @@
 'use client';
 
-import type { ReactNode } from 'react';
+import { useId, type KeyboardEvent, type ReactNode } from 'react';
 
+import { useTranslation } from '@/hooks';
+import { formatMessage } from '@/lib/i18n';
 import type { Operation } from '@/lib/openapi';
 
 import { MethodBadge } from '../MethodBadge/MethodBadge';
@@ -36,8 +38,22 @@ export const EndpointRow = ({
   onToggle,
   children,
 }: EndpointRowProps) => {
+  const { viewerLang } = useTranslation();
+  const detailsId = useId();
   const requiresAuth = operationRequiresAuth(operation);
-  const label = `${operation.method.toUpperCase()} ${operation.path}`;
+  const method = operation.method.toUpperCase();
+
+  const toggleLabel = formatMessage(
+    expanded ? viewerLang.collapseEndpoint : viewerLang.expandEndpoint,
+    { method, path: operation.path }
+  );
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+    if (event.key === 'Escape' && expanded) {
+      event.preventDefault();
+      onToggle?.();
+    }
+  };
 
   return (
     <div
@@ -47,8 +63,10 @@ export const EndpointRow = ({
         type="button"
         className={styles.toggle}
         onClick={onToggle}
+        onKeyDown={handleKeyDown}
         aria-expanded={expanded}
-        aria-label={label}
+        aria-controls={expanded ? detailsId : undefined}
+        aria-label={toggleLabel}
       >
         <MethodBadge method={operation.method} />
 
@@ -58,17 +76,24 @@ export const EndpointRow = ({
 
         <span className={styles.trailing}>
           {requiresAuth && (
-            <span className={styles.lock} title="Requires authentication">
+            <span className={styles.lock} title={viewerLang.requiresAuth}>
               <LockIcon />
             </span>
           )}
-          <span className={`${styles.chevron} ${expanded ? styles.chevronOpen : ''}`}>
+          <span
+            className={`${styles.chevron} ${expanded ? styles.chevronOpen : ''}`}
+            aria-hidden="true"
+          >
             <ChevronIcon />
           </span>
         </span>
       </button>
 
-      {expanded && children ? <div className={styles.details}>{children}</div> : null}
+      {expanded && children ? (
+        <div id={detailsId} className={styles.details} role="region" aria-label={toggleLabel}>
+          {children}
+        </div>
+      ) : null}
     </div>
   );
 };

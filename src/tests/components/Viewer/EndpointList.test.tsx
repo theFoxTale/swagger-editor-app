@@ -10,6 +10,11 @@ vi.mock('@/hooks', () => ({
     viewerLang: {
       endpointsLabel: 'API endpoints',
       emptyEndpoints: 'No endpoints found in this schema.',
+      requiresAuth: 'Requires authentication',
+      tagGroupLabel: '{name} tag group',
+      operationsCount: '{count} operations',
+      expandEndpoint: 'Show endpoint details for {method} {path}',
+      collapseEndpoint: 'Hide endpoint details for {method} {path}',
     },
   }),
 }));
@@ -75,9 +80,13 @@ describe('EndpointList', () => {
       'aria-expanded',
       'false'
     );
-    expect(screen.getByRole('button', { name: 'GET /pets' })).toBeInTheDocument();
     expect(
-      screen.queryByRole('button', { name: 'GET /store/order/{orderId}' })
+      screen.getByRole('button', { name: 'Show endpoint details for GET /pets' })
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole('button', {
+        name: 'Show endpoint details for GET /store/order/{orderId}',
+      })
     ).not.toBeInTheDocument();
   });
 
@@ -86,20 +95,17 @@ describe('EndpointList', () => {
 
     render(<EndpointList tagGroups={[petGroup]} />);
 
-    await user.click(screen.getByRole('button', { name: 'GET /pets' }));
-    expect(screen.getByRole('button', { name: 'GET /pets' })).toHaveAttribute(
-      'aria-expanded',
-      'true'
-    );
+    await user.click(screen.getByRole('button', { name: 'Show endpoint details for GET /pets' }));
+    expect(
+      screen.getByRole('button', { name: 'Hide endpoint details for GET /pets' })
+    ).toHaveAttribute('aria-expanded', 'true');
 
-    await user.click(screen.getByRole('button', { name: 'POST /pets' }));
-    expect(screen.getByRole('button', { name: 'GET /pets' })).toHaveAttribute(
-      'aria-expanded',
-      'false'
-    );
-    expect(screen.getByRole('button', { name: 'POST /pets' })).toHaveAttribute(
-      'aria-expanded',
-      'true'
-    );
+    await user.click(screen.getByRole('button', { name: 'Show endpoint details for POST /pets' }));
+    expect(
+      screen.getByRole('button', { name: 'Show endpoint details for GET /pets' })
+    ).toHaveAttribute('aria-expanded', 'false');
+    expect(
+      screen.getByRole('button', { name: 'Hide endpoint details for POST /pets' })
+    ).toHaveAttribute('aria-expanded', 'true');
   });
 });

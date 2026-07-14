@@ -1,7 +1,9 @@
 'use client';
 
-import { useId, useState, type ReactNode } from 'react';
+import { useId, useState, type KeyboardEvent, type ReactNode } from 'react';
 
+import { useTranslation } from '@/hooks';
+import { formatMessage } from '@/lib/i18n';
 import type { Operation, TagGroup as TagGroupData } from '@/lib/openapi';
 
 import { EndpointRow } from '../EndpointRow/EndpointRow';
@@ -56,6 +58,7 @@ export const TagGroup = ({
   onToggleOperation,
   renderDetails,
 }: TagGroupProps) => {
+  const { viewerLang } = useTranslation();
   const contentId = useId();
   const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
   const isOpen = open ?? uncontrolledOpen;
@@ -68,17 +71,30 @@ export const TagGroup = ({
     onOpenChange?.(next);
   };
 
+  const headerLabel = formatMessage(viewerLang.tagGroupLabel, { name: group.name });
+  const countLabel = formatMessage(viewerLang.operationsCount, {
+    count: group.operations.length,
+  });
+
+  const handleHeaderKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+    if (event.key === 'Escape' && isOpen) {
+      event.preventDefault();
+      setOpen(false);
+    }
+  };
+
   return (
     <section className={`${styles.group} ${isOpen ? styles.open : ''} ${accentClass}`}>
       <button
         type="button"
         className={styles.header}
         onClick={() => setOpen(!isOpen)}
+        onKeyDown={handleHeaderKeyDown}
         aria-expanded={isOpen}
         aria-controls={contentId}
-        aria-label={`${group.name} tag group`}
+        aria-label={headerLabel}
       >
-        <span className={styles.icon}>
+        <span className={styles.icon} aria-hidden="true">
           <TagIcon />
         </span>
 
@@ -87,15 +103,20 @@ export const TagGroup = ({
           {group.description && <span className={styles.description}>{group.description}</span>}
         </span>
 
-        <span className={styles.count}>{group.operations.length}</span>
+        <span className={styles.count} title={countLabel} aria-label={countLabel}>
+          {group.operations.length}
+        </span>
 
-        <span className={`${styles.chevron} ${isOpen ? styles.chevronOpen : ''}`}>
+        <span
+          className={`${styles.chevron} ${isOpen ? styles.chevronOpen : ''}`}
+          aria-hidden="true"
+        >
           <ChevronIcon />
         </span>
       </button>
 
       {isOpen && (
-        <div id={contentId} className={styles.content} role="region" aria-label={group.name}>
+        <div id={contentId} className={styles.content} role="region" aria-label={headerLabel}>
           <ul className={styles.list}>
             {group.operations.map((operation) => {
               const expanded = expandedOperationId === operation.id;

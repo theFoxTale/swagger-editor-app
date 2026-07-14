@@ -107,6 +107,11 @@ export interface ViewerTranslation {
   baseUrl: string;
   endpointsLabel: string;
   emptyEndpoints: string;
+  requiresAuth: string;
+  tagGroupLabel: string;
+  operationsCount: string;
+  expandEndpoint: string;
+  collapseEndpoint: string;
 }
 
 // Полный объект перевода для всего приложения

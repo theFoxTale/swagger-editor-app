@@ -5,6 +5,16 @@ import { describe, expect, it, vi } from 'vitest';
 import { EndpointRow, operationRequiresAuth } from '@/components/Viewer/EndpointRow/EndpointRow';
 import type { Operation } from '@/lib/openapi';
 
+vi.mock('@/hooks', () => ({
+  useTranslation: () => ({
+    viewerLang: {
+      requiresAuth: 'Requires authentication',
+      expandEndpoint: 'Show endpoint details for {method} {path}',
+      collapseEndpoint: 'Hide endpoint details for {method} {path}',
+    },
+  }),
+}));
+
 const createOperation = (overrides: Partial<Operation> = {}): Operation => ({
   id: 'listPets',
   method: 'get',
@@ -57,7 +67,7 @@ describe('EndpointRow', () => {
 
     render(<EndpointRow operation={createOperation()} onToggle={onToggle} />);
 
-    await user.click(screen.getByRole('button', { name: 'GET /pets' }));
+    await user.click(screen.getByRole('button', { name: 'Show endpoint details for GET /pets' }));
 
     expect(onToggle).toHaveBeenCalledTimes(1);
   });
@@ -69,10 +79,9 @@ describe('EndpointRow', () => {
       </EndpointRow>
     );
 
-    expect(screen.getByRole('button', { name: 'GET /pets' })).toHaveAttribute(
-      'aria-expanded',
-      'false'
-    );
+    expect(
+      screen.getByRole('button', { name: 'Show endpoint details for GET /pets' })
+    ).toHaveAttribute('aria-expanded', 'false');
     expect(screen.queryByText('Details panel')).not.toBeInTheDocument();
 
     rerender(
@@ -81,10 +90,26 @@ describe('EndpointRow', () => {
       </EndpointRow>
     );
 
-    expect(screen.getByRole('button', { name: 'GET /pets' })).toHaveAttribute(
-      'aria-expanded',
-      'true'
-    );
+    const toggle = screen.getByRole('button', {
+      name: 'Hide endpoint details for GET /pets',
+    });
+    expect(toggle).toHaveAttribute('aria-expanded', 'true');
+    expect(toggle).toHaveAttribute('aria-controls');
     expect(screen.getByText('Details panel')).toBeInTheDocument();
+  });
+
+  it('collapses on Escape when expanded', async () => {
+    const user = userEvent.setup();
+    const onToggle = vi.fn();
+
+    render(<EndpointRow operation={createOperation()} expanded onToggle={onToggle} />);
+
+    const toggle = screen.getByRole('button', {
+      name: 'Hide endpoint details for GET /pets',
+    });
+    toggle.focus();
+    await user.keyboard('{Escape}');
+
+    expect(onToggle).toHaveBeenCalledTimes(1);
   });
 });

@@ -6,4 +6,9 @@ export const viewer: ViewerTranslation = {
   baseUrl: 'Base URL',
   endpointsLabel: 'API endpoints',
   emptyEndpoints: 'No endpoints found in this schema.',
+  requiresAuth: 'Requires authentication',
+  tagGroupLabel: '{name} tag group',
+  operationsCount: '{count} operations',
+  expandEndpoint: 'Show endpoint details for {method} {path}',
+  collapseEndpoint: 'Hide endpoint details for {method} {path}',
 };
