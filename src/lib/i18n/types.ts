@@ -51,6 +51,26 @@ export interface CommonTranslation {
 
 export interface EditorTranslation {
   title: string;
+  tab: string;
+  format: string;
+  validate: string;
+  saveSchema: string;
+  savedAgo: string;
+  savedJustNow: string;
+  yaml: string;
+  json: string;
+  valid: string;
+  invalid: string;
+  line: string;
+  column: string;
+  spaces: string;
+  encoding: string;
+  lineEnding: string;
+  loginToSave: string;
+  errorsTitle: string;
+  newTab: string;
+  closeTab: string;
+  tabsLabel: string;
 }
 
 export interface HeaderTranslation {
@@ -83,6 +103,7 @@ export interface HistoryTranslation {
 
 export interface ViewerTranslation {
   title: string;
+  emptySchema: string;
 }
 
 // Полный объект перевода для всего приложения

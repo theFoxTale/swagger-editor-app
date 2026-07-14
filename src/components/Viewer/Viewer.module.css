@@ -1,0 +1,29 @@
+.viewer {
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  min-height: 0;
+  padding: 1rem;
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-lg);
+
+  background: var(--panel-bg);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.placeholder {
+  font-size: 0.875rem;
+  color: var(--muted);
+}

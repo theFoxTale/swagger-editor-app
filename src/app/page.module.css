@@ -1,37 +1,50 @@
 .container {
   display: flex;
   flex: 1;
+  gap: 0.75rem;
 
   height: 100%;
   min-height: 0;
+  padding: 0.75rem;
 
   background: var(--background);
 }
 
-.editorPanel {
-  overflow: auto;
-  flex: 1;
-
-  padding: 1rem;
-  border-right: 1px solid var(--panel-border);
-
-  background: var(--panel-bg);
-}
-
+.editorPanel,
 .viewerPanel {
-  overflow: auto;
+  overflow: hidden;
+  display: flex;
   flex: 1;
-  padding: 1rem;
-  background: var(--panel-bg);
+  flex-direction: column;
+
+  min-width: 0;
+  min-height: 0;
 }
 
 @media (width <= 768px) {
   .container {
     flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem;
   }
 
   .editorPanel {
-    border-right: none;
-    border-bottom: 1px solid var(--panel-border);
+    flex: 1.1;
+  }
+
+  .viewerPanel {
+    flex: 0.9;
+  }
+}
+
+@media (orientation: portrait) and (width <= 768px) {
+  .container {
+    flex-direction: column;
+  }
+}
+
+@media (orientation: landscape) and (width <= 1024px) {
+  .container {
+    flex-direction: row;
   }
 }
