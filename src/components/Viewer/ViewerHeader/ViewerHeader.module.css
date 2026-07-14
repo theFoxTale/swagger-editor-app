@@ -75,11 +75,23 @@
   outline-offset: 2px;
 }
 
-.description {
+.noBaseUrl {
   margin: 0;
   font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.description {
+  margin: 0;
+  font-size: 0.9rem;
   line-height: 1.5;
   color: var(--muted);
+}
+
+.descriptionMuted {
+  font-style: italic;
+  opacity: 0.85;
 }
 
 @media (width <= 768px) {

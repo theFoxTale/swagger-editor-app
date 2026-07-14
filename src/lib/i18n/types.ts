@@ -109,6 +109,10 @@ export interface ViewerTranslation {
   invalidSchema: string;
   invalidSchemaHint: string;
   baseUrl: string;
+  baseUrlLinkLabel: string;
+  noBaseUrl: string;
+  noDescription: string;
+  versionLabel: string;
   endpointsLabel: string;
   emptyEndpoints: string;
   requiresAuth: string;
