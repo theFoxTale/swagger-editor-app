@@ -379,6 +379,7 @@ export const extractEndpoints = (
     tags,
     tagGroups,
     operations,
+    document: spec,
   };
 };
 

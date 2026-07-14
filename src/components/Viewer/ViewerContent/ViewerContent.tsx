@@ -29,7 +29,7 @@ export const ViewerContent = ({ extracted }: ViewerContentProps) => {
         description={extracted.info.description}
         serverUrl={serverUrl}
       />
-      <EndpointList tagGroups={extracted.tagGroups} />
+      <EndpointList tagGroups={extracted.tagGroups} document={extracted.document} />
     </>
   );
 };

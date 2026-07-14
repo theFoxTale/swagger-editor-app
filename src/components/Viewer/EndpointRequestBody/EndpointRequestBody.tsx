@@ -9,15 +9,17 @@ import {
   formatJsonValue,
   getMediaTypeExample,
   getRequestBodyContentTypes,
+  getResolvedSchema,
   getSchemaTypeLabel,
 } from '../schemaUtils';
 import styles from './EndpointRequestBody.module.css';
 
 export interface EndpointRequestBodyProps {
   requestBody?: RequestBody;
+  document?: Record<string, unknown> | null;
 }
 
-export const EndpointRequestBody = ({ requestBody }: EndpointRequestBodyProps) => {
+export const EndpointRequestBody = ({ requestBody, document = null }: EndpointRequestBodyProps) => {
   const { viewerLang } = useTranslation();
   const contentTypes = requestBody ? getRequestBodyContentTypes(requestBody) : [];
   const [selectedContentType, setSelectedContentType] = useState(contentTypes[0] ?? '');
@@ -30,9 +32,10 @@ export const EndpointRequestBody = ({ requestBody }: EndpointRequestBodyProps) =
     ? selectedContentType
     : contentTypes[0];
   const mediaType = requestBody.content[activeContentType];
+  const resolvedSchema = getResolvedSchema(mediaType?.schema, document);
   const schemaLabel = getSchemaTypeLabel(mediaType?.schema);
-  const schemaJson = formatJsonValue(mediaType?.schema ?? {}, true);
-  const exampleJson = formatJsonValue(getMediaTypeExample(mediaType ?? {}), true);
+  const schemaJson = formatJsonValue(resolvedSchema ?? {}, true);
+  const exampleJson = formatJsonValue(getMediaTypeExample(mediaType ?? {}, document), true);
 
   return (
     <div className={styles.section}>

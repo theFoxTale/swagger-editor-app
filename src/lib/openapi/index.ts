@@ -3,6 +3,7 @@ export { detectFormat } from './detectFormat';
 export { convertFormat } from './convertFormat';
 
 export { extractEndpoints, getServerUrl, groupOperationsByTag } from './extractEndpoints';
+export { isLocalRef, resolveJsonPointer, resolveSchema } from './resolveRef';
 
 export { NEW_TAB_SCHEMA } from './newTabSchema';
 export { parseSchemaContent } from './parseSchema';

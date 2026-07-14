@@ -1,3 +1,4 @@
+import { resolveSchema } from '@/lib/openapi';
 import type { MediaTypeObject, OpenApiSchema, RequestBody } from '@/lib/openapi';
 
 export const getSchemaTypeLabel = (schema?: OpenApiSchema): string => {
@@ -42,8 +43,16 @@ export const formatJsonValue = (value: unknown, pretty = false): string | null =
   }
 };
 
-/** Предпочтительный пример для media type: named examples → example → schema.example. */
-export const getMediaTypeExample = (mediaType: MediaTypeObject): unknown => {
+export const getResolvedSchema = (
+  schema: OpenApiSchema | undefined,
+  document?: Record<string, unknown> | null
+): OpenApiSchema | undefined => resolveSchema(schema, document);
+
+/** Preferred example for a media type: named examples → example → schema.example. */
+export const getMediaTypeExample = (
+  mediaType: MediaTypeObject,
+  document?: Record<string, unknown> | null
+): unknown => {
   if (mediaType.examples) {
     const firstExample = Object.values(mediaType.examples)[0];
     if (firstExample && firstExample.value !== undefined) {
@@ -57,6 +66,11 @@ export const getMediaTypeExample = (mediaType: MediaTypeObject): unknown => {
 
   if (mediaType.schema && mediaType.schema.example !== undefined) {
     return mediaType.schema.example;
+  }
+
+  const resolved = getResolvedSchema(mediaType.schema, document);
+  if (resolved && resolved.example !== undefined) {
+    return resolved.example;
   }
 
   return undefined;

@@ -13,9 +13,10 @@ import styles from './EndpointList.module.css';
 
 export interface EndpointListProps {
   tagGroups: TagGroupData[];
+  document?: Record<string, unknown> | null;
 }
 
-export const EndpointList = ({ tagGroups }: EndpointListProps) => {
+export const EndpointList = ({ tagGroups, document = null }: EndpointListProps) => {
   const { viewerLang } = useTranslation();
   const [expandedOperationId, setExpandedOperationId] = useState<string | null>(null);
 
@@ -42,10 +43,12 @@ export const EndpointList = ({ tagGroups }: EndpointListProps) => {
                 <EndpointRequestBody
                   key={`${operation.id}-body`}
                   requestBody={operation.requestBody}
+                  document={document}
                 />
                 <EndpointResponses
                   key={`${operation.id}-responses`}
                   responses={operation.responses}
+                  document={document}
                 />
               </>
             )}

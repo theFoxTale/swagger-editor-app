@@ -9,6 +9,7 @@ import {
   formatJsonValue,
   getMediaTypeContentTypes,
   getMediaTypeExample,
+  getResolvedSchema,
   getResponseStatusTone,
   getSchemaTypeLabel,
   sortResponses,
@@ -17,6 +18,7 @@ import styles from './EndpointResponses.module.css';
 
 export interface EndpointResponsesProps {
   responses: ResponseObject[];
+  document?: Record<string, unknown> | null;
 }
 
 const STATUS_TONE_CLASS = {
@@ -36,9 +38,11 @@ const ChevronIcon = () => (
 
 const ResponseItem = ({
   response,
+  document = null,
   defaultOpen = false,
 }: {
   response: ResponseObject;
+  document?: Record<string, unknown> | null;
   defaultOpen?: boolean;
 }) => {
   const { viewerLang } = useTranslation();
@@ -51,9 +55,10 @@ const ResponseItem = ({
     : contentTypes[0];
   const mediaType =
     activeContentType && response.content ? response.content[activeContentType] : undefined;
+  const resolvedSchema = getResolvedSchema(mediaType?.schema, document);
   const schemaLabel = getSchemaTypeLabel(mediaType?.schema);
-  const schemaJson = mediaType?.schema ? formatJsonValue(mediaType.schema, true) : null;
-  const exampleJson = formatJsonValue(getMediaTypeExample(mediaType ?? {}), true);
+  const schemaJson = resolvedSchema ? formatJsonValue(resolvedSchema, true) : null;
+  const exampleJson = formatJsonValue(getMediaTypeExample(mediaType ?? {}, document), true);
   const headerEntries = Object.entries(response.headers ?? {});
   const toneClass = STATUS_TONE_CLASS[getResponseStatusTone(response.statusCode)];
 
@@ -137,7 +142,9 @@ const ResponseItem = ({
                   <li key={name} className={styles.headerItem}>
                     <code className={styles.headerName}>{name}</code>
                     <span className={styles.headerMeta}>
-                      {getSchemaTypeLabel(header.schema)}
+                      {getSchemaTypeLabel(
+                        getResolvedSchema(header.schema, document) ?? header.schema
+                      )}
                       {header.required ? ` · ${viewerLang.parameterRequiredYes}` : ''}
                     </span>
                     {header.description ? (
@@ -154,7 +161,7 @@ const ResponseItem = ({
   );
 };
 
-export const EndpointResponses = ({ responses }: EndpointResponsesProps) => {
+export const EndpointResponses = ({ responses, document = null }: EndpointResponsesProps) => {
   const { viewerLang } = useTranslation();
 
   if (responses.length === 0) {
@@ -172,7 +179,12 @@ export const EndpointResponses = ({ responses }: EndpointResponsesProps) => {
 
       <div className={styles.list}>
         {sorted.map((response, index) => (
-          <ResponseItem key={response.statusCode} response={response} defaultOpen={index === 0} />
+          <ResponseItem
+            key={response.statusCode}
+            response={response}
+            document={document}
+            defaultOpen={index === 0}
+          />
         ))}
       </div>
     </div>

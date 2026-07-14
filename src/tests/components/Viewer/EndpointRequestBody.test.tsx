@@ -39,7 +39,25 @@ describe('EndpointRequestBody', () => {
   });
 
   it('renders content type, schema, and example', () => {
-    render(<EndpointRequestBody requestBody={createRequestBody()} />);
+    render(
+      <EndpointRequestBody
+        requestBody={createRequestBody()}
+        document={{
+          components: {
+            schemas: {
+              Pet: {
+                type: 'object',
+                required: ['id', 'name'],
+                properties: {
+                  id: { type: 'string' },
+                  name: { type: 'string' },
+                },
+              },
+            },
+          },
+        }}
+      />
+    );
 
     expect(screen.getByText('Request body')).toBeInTheDocument();
     expect(screen.getByText('Required')).toBeInTheDocument();
@@ -48,7 +66,8 @@ describe('EndpointRequestBody', () => {
       'true'
     );
     expect(screen.getByText('Pet')).toBeInTheDocument();
-    expect(screen.getByText(/"\$ref": "#\/components\/schemas\/Pet"/)).toBeInTheDocument();
+    expect(screen.getByText(/"type": "object"/)).toBeInTheDocument();
+    expect(screen.getByText(/"name": \{/)).toBeInTheDocument();
     expect(screen.getByText(/"name": "Rex"/)).toBeInTheDocument();
   });
 

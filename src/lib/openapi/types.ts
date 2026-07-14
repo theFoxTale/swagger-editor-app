@@ -121,4 +121,5 @@ export interface ExtractedEndpoints {
   tags: TagDefinition[];
   tagGroups: TagGroup[]; // Операции, сгруппированные по тегам для UI с аккордеоном.
   operations: Operation[]; // Плоский список всех операций
+  document: Record<string, unknown>; // OpenAPI, внутри которого распознаются $ref
 }

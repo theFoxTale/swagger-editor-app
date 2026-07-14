@@ -33,6 +33,7 @@ describe('extractEndpoints', () => {
       { url: 'https://api.petstore.example.com/v1', description: undefined },
     ]);
     expect(result?.operations).toHaveLength(5);
+    expect(result?.document).toBe(parsed);
     expect(
       result?.operations.map((operation) => `${operation.method.toUpperCase()} ${operation.path}`)
     ).toEqual([
