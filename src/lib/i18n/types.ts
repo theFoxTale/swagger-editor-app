@@ -104,6 +104,7 @@ export interface HistoryTranslation {
 export interface ViewerTranslation {
   title: string;
   emptySchema: string;
+  baseUrl: string;
 }
 
 // Полный объект перевода для всего приложения
