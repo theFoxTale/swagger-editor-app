@@ -127,6 +127,14 @@ export interface ViewerTranslation {
   parameterNoDescription: string;
   parameterExample: string;
   deprecated: string;
+  requestBodyTitle: string;
+  requestBodyEmpty: string;
+  requestBodyRequired: string;
+  requestBodyOptional: string;
+  requestBodyContentType: string;
+  requestBodySchema: string;
+  requestBodyExample: string;
+  requestBodyNoExample: string;
 }
 
 // Полный объект перевода для всего приложения

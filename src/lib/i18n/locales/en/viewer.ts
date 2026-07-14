@@ -26,4 +26,12 @@ export const viewer: ViewerTranslation = {
   parameterNoDescription: '—',
   parameterExample: 'Example',
   deprecated: 'Deprecated',
+  requestBodyTitle: 'Request body',
+  requestBodyEmpty: 'This endpoint has no request body.',
+  requestBodyRequired: 'Required',
+  requestBodyOptional: 'Optional',
+  requestBodyContentType: 'Content type',
+  requestBodySchema: 'Schema',
+  requestBodyExample: 'Example',
+  requestBodyNoExample: 'No example provided for this content type.',
 };

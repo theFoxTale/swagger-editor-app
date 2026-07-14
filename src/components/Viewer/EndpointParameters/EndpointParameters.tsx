@@ -1,14 +1,13 @@
 'use client';
 
 import { useTranslation } from '@/hooks';
-
 import {
   PARAMETER_LOCATIONS,
   type OperationParameter,
-  type OpenApiSchema,
   type ParameterLocation,
 } from '@/lib/openapi';
 
+import { formatJsonValue, getSchemaTypeLabel } from '../schemaUtils';
 import styles from './EndpointParameters.module.css';
 
 export interface EndpointParametersProps {
@@ -22,31 +21,7 @@ const LOCATION_LABEL_KEY = {
   cookie: 'parametersCookie',
 } as const satisfies Record<ParameterLocation, string>;
 
-export const getSchemaTypeLabel = (schema?: OpenApiSchema): string => {
-  if (!schema) {
-    return '—';
-  }
-
-  if (typeof schema.$ref === 'string') {
-    const refName = schema.$ref.split('/').pop();
-    return refName && refName.length > 0 ? refName : schema.$ref;
-  }
-
-  if (typeof schema.type === 'string') {
-    if (schema.type === 'array' && typeof schema.items === 'object' && schema.items !== null) {
-      const itemsLabel = getSchemaTypeLabel(schema.items as OpenApiSchema);
-      return `array<${itemsLabel}>`;
-    }
-
-    if (typeof schema.format === 'string') {
-      return `${schema.type} (${schema.format})`;
-    }
-
-    return schema.type;
-  }
-
-  return 'object';
-};
+export { getSchemaTypeLabel } from '../schemaUtils';
 
 export const groupParametersByLocation = (
   parameters: OperationParameter[]
@@ -63,22 +38,6 @@ export const groupParametersByLocation = (
   }
 
   return groups;
-};
-
-const formatExample = (value: unknown): string | null => {
-  if (value === undefined) {
-    return null;
-  }
-
-  if (typeof value === 'string') {
-    return value;
-  }
-
-  try {
-    return JSON.stringify(value);
-  } catch {
-    return String(value);
-  }
 };
 
 export const EndpointParameters = ({ parameters }: EndpointParametersProps) => {
@@ -122,7 +81,7 @@ export const EndpointParameters = ({ parameters }: EndpointParametersProps) => {
                 </thead>
                 <tbody>
                   {items.map((parameter) => {
-                    const example = formatExample(parameter.example);
+                    const example = formatJsonValue(parameter.example);
 
                     return (
                       <tr key={`${parameter.in}:${parameter.name}`}>

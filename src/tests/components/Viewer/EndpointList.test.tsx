@@ -30,6 +30,14 @@ vi.mock('@/hooks', () => ({
       parameterNoDescription: '—',
       parameterExample: 'Example',
       deprecated: 'Deprecated',
+      requestBodyTitle: 'Request body',
+      requestBodyEmpty: 'This endpoint has no request body.',
+      requestBodyRequired: 'Required',
+      requestBodyOptional: 'Optional',
+      requestBodyContentType: 'Content type',
+      requestBodySchema: 'Schema',
+      requestBodyExample: 'Example',
+      requestBodyNoExample: 'No example provided for this content type.',
     },
   }),
 }));
@@ -158,5 +166,36 @@ describe('EndpointList', () => {
     expect(screen.getByText('Path parameters')).toBeInTheDocument();
     expect(screen.getByText('petId')).toBeInTheDocument();
     expect(screen.getByText('Pet identifier')).toBeInTheDocument();
+  });
+
+  it('shows request body details when an endpoint has a body', async () => {
+    const user = userEvent.setup();
+    const groupWithBody: TagGroup = {
+      ...petGroup,
+      operations: [
+        createOperation({
+          id: 'createPet',
+          method: 'post',
+          summary: 'Create a pet',
+          requestBody: {
+            required: true,
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/Pet' },
+                example: { id: '1', name: 'Rex' },
+              },
+            },
+          },
+        }),
+      ],
+    };
+
+    render(<EndpointList tagGroups={[groupWithBody]} />);
+
+    await user.click(screen.getByRole('button', { name: 'Show endpoint details for POST /pets' }));
+
+    expect(screen.getByText('Request body')).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: 'application/json' })).toBeInTheDocument();
+    expect(screen.getByText(/"name": "Rex"/)).toBeInTheDocument();
   });
 });

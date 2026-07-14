@@ -26,4 +26,12 @@ export const viewer: ViewerTranslation = {
   parameterNoDescription: '—',
   parameterExample: 'Пример',
   deprecated: 'Устаревший',
+  requestBodyTitle: 'Тело запроса',
+  requestBodyEmpty: 'У этого эндпоинта нет тела запроса.',
+  requestBodyRequired: 'Обязательное',
+  requestBodyOptional: 'Необязательное',
+  requestBodyContentType: 'Тип содержимого',
+  requestBodySchema: 'Схема',
+  requestBodyExample: 'Пример',
+  requestBodyNoExample: 'Для этого типа содержимого пример не указан.',
 };
