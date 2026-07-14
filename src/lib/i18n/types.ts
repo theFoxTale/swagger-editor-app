@@ -105,6 +105,8 @@ export interface ViewerTranslation {
   title: string;
   emptySchema: string;
   baseUrl: string;
+  endpointsLabel: string;
+  emptyEndpoints: string;
 }
 
 // Полный объект перевода для всего приложения

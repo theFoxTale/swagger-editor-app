@@ -3,11 +3,11 @@
 import { useMemo } from 'react';
 
 import { useTranslation } from '@/hooks';
-import { extractEndpoints, getServerUrl } from '@/lib/openapi';
+import { extractEndpoints } from '@/lib/openapi';
 import { getActiveTab, useEditorStore } from '@/store';
 
 import styles from './Viewer.module.css';
-import { ViewerHeader } from './ViewerHeader/ViewerHeader';
+import { ViewerContent } from './ViewerContent/ViewerContent';
 
 export const Viewer = () => {
   const { viewerLang } = useTranslation();
@@ -19,21 +19,10 @@ export const Viewer = () => {
     [isValid, parsedSpec]
   );
 
-  const serverUrl = getServerUrl(extracted);
-
   return (
     <section className={styles.viewer} aria-label={viewerLang.title}>
       <div className={styles.scrollArea}>
-        {extracted ? (
-          <ViewerHeader
-            title={extracted.info.title}
-            version={extracted.info.version}
-            description={extracted.info.description}
-            serverUrl={serverUrl}
-          />
-        ) : (
-          <p className={styles.placeholder}>{viewerLang.emptySchema}</p>
-        )}
+        <ViewerContent extracted={extracted} />
       </div>
     </section>
   );
