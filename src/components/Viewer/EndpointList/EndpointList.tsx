@@ -7,6 +7,7 @@ import type { TagGroup as TagGroupData } from '@/lib/openapi';
 
 import { EndpointParameters } from '../EndpointParameters';
 import { EndpointRequestBody } from '../EndpointRequestBody';
+import { EndpointResponses } from '../EndpointResponses';
 import { TagGroup } from '../TagGroup';
 import styles from './EndpointList.module.css';
 
@@ -38,7 +39,14 @@ export const EndpointList = ({ tagGroups }: EndpointListProps) => {
             renderDetails={(operation) => (
               <>
                 <EndpointParameters parameters={operation.parameters} />
-                <EndpointRequestBody key={operation.id} requestBody={operation.requestBody} />
+                <EndpointRequestBody
+                  key={`${operation.id}-body`}
+                  requestBody={operation.requestBody}
+                />
+                <EndpointResponses
+                  key={`${operation.id}-responses`}
+                  responses={operation.responses}
+                />
               </>
             )}
           />

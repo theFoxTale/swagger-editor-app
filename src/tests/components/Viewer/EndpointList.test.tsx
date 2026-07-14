@@ -38,6 +38,16 @@ vi.mock('@/hooks', () => ({
       requestBodySchema: 'Schema',
       requestBodyExample: 'Example',
       requestBodyNoExample: 'No example provided for this content type.',
+      responsesTitle: 'Responses',
+      responsesEmpty: 'This endpoint has no responses.',
+      responseNoDescription: 'No description',
+      responseContentType: 'Response content type',
+      responseSchema: 'Schema',
+      responseExample: 'Example',
+      responseNoExample: 'No example provided for this content type.',
+      responseNoSchema: 'No schema provided for this content type.',
+      responseNoContent: 'No response content defined.',
+      responseHeaders: 'Headers',
     },
   }),
 }));
@@ -197,5 +207,37 @@ describe('EndpointList', () => {
     expect(screen.getByText('Request body')).toBeInTheDocument();
     expect(screen.getByRole('tab', { name: 'application/json' })).toBeInTheDocument();
     expect(screen.getByText(/"name": "Rex"/)).toBeInTheDocument();
+  });
+
+  it('shows responses when an endpoint is expanded', async () => {
+    const user = userEvent.setup();
+    const groupWithResponses: TagGroup = {
+      ...petGroup,
+      operations: [
+        createOperation({
+          id: 'listPets',
+          responses: [
+            {
+              statusCode: '200',
+              description: 'A list of pets',
+              content: {
+                'application/json': {
+                  schema: { type: 'array', items: { type: 'string' } },
+                  example: ['a'],
+                },
+              },
+            },
+          ],
+        }),
+      ],
+    };
+
+    render(<EndpointList tagGroups={[groupWithResponses]} />);
+
+    await user.click(screen.getByRole('button', { name: 'Show endpoint details for GET /pets' }));
+
+    expect(screen.getByText('Responses')).toBeInTheDocument();
+    expect(screen.getByText('200')).toBeInTheDocument();
+    expect(screen.getByText('A list of pets')).toBeInTheDocument();
   });
 });

@@ -4,7 +4,9 @@ import {
   formatJsonValue,
   getMediaTypeExample,
   getRequestBodyContentTypes,
+  getResponseStatusTone,
   getSchemaTypeLabel,
+  sortResponses,
 } from '@/components/Viewer/schemaUtils';
 
 describe('schemaUtils', () => {
@@ -44,5 +46,18 @@ describe('schemaUtils', () => {
         },
       })
     ).toEqual(['application/json', 'text/plain']);
+  });
+
+  it('sorts responses and maps status tones', () => {
+    expect(
+      sortResponses([{ statusCode: 'default' }, { statusCode: '404' }, { statusCode: '200' }]).map(
+        (item) => item.statusCode
+      )
+    ).toEqual(['200', '404', 'default']);
+
+    expect(getResponseStatusTone('200')).toBe('success');
+    expect(getResponseStatusTone('404')).toBe('clientError');
+    expect(getResponseStatusTone('500')).toBe('serverError');
+    expect(getResponseStatusTone('default')).toBe('default');
   });
 });

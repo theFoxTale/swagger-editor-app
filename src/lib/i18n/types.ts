@@ -135,6 +135,16 @@ export interface ViewerTranslation {
   requestBodySchema: string;
   requestBodyExample: string;
   requestBodyNoExample: string;
+  responsesTitle: string;
+  responsesEmpty: string;
+  responseNoDescription: string;
+  responseContentType: string;
+  responseSchema: string;
+  responseExample: string;
+  responseNoExample: string;
+  responseNoSchema: string;
+  responseNoContent: string;
+  responseHeaders: string;
 }
 
 // Полный объект перевода для всего приложения

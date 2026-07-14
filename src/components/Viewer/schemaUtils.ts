@@ -64,3 +64,55 @@ export const getMediaTypeExample = (mediaType: MediaTypeObject): unknown => {
 
 export const getRequestBodyContentTypes = (requestBody: RequestBody): string[] =>
   Object.keys(requestBody.content);
+
+export const getMediaTypeContentTypes = (content?: Record<string, MediaTypeObject>): string[] =>
+  content ? Object.keys(content) : [];
+
+const numericStatus = (statusCode: string): number => {
+  const parsed = Number(statusCode);
+  return Number.isNaN(parsed) ? Number.POSITIVE_INFINITY : parsed;
+};
+
+/** Сортировка поля responses: 1xx→5xx. */
+export const sortResponses = <T extends { statusCode: string }>(responses: T[]): T[] =>
+  [...responses].sort((left, right) => {
+    if (left.statusCode === 'default' && right.statusCode !== 'default') {
+      return 1;
+    }
+    if (right.statusCode === 'default' && left.statusCode !== 'default') {
+      return -1;
+    }
+
+    return numericStatus(left.statusCode) - numericStatus(right.statusCode);
+  });
+
+export type ResponseStatusTone =
+  'info' | 'success' | 'redirect' | 'clientError' | 'serverError' | 'default';
+
+export const getResponseStatusTone = (statusCode: string): ResponseStatusTone => {
+  if (statusCode === 'default') {
+    return 'default';
+  }
+
+  const code = Number(statusCode);
+  if (Number.isNaN(code)) {
+    return 'default';
+  }
+  if (code >= 100 && code < 200) {
+    return 'info';
+  }
+  if (code >= 200 && code < 300) {
+    return 'success';
+  }
+  if (code >= 300 && code < 400) {
+    return 'redirect';
+  }
+  if (code >= 400 && code < 500) {
+    return 'clientError';
+  }
+  if (code >= 500 && code < 600) {
+    return 'serverError';
+  }
+
+  return 'default';
+};
