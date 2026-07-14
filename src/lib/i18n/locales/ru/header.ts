@@ -4,7 +4,7 @@ export const header: HeaderTranslation = {
   logo: 'SwaggerUI',
   description: 'Редактор OpenAPI',
   nav: {
-    editor: 'Редактор',
+    editor: 'Рабочая область',
     about: 'О проекте',
     history: 'История',
   },
