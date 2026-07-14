@@ -15,6 +15,10 @@ vi.mock('@/hooks', () => ({
       operationsCount: '{count} operations',
       expandEndpoint: 'Show endpoint details for {method} {path}',
       collapseEndpoint: 'Hide endpoint details for {method} {path}',
+      tryItOut: 'Try it out',
+      cancelTryItOut: 'Cancel',
+      tryItOutPanel: 'Try it out request form',
+      tryItOutPlaceholder: 'Parameter and body inputs will appear here.',
       parametersTitle: 'Parameters',
       parametersEmpty: 'This endpoint has no parameters.',
       parametersPath: 'Path parameters',
@@ -180,6 +184,7 @@ describe('EndpointList', () => {
       })
     );
 
+    expect(screen.getByRole('button', { name: 'Try it out' })).toBeInTheDocument();
     expect(screen.getByText('Parameters')).toBeInTheDocument();
     expect(screen.getByText('Path parameters')).toBeInTheDocument();
     expect(screen.getByText('petId')).toBeInTheDocument();

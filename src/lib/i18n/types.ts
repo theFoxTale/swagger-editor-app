@@ -120,6 +120,10 @@ export interface ViewerTranslation {
   operationsCount: string;
   expandEndpoint: string;
   collapseEndpoint: string;
+  tryItOut: string;
+  cancelTryItOut: string;
+  tryItOutPanel: string;
+  tryItOutPlaceholder: string;
   parametersTitle: string;
   parametersEmpty: string;
   parametersPath: string;

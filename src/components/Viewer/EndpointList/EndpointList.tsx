@@ -9,6 +9,7 @@ import { EndpointParameters } from '../EndpointParameters';
 import { EndpointRequestBody } from '../EndpointRequestBody';
 import { EndpointResponses } from '../EndpointResponses';
 import { TagGroup } from '../TagGroup';
+import { TryItOutPanel } from '../TryItOutPanel';
 import styles from './EndpointList.module.css';
 
 export interface EndpointListProps {
@@ -39,6 +40,7 @@ export const EndpointList = ({ tagGroups, document = null }: EndpointListProps) 
             onToggleOperation={handleToggleOperation}
             renderDetails={(operation) => (
               <>
+                <TryItOutPanel key={`${operation.id}-try`} />
                 <EndpointParameters parameters={operation.parameters} />
                 <EndpointRequestBody
                   key={`${operation.id}-body`}
