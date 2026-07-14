@@ -145,6 +145,14 @@ export interface ViewerTranslation {
   responseNoSchema: string;
   responseNoContent: string;
   responseHeaders: string;
+  schemaEmpty: string;
+  schemaRequired: string;
+  schemaOptional: string;
+  schemaEnum: string;
+  schemaItems: string;
+  schemaAllOf: string;
+  schemaAnyOf: string;
+  schemaOneOf: string;
 }
 
 // Полный объект перевода для всего приложения

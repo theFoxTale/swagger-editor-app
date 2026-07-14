@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useTranslation } from '@/hooks';
 import type { ResponseObject } from '@/lib/openapi';
 
+import { SchemaRenderer } from '../SchemaRenderer';
 import {
   formatJsonValue,
   getMediaTypeContentTypes,
@@ -57,7 +58,6 @@ const ResponseItem = ({
     activeContentType && response.content ? response.content[activeContentType] : undefined;
   const resolvedSchema = getResolvedSchema(mediaType?.schema, document);
   const schemaLabel = getSchemaTypeLabel(mediaType?.schema);
-  const schemaJson = resolvedSchema ? formatJsonValue(resolvedSchema, true) : null;
   const exampleJson = formatJsonValue(getMediaTypeExample(mediaType ?? {}, document), true);
   const headerEntries = Object.entries(response.headers ?? {});
   const toneClass = STATUS_TONE_CLASS[getResponseStatusTone(response.statusCode)];
@@ -114,8 +114,10 @@ const ResponseItem = ({
                   <h4 className={styles.blockTitle}>{viewerLang.responseSchema}</h4>
                   <code className={styles.schemaType}>{schemaLabel}</code>
                 </div>
-                {schemaJson ? (
-                  <pre className={styles.code}>{schemaJson}</pre>
+                {resolvedSchema ? (
+                  <div className={styles.schemaBody}>
+                    <SchemaRenderer schema={resolvedSchema} />
+                  </div>
                 ) : (
                   <p className={styles.emptyInline}>{viewerLang.responseNoSchema}</p>
                 )}

@@ -16,6 +16,14 @@ vi.mock('@/hooks', () => ({
       requestBodySchema: 'Schema',
       requestBodyExample: 'Example',
       requestBodyNoExample: 'No example provided for this content type.',
+      schemaEmpty: 'No schema defined.',
+      schemaRequired: 'required',
+      schemaOptional: 'optional',
+      schemaEnum: 'Enum',
+      schemaItems: 'Items',
+      schemaAllOf: 'allOf',
+      schemaAnyOf: 'anyOf',
+      schemaOneOf: 'oneOf',
     },
   }),
 }));
@@ -66,8 +74,9 @@ describe('EndpointRequestBody', () => {
       'true'
     );
     expect(screen.getByText('Pet')).toBeInTheDocument();
-    expect(screen.getByText(/"type": "object"/)).toBeInTheDocument();
-    expect(screen.getByText(/"name": \{/)).toBeInTheDocument();
+    expect(screen.getByText('object')).toBeInTheDocument();
+    expect(screen.getByText('id')).toBeInTheDocument();
+    expect(screen.getByText('name')).toBeInTheDocument();
     expect(screen.getByText(/"name": "Rex"/)).toBeInTheDocument();
   });
 

@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useTranslation } from '@/hooks';
 import type { RequestBody } from '@/lib/openapi';
 
+import { SchemaRenderer } from '../SchemaRenderer';
 import {
   formatJsonValue,
   getMediaTypeExample,
@@ -34,7 +35,6 @@ export const EndpointRequestBody = ({ requestBody, document = null }: EndpointRe
   const mediaType = requestBody.content[activeContentType];
   const resolvedSchema = getResolvedSchema(mediaType?.schema, document);
   const schemaLabel = getSchemaTypeLabel(mediaType?.schema);
-  const schemaJson = formatJsonValue(resolvedSchema ?? {}, true);
   const exampleJson = formatJsonValue(getMediaTypeExample(mediaType ?? {}, document), true);
 
   return (
@@ -80,7 +80,9 @@ export const EndpointRequestBody = ({ requestBody, document = null }: EndpointRe
           <h4 className={styles.blockTitle}>{viewerLang.requestBodySchema}</h4>
           <code className={styles.schemaType}>{schemaLabel}</code>
         </div>
-        <pre className={styles.code}>{schemaJson}</pre>
+        <div className={styles.schemaBody}>
+          <SchemaRenderer schema={resolvedSchema} />
+        </div>
       </div>
 
       <div className={styles.block}>

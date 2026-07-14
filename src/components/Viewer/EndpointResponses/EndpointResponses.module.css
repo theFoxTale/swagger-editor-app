@@ -263,6 +263,10 @@
   white-space: pre;
 }
 
+.schemaBody {
+  padding: 0.625rem;
+}
+
 .headerList {
   display: flex;
   flex-direction: column;

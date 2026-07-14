@@ -143,6 +143,10 @@
   white-space: pre;
 }
 
+.schemaBody {
+  padding: 0.625rem;
+}
+
 .empty,
 .emptyInline {
   margin: 0;

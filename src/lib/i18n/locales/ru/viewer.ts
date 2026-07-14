@@ -44,4 +44,12 @@ export const viewer: ViewerTranslation = {
   responseNoSchema: 'Для этого типа содержимого схема не указана.',
   responseNoContent: 'Содержимое ответа не определено.',
   responseHeaders: 'Заголовки',
+  schemaEmpty: 'Схема не определена.',
+  schemaRequired: 'обязательно',
+  schemaOptional: 'необязательно',
+  schemaEnum: 'Enum',
+  schemaItems: 'Элементы',
+  schemaAllOf: 'allOf',
+  schemaAnyOf: 'anyOf',
+  schemaOneOf: 'oneOf',
 };

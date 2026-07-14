@@ -1,0 +1,143 @@
+.node {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.name {
+  font-family: var(--font-geist-mono, Consolas, monospace);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--accent-cyan);
+}
+
+.type {
+  font-family: var(--font-geist-mono, Consolas, monospace);
+  font-size: 0.75rem;
+  color: var(--foreground);
+}
+
+.required {
+  padding: 0.05rem 0.35rem;
+  border-radius: var(--radius-sm);
+
+  font-size: 0.625rem;
+  font-weight: 700;
+  color: #f87171;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+
+  background: rgb(239 68 68 / 14%);
+}
+
+.optional {
+  padding: 0.05rem 0.35rem;
+  border-radius: var(--radius-sm);
+
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+
+  background: var(--surface-elevated);
+}
+
+.format {
+  font-size: 0.6875rem;
+  color: var(--muted);
+}
+
+.description {
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.enum {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.enumLabel {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.enumValues {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.enumValue {
+  padding: 0.05rem 0.35rem;
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-sm);
+
+  font-family: var(--font-geist-mono, Consolas, monospace);
+  font-size: 0.6875rem;
+  color: var(--foreground);
+
+  background: var(--surface-elevated);
+}
+
+.children {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  margin: 0.25rem 0 0;
+  padding: 0.5rem 0 0 0.75rem;
+  border-left: 1px solid var(--panel-border);
+
+  list-style: none;
+}
+
+.child {
+  min-width: 0;
+}
+
+.items,
+.composition {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-top: 0.25rem;
+}
+
+.itemsLabel,
+.compositionLabel {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.ref {
+  font-family: var(--font-geist-mono, Consolas, monospace);
+  font-size: 0.6875rem;
+  color: var(--muted);
+}
+
+.empty {
+  margin: 0;
+  padding: 0.5rem 0.625rem;
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+[data-theme='light'] .required {
+  color: #b91c1c;
+  background: rgb(239 68 68 / 10%);
+}

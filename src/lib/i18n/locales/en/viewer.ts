@@ -44,4 +44,12 @@ export const viewer: ViewerTranslation = {
   responseNoSchema: 'No schema provided for this content type.',
   responseNoContent: 'No response content defined.',
   responseHeaders: 'Headers',
+  schemaEmpty: 'No schema defined.',
+  schemaRequired: 'required',
+  schemaOptional: 'optional',
+  schemaEnum: 'Enum',
+  schemaItems: 'Items',
+  schemaAllOf: 'allOf',
+  schemaAnyOf: 'anyOf',
+  schemaOneOf: 'oneOf',
 };
