@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useTranslation } from '@/hooks';
 import type { TagGroup as TagGroupData } from '@/lib/openapi';
 
+import { EndpointParameters } from '../EndpointParameters/EndpointParameters';
 import { TagGroup } from '../TagGroup/TagGroup';
 import styles from './EndpointList.module.css';
 
@@ -33,6 +34,7 @@ export const EndpointList = ({ tagGroups }: EndpointListProps) => {
             defaultOpen={index === 0}
             expandedOperationId={expandedOperationId}
             onToggleOperation={handleToggleOperation}
+            renderDetails={(operation) => <EndpointParameters parameters={operation.parameters} />}
           />
         </div>
       ))}

@@ -15,6 +15,21 @@ vi.mock('@/hooks', () => ({
       operationsCount: '{count} operations',
       expandEndpoint: 'Show endpoint details for {method} {path}',
       collapseEndpoint: 'Hide endpoint details for {method} {path}',
+      parametersTitle: 'Parameters',
+      parametersEmpty: 'This endpoint has no parameters.',
+      parametersPath: 'Path parameters',
+      parametersQuery: 'Query parameters',
+      parametersHeader: 'Header parameters',
+      parametersCookie: 'Cookie parameters',
+      parameterName: 'Name',
+      parameterType: 'Type',
+      parameterRequired: 'Required',
+      parameterRequiredYes: 'Yes',
+      parameterRequiredNo: 'No',
+      parameterDescription: 'Description',
+      parameterNoDescription: '—',
+      parameterExample: 'Example',
+      deprecated: 'Deprecated',
     },
   }),
 }));
@@ -107,5 +122,41 @@ describe('EndpointList', () => {
     expect(
       screen.getByRole('button', { name: 'Hide endpoint details for POST /pets' })
     ).toHaveAttribute('aria-expanded', 'true');
+  });
+
+  it('shows parameters when an endpoint is expanded', async () => {
+    const user = userEvent.setup();
+    const groupWithParams: TagGroup = {
+      ...petGroup,
+      operations: [
+        createOperation({
+          id: 'getPet',
+          path: '/pets/{petId}',
+          summary: 'Get a pet by ID',
+          parameters: [
+            {
+              name: 'petId',
+              in: 'path',
+              required: true,
+              schema: { type: 'string' },
+              description: 'Pet identifier',
+            },
+          ],
+        }),
+      ],
+    };
+
+    render(<EndpointList tagGroups={[groupWithParams]} />);
+
+    await user.click(
+      screen.getByRole('button', {
+        name: 'Show endpoint details for GET /pets/{petId}',
+      })
+    );
+
+    expect(screen.getByText('Parameters')).toBeInTheDocument();
+    expect(screen.getByText('Path parameters')).toBeInTheDocument();
+    expect(screen.getByText('petId')).toBeInTheDocument();
+    expect(screen.getByText('Pet identifier')).toBeInTheDocument();
   });
 });

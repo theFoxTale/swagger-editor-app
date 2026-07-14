@@ -112,6 +112,21 @@ export interface ViewerTranslation {
   operationsCount: string;
   expandEndpoint: string;
   collapseEndpoint: string;
+  parametersTitle: string;
+  parametersEmpty: string;
+  parametersPath: string;
+  parametersQuery: string;
+  parametersHeader: string;
+  parametersCookie: string;
+  parameterName: string;
+  parameterType: string;
+  parameterRequired: string;
+  parameterRequiredYes: string;
+  parameterRequiredNo: string;
+  parameterDescription: string;
+  parameterNoDescription: string;
+  parameterExample: string;
+  deprecated: string;
 }
 
 // Полный объект перевода для всего приложения
