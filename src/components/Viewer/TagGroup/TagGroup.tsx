@@ -6,7 +6,7 @@ import { useTranslation } from '@/hooks';
 import { formatMessage } from '@/lib/i18n';
 import type { Operation, TagGroup as TagGroupData } from '@/lib/openapi';
 
-import { EndpointRow } from '../EndpointRow/EndpointRow';
+import { EndpointRow } from '../EndpointRow';
 import styles from './TagGroup.module.css';
 
 export interface TagGroupProps {

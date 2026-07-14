@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { MethodBadge } from '@/components/Viewer/MethodBadge/MethodBadge';
+import { MethodBadge } from '@/components/Viewer/MethodBadge';
 import { HTTP_METHODS } from '@/lib/openapi';
 
 describe('MethodBadge', () => {

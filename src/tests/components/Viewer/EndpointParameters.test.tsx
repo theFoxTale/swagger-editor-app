@@ -5,7 +5,7 @@ import {
   EndpointParameters,
   getSchemaTypeLabel,
   groupParametersByLocation,
-} from '@/components/Viewer/EndpointParameters/EndpointParameters';
+} from '@/components/Viewer/EndpointParameters';
 import type { OperationParameter } from '@/lib/openapi';
 
 vi.mock('@/hooks', () => ({

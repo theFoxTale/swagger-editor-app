@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 
-import { EndpointRow, operationRequiresAuth } from '@/components/Viewer/EndpointRow/EndpointRow';
+import { EndpointRow, operationRequiresAuth } from '@/components/Viewer/EndpointRow';
 import type { Operation } from '@/lib/openapi';
 
 vi.mock('@/hooks', () => ({

@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 
-import { getTagAccentClass, TagGroup } from '@/components/Viewer/TagGroup/TagGroup';
+import { getTagAccentClass, TagGroup } from '@/components/Viewer/TagGroup';
 import type { Operation, TagGroup as TagGroupData } from '@/lib/openapi';
 
 vi.mock('@/hooks', () => ({

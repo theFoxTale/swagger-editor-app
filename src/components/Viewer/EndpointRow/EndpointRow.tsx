@@ -6,7 +6,7 @@ import { useTranslation } from '@/hooks';
 import { formatMessage } from '@/lib/i18n';
 import type { Operation } from '@/lib/openapi';
 
-import { MethodBadge } from '../MethodBadge/MethodBadge';
+import { MethodBadge } from '../MethodBadge';
 import styles from './EndpointRow.module.css';
 
 export interface EndpointRowProps {

@@ -7,7 +7,7 @@ import { extractEndpoints } from '@/lib/openapi';
 import { getActiveTab, useEditorStore } from '@/store';
 
 import styles from './Viewer.module.css';
-import { ViewerContent } from './ViewerContent/ViewerContent';
+import { ViewerContent } from './ViewerContent';
 
 export const Viewer = () => {
   const { viewerLang } = useTranslation();

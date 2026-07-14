@@ -3,10 +3,10 @@
 import { useTranslation } from '@/hooks';
 import { getServerUrl, type ExtractedEndpoints } from '@/lib/openapi';
 
-import { EndpointList } from '../EndpointList/EndpointList';
+import { EndpointList } from '../EndpointList';
 
 import styles from '../Viewer.module.css';
-import { ViewerHeader } from '../ViewerHeader/ViewerHeader';
+import { ViewerHeader } from '../ViewerHeader';
 
 export interface ViewerContentProps {
   extracted: ExtractedEndpoints | null;

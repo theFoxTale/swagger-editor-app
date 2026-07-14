@@ -5,8 +5,8 @@ import { useState } from 'react';
 import { useTranslation } from '@/hooks';
 import type { TagGroup as TagGroupData } from '@/lib/openapi';
 
-import { EndpointParameters } from '../EndpointParameters/EndpointParameters';
-import { TagGroup } from '../TagGroup/TagGroup';
+import { EndpointParameters } from '../EndpointParameters';
+import { TagGroup } from '../TagGroup';
 import styles from './EndpointList.module.css';
 
 export interface EndpointListProps {

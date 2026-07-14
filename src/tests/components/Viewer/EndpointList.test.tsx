@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 
-import { EndpointList } from '@/components/Viewer/EndpointList/EndpointList';
+import { EndpointList } from '@/components/Viewer/EndpointList';
 import type { Operation, TagGroup } from '@/lib/openapi';
 
 vi.mock('@/hooks', () => ({
