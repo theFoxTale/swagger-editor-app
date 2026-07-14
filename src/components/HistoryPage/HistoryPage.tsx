@@ -2,6 +2,7 @@ import Link from 'next/link';
 
 import HistoryDetails from '@/components/HistoryDetails/HistoryDetails';
 import HistoryList from '@/components/HistoryList/HistoryList';
+import { HistoryTitle } from '@/components/HistoryPage/HistoryTitle';
 import { db } from '@/lib/db';
 import type { RequestHistory } from '@/types/history';
 
@@ -24,7 +25,7 @@ export default async function HistoryPage({ searchParams }: Props) {
   return (
     <div className="history">
       <div className="history-wrapper-large">
-        <h2 className="history-title">History</h2>
+        <HistoryTitle />
         {error ? (
           <p className="error-message">{error}</p>
         ) : (
