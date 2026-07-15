@@ -9,6 +9,7 @@ import { EndpointParameters } from '../EndpointParameters';
 import { EndpointRequestBody } from '../EndpointRequestBody';
 import { EndpointResponses } from '../EndpointResponses';
 import { TagGroup } from '../TagGroup';
+import { TryItOutHeadersEditor } from '../TryItOutHeadersEditor';
 import { TryItOutPanel } from '../TryItOutPanel';
 import { TryItOutParameterInputs } from '../TryItOutParameterInputs';
 import styles from './EndpointList.module.css';
@@ -43,6 +44,7 @@ export const EndpointList = ({ tagGroups, document = null }: EndpointListProps) 
               <>
                 <TryItOutPanel key={`${operation.id}-try`}>
                   <TryItOutParameterInputs parameters={operation.parameters} document={document} />
+                  <TryItOutHeadersEditor />
                 </TryItOutPanel>
                 <EndpointParameters parameters={operation.parameters} />
                 <EndpointRequestBody

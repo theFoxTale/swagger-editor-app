@@ -132,6 +132,14 @@ export interface ViewerTranslation {
   tryItOutBooleanFalse: string;
   tryItOutArrayHint: string;
   tryItOutObjectHint: string;
+  tryItOutHeadersTitle: string;
+  tryItOutHeaderName: string;
+  tryItOutHeaderValue: string;
+  tryItOutAddHeader: string;
+  tryItOutRemoveHeader: string;
+  tryItOutCustomHeader: string;
+  tryItOutAcceptPlaceholder: string;
+  tryItOutAuthorizationPlaceholder: string;
   parametersTitle: string;
   parametersEmpty: string;
   parametersPath: string;
