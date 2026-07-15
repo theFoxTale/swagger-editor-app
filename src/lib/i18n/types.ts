@@ -140,6 +140,11 @@ export interface ViewerTranslation {
   tryItOutCustomHeader: string;
   tryItOutAcceptPlaceholder: string;
   tryItOutAuthorizationPlaceholder: string;
+  tryItOutBodyTitle: string;
+  tryItOutBodyEmpty: string;
+  tryItOutBodyContentType: string;
+  tryItOutBodyEditor: string;
+  tryItOutBodyInvalidJson: string;
   parametersTitle: string;
   parametersEmpty: string;
   parametersPath: string;
