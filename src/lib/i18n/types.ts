@@ -145,6 +145,10 @@ export interface ViewerTranslation {
   tryItOutBodyContentType: string;
   tryItOutBodyEditor: string;
   tryItOutBodyInvalidJson: string;
+  tryItOutSend: string;
+  tryItOutSending: string;
+  tryItOutClear: string;
+  tryItOutSendDisabledHint: string;
   parametersTitle: string;
   parametersEmpty: string;
   parametersPath: string;

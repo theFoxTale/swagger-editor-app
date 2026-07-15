@@ -44,6 +44,11 @@ export const viewer: ViewerTranslation = {
   tryItOutBodyContentType: 'Request body content type',
   tryItOutBodyEditor: 'Request body editor',
   tryItOutBodyInvalidJson: 'Body is not valid JSON.',
+  tryItOutSend: 'Send',
+  tryItOutSending: 'Sending…',
+  tryItOutClear: 'Clear',
+  tryItOutSendDisabledHint:
+    'Request execution will be available once the server proxy is connected.',
   parametersTitle: 'Parameters',
   parametersEmpty: 'This endpoint has no parameters.',
   parametersPath: 'Path parameters',

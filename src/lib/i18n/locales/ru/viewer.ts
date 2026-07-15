@@ -45,6 +45,11 @@ export const viewer: ViewerTranslation = {
   tryItOutBodyContentType: 'Тип содержимого тела запроса',
   tryItOutBodyEditor: 'Редактор тела запроса',
   tryItOutBodyInvalidJson: 'Тело запроса не является корректным JSON.',
+  tryItOutSend: 'Отправить',
+  tryItOutSending: 'Отправка…',
+  tryItOutClear: 'Очистить',
+  tryItOutSendDisabledHint:
+    'Выполнение запроса станет доступно после подключения серверного прокси.',
   parametersTitle: 'Параметры',
   parametersEmpty: 'У этого эндпоинта нет параметров.',
   parametersPath: 'Параметры пути',
