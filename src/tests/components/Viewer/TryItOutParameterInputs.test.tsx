@@ -7,6 +7,7 @@ import {
   createInitialParameterValues,
   getParameterInputKind,
   TryItOutParameterInputs,
+  type ParameterValues,
 } from '@/components/Viewer/TryItOutParameterInputs';
 import type { OperationParameter } from '@/lib/openapi';
 
@@ -166,7 +167,7 @@ describe('TryItOutParameterInputs', () => {
     const user = userEvent.setup();
 
     const Controlled = () => {
-      const [values, setValues] = useState({ 'path:petId': '1' });
+      const [values, setValues] = useState<ParameterValues>({ 'path:petId': '1' });
 
       return (
         <TryItOutParameterInputs
