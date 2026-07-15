@@ -124,6 +124,14 @@ export interface ViewerTranslation {
   cancelTryItOut: string;
   tryItOutPanel: string;
   tryItOutPlaceholder: string;
+  tryItOutParametersTitle: string;
+  tryItOutParametersEmpty: string;
+  tryItOutRequired: string;
+  tryItOutUnset: string;
+  tryItOutBooleanTrue: string;
+  tryItOutBooleanFalse: string;
+  tryItOutArrayHint: string;
+  tryItOutObjectHint: string;
   parametersTitle: string;
   parametersEmpty: string;
   parametersPath: string;

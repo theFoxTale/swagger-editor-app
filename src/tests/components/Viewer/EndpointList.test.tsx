@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 
@@ -19,6 +19,14 @@ vi.mock('@/hooks', () => ({
       cancelTryItOut: 'Cancel',
       tryItOutPanel: 'Try it out request form',
       tryItOutPlaceholder: 'Parameter and body inputs will appear here.',
+      tryItOutParametersTitle: 'Parameters',
+      tryItOutParametersEmpty: 'This endpoint has no parameters to fill.',
+      tryItOutRequired: 'required',
+      tryItOutUnset: '—',
+      tryItOutBooleanTrue: 'true',
+      tryItOutBooleanFalse: 'false',
+      tryItOutArrayHint: 'Enter a JSON array, e.g. ["a", "b"]',
+      tryItOutObjectHint: 'Enter a JSON object, e.g. {"key": "value"}',
       parametersTitle: 'Parameters',
       parametersEmpty: 'This endpoint has no parameters.',
       parametersPath: 'Path parameters',
@@ -189,6 +197,11 @@ describe('EndpointList', () => {
     expect(screen.getByText('Path parameters')).toBeInTheDocument();
     expect(screen.getByText('petId')).toBeInTheDocument();
     expect(screen.getByText('Pet identifier')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Try it out' }));
+    const tryItOutForm = screen.getByRole('region', { name: 'Try it out request form' });
+    expect(tryItOutForm).toBeInTheDocument();
+    expect(within(tryItOutForm).getByRole('textbox', { name: /petId/ })).toBeInTheDocument();
   });
 
   it('shows request body details when an endpoint has a body', async () => {
