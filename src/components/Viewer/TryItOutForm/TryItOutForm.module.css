@@ -1,0 +1,15 @@
+.error {
+  margin: 0.25rem 0 0;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--danger);
+}
+
+.status {
+  margin: 0.25rem 0 0;
+
+  font-family: var(--font-geist-mono, Consolas, monospace);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--muted);
+}

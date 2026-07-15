@@ -39,5 +39,4 @@ export const HOP_BY_HOP_HEADERS = new Set([
   'upgrade',
   'host',
   'content-length',
-  'cookie',
 ]);

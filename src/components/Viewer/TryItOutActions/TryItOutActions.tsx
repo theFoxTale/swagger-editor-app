@@ -6,20 +6,24 @@ import { useTranslation } from '@/hooks';
 import styles from './TryItOutActions.module.css';
 
 export interface TryItOutActionsProps {
-  /** When false, Send is enabled (proxy wired in phase 5). */
   sendDisabled?: boolean;
+  sendDisabledHint?: string;
   onSend?: () => void;
   onClear?: () => void;
   sending?: boolean;
 }
 
 export const TryItOutActions = ({
-  sendDisabled = true,
+  sendDisabled = false,
+  sendDisabledHint,
   onSend,
   onClear,
   sending = false,
 }: TryItOutActionsProps) => {
   const { viewerLang } = useTranslation();
+  const disabledTitle = sendDisabled
+    ? (sendDisabledHint ?? viewerLang.tryItOutSendDisabledHint)
+    : undefined;
 
   return (
     <div className={styles.actions}>
@@ -27,9 +31,9 @@ export const TryItOutActions = ({
         variant="primary"
         size="sm"
         type="button"
-        disabled={sendDisabled || sending}
+        disabled={sendDisabled || sending || !onSend}
         onClick={onSend}
-        title={sendDisabled ? viewerLang.tryItOutSendDisabledHint : undefined}
+        title={disabledTitle}
       >
         {sending ? viewerLang.tryItOutSending : viewerLang.tryItOutSend}
       </Button>

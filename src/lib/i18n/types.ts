@@ -149,6 +149,8 @@ export interface ViewerTranslation {
   tryItOutSending: string;
   tryItOutClear: string;
   tryItOutSendDisabledHint: string;
+  tryItOutNoServerUrl: string;
+  tryItOutSendError: string;
   parametersTitle: string;
   parametersEmpty: string;
   parametersPath: string;

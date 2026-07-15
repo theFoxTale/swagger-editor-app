@@ -49,6 +49,8 @@ export const viewer: ViewerTranslation = {
   tryItOutClear: 'Clear',
   tryItOutSendDisabledHint:
     'Request execution will be available once the server proxy is connected.',
+  tryItOutNoServerUrl: 'No server URL is defined in this schema.',
+  tryItOutSendError: 'Request failed. Check the URL, parameters, and try again.',
   parametersTitle: 'Parameters',
   parametersEmpty: 'This endpoint has no parameters.',
   parametersPath: 'Path parameters',

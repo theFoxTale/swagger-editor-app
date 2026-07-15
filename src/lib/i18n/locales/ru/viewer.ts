@@ -50,6 +50,8 @@ export const viewer: ViewerTranslation = {
   tryItOutClear: 'Очистить',
   tryItOutSendDisabledHint:
     'Выполнение запроса станет доступно после подключения серверного прокси.',
+  tryItOutNoServerUrl: 'В схеме не указан URL сервера.',
+  tryItOutSendError: 'Запрос не выполнен. Проверьте URL, параметры и попробуйте снова.',
   parametersTitle: 'Параметры',
   parametersEmpty: 'У этого эндпоинта нет параметров.',
   parametersPath: 'Параметры пути',

@@ -17,7 +17,7 @@ vi.mock('@/hooks', () => ({
 }));
 
 describe('TryItOutActions', () => {
-  it('renders Send disabled by default and Clear enabled when onClear is provided', () => {
+  it('disables Send when onSend is missing', () => {
     render(<TryItOutActions onClear={() => undefined} />);
 
     expect(screen.getByRole('button', { name: 'Send' })).toBeDisabled();
@@ -25,7 +25,7 @@ describe('TryItOutActions', () => {
   });
 
   it('disables Clear when onClear is missing', () => {
-    render(<TryItOutActions />);
+    render(<TryItOutActions onSend={() => undefined} />);
 
     expect(screen.getByRole('button', { name: 'Clear' })).toBeDisabled();
   });
@@ -34,13 +34,13 @@ describe('TryItOutActions', () => {
     const user = userEvent.setup();
     const onClear = vi.fn();
 
-    render(<TryItOutActions onClear={onClear} />);
+    render(<TryItOutActions onSend={() => undefined} onClear={onClear} />);
 
     await user.click(screen.getByRole('button', { name: 'Clear' }));
     expect(onClear).toHaveBeenCalledTimes(1);
   });
 
-  it('enables Send when sendDisabled is false', () => {
+  it('enables Send when onSend is provided', () => {
     render(
       <TryItOutActions sendDisabled={false} onSend={() => undefined} onClear={() => undefined} />
     );
@@ -49,7 +49,14 @@ describe('TryItOutActions', () => {
   });
 
   it('shows sending label while request is in flight', () => {
-    render(<TryItOutActions sendDisabled={false} sending onClear={() => undefined} />);
+    render(
+      <TryItOutActions
+        sendDisabled={false}
+        sending
+        onSend={() => undefined}
+        onClear={() => undefined}
+      />
+    );
 
     expect(screen.getByRole('button', { name: 'Sending…' })).toBeDisabled();
     expect(screen.getByRole('button', { name: 'Clear' })).toBeDisabled();

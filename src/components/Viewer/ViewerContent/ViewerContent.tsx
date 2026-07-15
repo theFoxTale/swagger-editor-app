@@ -36,7 +36,11 @@ export const ViewerContent = ({
         description={extracted.info.description}
         serverUrl={serverUrl}
       />
-      <EndpointList tagGroups={extracted.tagGroups} document={extracted.document} />
+      <EndpointList
+        tagGroups={extracted.tagGroups}
+        document={extracted.document}
+        serverUrl={serverUrl}
+      />
     </>
   );
 };

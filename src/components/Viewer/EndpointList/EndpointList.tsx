@@ -16,9 +16,14 @@ import styles from './EndpointList.module.css';
 export interface EndpointListProps {
   tagGroups: TagGroupData[];
   document?: Record<string, unknown> | null;
+  serverUrl?: string | null;
 }
 
-export const EndpointList = ({ tagGroups, document = null }: EndpointListProps) => {
+export const EndpointList = ({
+  tagGroups,
+  document = null,
+  serverUrl = null,
+}: EndpointListProps) => {
   const { viewerLang } = useTranslation();
   const [expandedOperationId, setExpandedOperationId] = useState<string | null>(null);
 
@@ -42,7 +47,7 @@ export const EndpointList = ({ tagGroups, document = null }: EndpointListProps) 
             renderDetails={(operation) => (
               <>
                 <TryItOutPanel key={`${operation.id}-try`}>
-                  <TryItOutForm operation={operation} document={document} />
+                  <TryItOutForm operation={operation} document={document} serverUrl={serverUrl} />
                 </TryItOutPanel>
                 <EndpointParameters parameters={operation.parameters} />
                 <EndpointRequestBody

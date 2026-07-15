@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 
@@ -38,6 +38,8 @@ vi.mock('@/hooks', async (importOriginal) => {
         tryItOutClear: 'Clear',
         tryItOutSendDisabledHint:
           'Request execution will be available once the server proxy is connected.',
+        tryItOutNoServerUrl: 'No server URL is defined in this schema.',
+        tryItOutSendError: 'Request failed. Check the URL, parameters, and try again.',
         requestBodyOptional: 'Optional',
         parametersPath: 'Path parameters',
         parametersQuery: 'Query parameters',
@@ -49,10 +51,10 @@ vi.mock('@/hooks', async (importOriginal) => {
 });
 
 const operation: Operation = {
-  id: 'createPet',
-  method: 'post',
+  id: 'listPets',
+  method: 'get',
   path: '/pets',
-  summary: 'Create a pet',
+  summary: 'List pets',
   tags: ['pet'],
   parameters: [
     {
@@ -62,28 +64,61 @@ const operation: Operation = {
       schema: { type: 'boolean' },
     },
   ],
-  requestBody: {
-    required: true,
-    content: {
-      'application/json': {
-        example: { id: 1, name: 'Rex' },
-      },
-    },
-  },
   responses: [],
 };
 
 describe('TryItOutForm', () => {
-  it('renders Send and Clear actions', () => {
+  it('disables Send when server URL is missing', () => {
     render(<TryItOutForm operation={operation} />);
 
     expect(screen.getByRole('button', { name: 'Send' })).toBeDisabled();
-    expect(screen.getByRole('button', { name: 'Clear' })).toBeEnabled();
+    expect(screen.getByRole('button', { name: 'Send' })).toHaveAttribute(
+      'title',
+      'No server URL is defined in this schema.'
+    );
+  });
+
+  it('enables Send when server URL is provided', () => {
+    render(<TryItOutForm operation={operation} serverUrl="https://api.example.com" />);
+
+    expect(screen.getByRole('button', { name: 'Send' })).toBeEnabled();
+  });
+
+  it('sends through /api/proxy and shows status', async () => {
+    const user = userEvent.setup();
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      new Response(
+        JSON.stringify({
+          ok: true,
+          status: 200,
+          statusText: 'OK',
+          headers: { 'content-type': 'application/json' },
+          body: '[]',
+          durationMs: 15,
+        }),
+        { status: 200, headers: { 'Content-Type': 'application/json' } }
+      )
+    );
+
+    render(<TryItOutForm operation={operation} serverUrl="https://api.example.com" />);
+
+    await user.click(screen.getByRole('button', { name: 'Send' }));
+
+    await waitFor(() => {
+      expect(screen.getByRole('status')).toHaveTextContent('200 OK · 15ms');
+    });
+
+    expect(fetchSpy).toHaveBeenCalledWith(
+      '/api/proxy',
+      expect.objectContaining({ method: 'POST' })
+    );
+
+    fetchSpy.mockRestore();
   });
 
   it('resets form inputs when Clear is clicked', async () => {
     const user = userEvent.setup();
-    render(<TryItOutForm operation={operation} />);
+    render(<TryItOutForm operation={operation} serverUrl="https://api.example.com" />);
 
     const verbose = screen.getByLabelText(/verbose/);
     await user.selectOptions(verbose, 'true');

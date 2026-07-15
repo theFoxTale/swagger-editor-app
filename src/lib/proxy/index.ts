@@ -14,6 +14,13 @@ export {
   type BuildRequestUrlResult,
 } from './buildRequestUrl';
 export {
+  buildProxyPayload,
+  mergeRequestHeaders,
+  type BuildProxyPayloadInput,
+  type BuildProxyPayloadResult,
+} from './buildProxyPayload';
+export { executeProxyRequest, PROXY_API_PATH } from './executeProxyRequest';
+export {
   forwardRequest,
   headersToRecord,
   methodsWithoutBody,
