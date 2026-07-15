@@ -1,7 +1,6 @@
 'use client';
 
-import { useState } from 'react';
-
+import { useTryItOutState } from '@/hooks';
 import type { Operation } from '@/lib/openapi';
 
 import { TryItOutActions } from '../TryItOutActions';
@@ -15,16 +14,36 @@ export interface TryItOutFormProps {
 }
 
 export const TryItOutForm = ({ operation, document = null }: TryItOutFormProps) => {
-  const [resetKey, setResetKey] = useState(0);
+  const {
+    parameters,
+    headers,
+    contentType,
+    body,
+    setParameters,
+    setHeaders,
+    setContentType,
+    setBody,
+    clear,
+  } = useTryItOutState({ operation, document });
 
   return (
     <>
-      <div key={resetKey}>
-        <TryItOutParameterInputs parameters={operation.parameters} document={document} />
-        <TryItOutHeadersEditor />
-        <TryItOutBodyEditor requestBody={operation.requestBody} document={document} />
-      </div>
-      <TryItOutActions onClear={() => setResetKey((current) => current + 1)} />
+      <TryItOutParameterInputs
+        parameters={operation.parameters}
+        document={document}
+        values={parameters}
+        onValuesChange={setParameters}
+      />
+      <TryItOutHeadersEditor headers={headers} onHeadersChange={setHeaders} />
+      <TryItOutBodyEditor
+        requestBody={operation.requestBody}
+        document={document}
+        contentType={contentType}
+        body={body}
+        onContentTypeChange={setContentType}
+        onBodyChange={setBody}
+      />
+      <TryItOutActions onClear={clear} />
     </>
   );
 };
