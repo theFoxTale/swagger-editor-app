@@ -22,7 +22,7 @@ describe('sanitizeOutboundHeaders', () => {
 
 describe('forwardRequest', () => {
   it('forwards the request and returns status, headers, body, and duration', async () => {
-    const fetchImpl = vi.fn(
+    const fetchImpl = vi.fn<typeof fetch>(
       async () =>
         new Response('{"id":1}', {
           status: 201,
@@ -50,7 +50,8 @@ describe('forwardRequest', () => {
       })
     );
 
-    const callHeaders = fetchImpl.mock.calls[0]?.[1]?.headers as Headers;
+    const callInit = fetchImpl.mock.calls[0]?.[1];
+    const callHeaders = callInit?.headers as Headers;
     expect(callHeaders.get('Accept')).toBe('application/json');
     expect(callHeaders.get('Host')).toBeNull();
 
@@ -70,7 +71,7 @@ describe('forwardRequest', () => {
   });
 
   it('omits body for GET requests', async () => {
-    const fetchImpl = vi.fn(async () => new Response('ok', { status: 200 }));
+    const fetchImpl = vi.fn<typeof fetch>(async () => new Response('ok', { status: 200 }));
 
     await forwardRequest(
       {
@@ -85,7 +86,7 @@ describe('forwardRequest', () => {
   });
 
   it('returns ok:false when the upstream fetch fails', async () => {
-    const fetchImpl = vi.fn(async () => {
+    const fetchImpl = vi.fn<typeof fetch>(async () => {
       throw new Error('network down');
     });
 
