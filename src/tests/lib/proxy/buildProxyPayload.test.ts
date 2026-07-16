@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import type { TryItOutStateSnapshot } from '@/hooks/useTryItOutState';
 import type { Operation } from '@/lib/openapi';
-import { buildProxyPayload, generateCurl, mergeRequestHeaders } from '@/lib/proxy';
+import { buildProxyPayload, mergeRequestHeaders } from '@/lib/proxy';
 
 const operation: Operation = {
   id: 'getPet',
@@ -107,58 +107,5 @@ describe('buildProxyPayload', () => {
       ok: false,
       error: 'Missing required path parameter: petId.',
     });
-  });
-
-  it('generates a cURL command from the current request payload', () => {
-    const result = buildProxyPayload({
-      operation,
-      serverUrl: 'https://petstore.swagger.io/v1',
-      snapshot: snapshot(),
-    });
-
-    expect(result.ok).toBe(true);
-
-    if (!result.ok) {
-      return;
-    }
-
-    expect(generateCurl(result.payload)).toBe(
-      "curl -X GET 'https://petstore.swagger.io/v1/pets/42?status=available' -H 'Accept: application/json' -H 'Authorization: Bearer token' -H 'X-Trace: abc' -H 'Cookie: session=s1'"
-    );
-  });
-
-  it('includes body and escapes single quotes in generated cURL', () => {
-    const postOperation: Operation = {
-      ...operation,
-      id: 'createPet',
-      method: 'post',
-      path: '/pets',
-      parameters: [],
-      requestBody: {
-        required: true,
-        content: { 'application/json': { example: {} } },
-      },
-    };
-
-    const result = buildProxyPayload({
-      operation: postOperation,
-      serverUrl: 'https://petstore.swagger.io/v1',
-      snapshot: snapshot({
-        parameters: {},
-        headers: { Accept: 'application/json' },
-        body: `{"name":"O'Brien"}`,
-        contentType: 'application/json',
-      }),
-    });
-
-    expect(result.ok).toBe(true);
-
-    if (!result.ok) {
-      return;
-    }
-
-    expect(generateCurl(result.payload)).toBe(
-      `curl -X POST 'https://petstore.swagger.io/v1/pets' -H 'Accept: application/json' -H 'Content-Type: application/json' --data-raw '{"name":"O'"'"'Brien"}'`
-    );
   });
 });

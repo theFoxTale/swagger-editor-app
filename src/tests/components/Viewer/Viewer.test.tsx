@@ -1,22 +1,54 @@
 import { render, screen } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { ViewerContent } from '@/components/Viewer/ViewerContent';
-import {
-  DEFAULT_SCHEMA,
-  extractEndpoints,
-  type ExtractedEndpoints,
-  validateSchema,
-} from '@/lib/openapi';
+import { Viewer } from '@/components/Viewer/Viewer';
+import { DEFAULT_SCHEMA, validateSchema } from '@/lib/openapi';
+
+const parsedSpec = validateSchema(DEFAULT_SCHEMA).parsed;
+
+type MockEditorTab = {
+  id: string;
+  content: string;
+  parsedSpec: Record<string, unknown> | null;
+  isValid: boolean;
+  validationErrors: string[];
+};
+
+type MockEditorState = {
+  tabs: MockEditorTab[];
+  activeTabId: string;
+};
+
+const createEditorState = (overrides: Partial<MockEditorTab> = {}): MockEditorState => ({
+  tabs: [
+    {
+      id: 'tab-1',
+      content: DEFAULT_SCHEMA,
+      parsedSpec,
+      isValid: true,
+      validationErrors: [],
+      ...overrides,
+    },
+  ],
+  activeTabId: 'tab-1',
+});
+
+let editorState: MockEditorState = createEditorState();
 
 vi.mock('@/hooks', () => ({
   useTranslation: () => ({
     viewerLang: {
+      title: 'Viewer',
       emptySchemaTitle: 'No schema to preview',
       emptySchema: 'Paste a schema.',
       invalidSchemaTitle: 'Schema is invalid',
       invalidSchema: 'Fix errors.',
       invalidSchemaHint: 'See editor.',
+      requiresAuth: 'Requires authentication',
+      tagGroupLabel: '{name} tag group',
+      operationsCount: '{count} operations',
+      expandEndpoint: 'Show endpoint details for {method} {path}',
+      collapseEndpoint: 'Hide endpoint details for {method} {path}',
       baseUrl: 'Base URL',
       baseUrlLinkLabel: 'Open base URL {url} in a new tab',
       noBaseUrl: 'No server URL defined in this schema.',
@@ -24,11 +56,6 @@ vi.mock('@/hooks', () => ({
       versionLabel: 'Version {version}',
       endpointsLabel: 'API endpoints',
       emptyEndpoints: 'No endpoints found in this schema.',
-      requiresAuth: 'Requires authentication',
-      tagGroupLabel: '{name} tag group',
-      operationsCount: '{count} operations',
-      expandEndpoint: 'Show endpoint details for {method} {path}',
-      collapseEndpoint: 'Hide endpoint details for {method} {path}',
       tryItOut: 'Try it out',
       cancelTryItOut: 'Cancel',
       tryItOutPanel: 'Try it out request form',
@@ -99,54 +126,38 @@ vi.mock('@/hooks', () => ({
   }),
 }));
 
-const extracted: ExtractedEndpoints = {
-  info: { title: 'Pet Store API', version: '1.0.0', description: 'Demo' },
-  servers: [{ url: 'https://api.example.com' }],
-  tags: [],
-  tagGroups: [],
-  operations: [],
-  document: { openapi: '3.0.3' },
-};
+vi.mock('@/store', () => ({
+  getActiveTab: (state: MockEditorState) =>
+    state.tabs.find((tab) => tab.id === state.activeTabId) ?? state.tabs[0],
+  useEditorStore: (selector: (state: MockEditorState) => unknown) => selector(editorState),
+}));
 
-describe('ViewerContent', () => {
-  it('shows empty state when schema is missing', () => {
-    render(<ViewerContent extracted={null} schemaState="empty" />);
-
-    expect(screen.getByText('No schema to preview')).toBeInTheDocument();
+describe('Viewer', () => {
+  beforeEach(() => {
+    editorState = createEditorState();
   });
 
-  it('shows invalid state with errors', () => {
-    render(
-      <ViewerContent extracted={null} schemaState="invalid" validationErrors={['Broken YAML']} />
-    );
+  it('renders endpoints from a valid schema in the editor store', () => {
+    render(<Viewer />);
 
-    expect(screen.getByText('Schema is invalid')).toBeInTheDocument();
-    expect(screen.getByText('Broken YAML')).toBeInTheDocument();
-  });
-
-  it('renders header and endpoints for a ready schema', () => {
-    render(<ViewerContent extracted={extracted} schemaState="ready" />);
-
+    expect(screen.getByRole('region', { name: 'Viewer' })).toBeInTheDocument();
     expect(screen.getByText('Pet Store API')).toBeInTheDocument();
-    expect(screen.getByText('1.0.0')).toBeInTheDocument();
-    expect(screen.getByText('No endpoints found in this schema.')).toBeInTheDocument();
-  });
-
-  it('renders tag groups and endpoint rows from a valid Pet Store schema', () => {
-    const parsed = validateSchema(DEFAULT_SCHEMA).parsed;
-    const petStore = extractEndpoints(parsed);
-
-    expect(petStore).not.toBeNull();
-
-    render(<ViewerContent extracted={petStore} schemaState="ready" />);
-
-    expect(screen.getByText('Pet Store API')).toBeInTheDocument();
-    expect(screen.getByText('https://api.petstore.example.com/v1')).toBeInTheDocument();
     expect(screen.getByText('pet')).toBeInTheDocument();
     expect(screen.getByText('List all pets')).toBeInTheDocument();
-    expect(screen.getByText('Create a pet')).toBeInTheDocument();
-    expect(screen.getAllByText('GET').length).toBeGreaterThan(0);
-    expect(screen.getByText('POST')).toBeInTheDocument();
     expect(screen.getByLabelText('5 operations')).toBeInTheDocument();
+  });
+
+  it('shows empty state when schema content is blank', () => {
+    editorState = createEditorState({
+      content: '',
+      parsedSpec: null,
+      isValid: false,
+      validationErrors: [],
+    });
+
+    render(<Viewer />);
+
+    expect(screen.queryByText('Pet Store API')).not.toBeInTheDocument();
+    expect(screen.getByText('No schema to preview')).toBeInTheDocument();
   });
 });

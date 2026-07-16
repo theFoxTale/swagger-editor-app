@@ -10,6 +10,8 @@ vi.mock('@/hooks', () => ({
       tryItOutSend: 'Send',
       tryItOutSending: 'Sending…',
       tryItOutClear: 'Clear',
+      tryItOutCopyCurl: 'Copy as cURL',
+      tryItOutCopiedCurl: 'Copied cURL',
       tryItOutSendDisabledHint:
         'Request execution will be available once the server proxy is connected.',
     },
@@ -60,5 +62,49 @@ describe('TryItOutActions', () => {
 
     expect(screen.getByRole('button', { name: 'Sending…' })).toBeDisabled();
     expect(screen.getByRole('button', { name: 'Clear' })).toBeDisabled();
+  });
+
+  it('copies cURL when the copy button is clicked', async () => {
+    const user = userEvent.setup();
+    const onCopyCurl = vi.fn();
+
+    render(
+      <TryItOutActions onSend={() => undefined} onClear={() => undefined} onCopyCurl={onCopyCurl} />
+    );
+
+    await user.click(screen.getByRole('button', { name: 'Copy as cURL' }));
+    expect(onCopyCurl).toHaveBeenCalledTimes(1);
+  });
+
+  it('shows copied label after a successful copy', () => {
+    render(
+      <TryItOutActions
+        copyCurlSuccess
+        onSend={() => undefined}
+        onClear={() => undefined}
+        onCopyCurl={() => undefined}
+      />
+    );
+
+    expect(screen.getByRole('button', { name: 'Copied cURL' })).toBeInTheDocument();
+  });
+
+  it('disables copy when request state is invalid', () => {
+    render(
+      <TryItOutActions
+        sendDisabled
+        copyCurlDisabled
+        sendDisabledHint="No server URL is defined in this schema."
+        onSend={() => undefined}
+        onClear={() => undefined}
+        onCopyCurl={() => undefined}
+      />
+    );
+
+    expect(screen.getByRole('button', { name: 'Copy as cURL' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Copy as cURL' })).toHaveAttribute(
+      'title',
+      'No server URL is defined in this schema.'
+    );
   });
 });
