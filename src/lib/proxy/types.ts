@@ -24,10 +24,13 @@ export interface ProxyErrorResponse {
 
 export type ProxyResponse = ProxySuccessResponse | ProxyErrorResponse;
 
+/** Ошибка сети или прокси, не HTTP 4xx/5xx. */
+export const isProxyTransportError = (response: ProxyResponse): response is ProxyErrorResponse =>
+  !response.ok;
+
 export const isHttpMethod = (value: string): value is HttpMethod =>
   (HTTP_METHODS as readonly string[]).includes(value.toLowerCase());
 
-/** Headers that must not be forwarded from the browser to the upstream API. */
 export const HOP_BY_HOP_HEADERS = new Set([
   'connection',
   'keep-alive',

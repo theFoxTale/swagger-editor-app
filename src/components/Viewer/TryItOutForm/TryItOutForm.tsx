@@ -4,7 +4,12 @@ import { useState } from 'react';
 
 import { useTranslation, useTryItOutState } from '@/hooks';
 import type { Operation } from '@/lib/openapi';
-import { buildProxyPayload, executeProxyRequest, type ProxyResponse } from '@/lib/proxy';
+import {
+  buildProxyPayload,
+  executeProxyRequest,
+  isProxyTransportError,
+  type ProxyResponse,
+} from '@/lib/proxy';
 
 import { ResponsePanel } from '../ResponsePanel';
 import { TryItOutActions } from '../TryItOutActions';
@@ -80,7 +85,8 @@ export const TryItOutForm = ({
     const result = await executeProxyRequest(payloadResult.payload);
     setLastResponse(result);
 
-    if (!result.ok) {
+    // Upstream 4xx/5xx are shown in ResponsePanel; only proxy/transport failures use the alert.
+    if (isProxyTransportError(result)) {
       setSendError(result.error || viewerLang.tryItOutSendError);
     }
 

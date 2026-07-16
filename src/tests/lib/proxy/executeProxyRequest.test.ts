@@ -41,6 +41,30 @@ describe('executeProxyRequest', () => {
     });
   });
 
+  it('returns ok:true for upstream 4xx/5xx responses from the proxy', async () => {
+    const fetchImpl = vi.fn<typeof fetch>(
+      async () =>
+        new Response(
+          JSON.stringify({
+            ok: true,
+            status: 404,
+            statusText: 'Not Found',
+            headers: { 'content-type': 'application/json' },
+            body: '{"message":"missing"}',
+            durationMs: 5,
+          }),
+          { status: 200, headers: { 'Content-Type': 'application/json' } }
+        )
+    );
+
+    const result = await executeProxyRequest(
+      { method: 'get', url: 'https://api.example.com/missing' },
+      fetchImpl
+    );
+
+    expect(result).toMatchObject({ ok: true, status: 404, body: '{"message":"missing"}' });
+  });
+
   it('returns ok:false when the browser cannot reach the proxy', async () => {
     const fetchImpl = vi.fn<typeof fetch>(async () => {
       throw new Error('offline');

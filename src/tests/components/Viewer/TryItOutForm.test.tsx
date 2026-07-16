@@ -124,6 +124,64 @@ describe('TryItOutForm', () => {
     fetchSpy.mockRestore();
   });
 
+  it.each([
+    { status: 404, statusText: 'Not Found', body: '{"message":"not found"}' },
+    { status: 500, statusText: 'Internal Server Error', body: '{"message":"server error"}' },
+  ])(
+    'shows upstream $status in the response panel without an error alert',
+    async ({ status, statusText, body }) => {
+      const user = userEvent.setup();
+      const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+        new Response(
+          JSON.stringify({
+            ok: true,
+            status,
+            statusText,
+            headers: { 'content-type': 'application/json' },
+            body,
+            durationMs: 8,
+          }),
+          { status: 200, headers: { 'Content-Type': 'application/json' } }
+        )
+      );
+
+      render(<TryItOutForm operation={operation} serverUrl="https://api.example.com" />);
+
+      await user.click(screen.getByRole('button', { name: 'Send' }));
+
+      await waitFor(() => {
+        expect(screen.getByRole('region', { name: 'Response' })).toBeInTheDocument();
+      });
+
+      expect(screen.getByText(`${status} ${statusText}`)).toBeInTheDocument();
+      expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+
+      fetchSpy.mockRestore();
+    }
+  );
+
+  it('shows an error alert for proxy transport failures, not the response panel', async () => {
+    const user = userEvent.setup();
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      new Response(JSON.stringify({ ok: false, error: 'Upstream request failed.' }), {
+        status: 502,
+        headers: { 'Content-Type': 'application/json' },
+      })
+    );
+
+    render(<TryItOutForm operation={operation} serverUrl="https://api.example.com" />);
+
+    await user.click(screen.getByRole('button', { name: 'Send' }));
+
+    await waitFor(() => {
+      expect(screen.getByRole('alert')).toHaveTextContent('Upstream request failed.');
+    });
+
+    expect(screen.queryByRole('region', { name: 'Response' })).not.toBeInTheDocument();
+
+    fetchSpy.mockRestore();
+  });
+
   it('resets form inputs when Clear is clicked', async () => {
     const user = userEvent.setup();
     render(<TryItOutForm operation={operation} serverUrl="https://api.example.com" />);
