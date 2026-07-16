@@ -17,14 +17,14 @@ export const executeProxyRequest = async (
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Failed to reach the proxy.';
-    return { ok: false, error: message };
+    return { ok: false, error: message, durationMs: 0 };
   }
 
   let json: unknown;
   try {
     json = await response.json();
   } catch {
-    return { ok: false, error: 'Proxy returned an invalid JSON response.' };
+    return { ok: false, error: 'Proxy returned an invalid JSON response.', durationMs: 0 };
   }
 
   if (
@@ -36,5 +36,5 @@ export const executeProxyRequest = async (
     return json as ProxyResponse;
   }
 
-  return { ok: false, error: 'Proxy returned an unexpected response.' };
+  return { ok: false, error: 'Proxy returned an unexpected response.', durationMs: 0 };
 };

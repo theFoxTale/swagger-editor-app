@@ -12,6 +12,7 @@ import {
   type ProxyResponse,
 } from '@/lib/proxy';
 
+import { ProxyErrorPanel } from '../ProxyErrorPanel';
 import { ResponsePanel } from '../ResponsePanel';
 import { TryItOutActions } from '../TryItOutActions';
 import { TryItOutBodyEditor } from '../TryItOutBodyEditor';
@@ -127,12 +128,6 @@ export const TryItOutForm = ({
 
     const result = await executeProxyRequest(payloadResult.payload);
     setLastResponse(result);
-
-    // Upstream 4xx/5xx are shown in ResponsePanel; only proxy/transport failures use the alert.
-    if (isProxyTransportError(result)) {
-      setSendError(result.error || viewerLang.tryItOutSendError);
-    }
-
     setSending(false);
   };
 
@@ -176,6 +171,9 @@ export const TryItOutForm = ({
       ) : null}
 
       {lastResponse?.ok ? <ResponsePanel response={lastResponse} /> : null}
+      {lastResponse && isProxyTransportError(lastResponse) ? (
+        <ProxyErrorPanel response={lastResponse} />
+      ) : null}
     </>
   );
 };

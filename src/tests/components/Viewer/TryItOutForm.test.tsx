@@ -43,6 +43,16 @@ vi.mock('@/hooks', async (importOriginal) => {
           'Request execution will be available once the server proxy is connected.',
         tryItOutNoServerUrl: 'No server URL is defined in this schema.',
         tryItOutSendError: 'Request failed. Check the URL, parameters, and try again.',
+        tryItOutProxyErrorStatusText: 'Bad Gateway',
+        tryItOutProxyErrorGeneric: 'The proxy could not complete the request to the API server.',
+        tryItOutProxyErrorNetwork:
+          'Could not reach the API server (network error). The host may be temporarily unreachable.',
+        tryItOutProxyErrorDns:
+          'The API host could not be found (DNS). Check the server URL in the schema.',
+        tryItOutProxyErrorTimeout: 'The API server timed out before responding.',
+        tryItOutProxyErrorHint:
+          'Check the base URL and try again — retrying often helps with flaky hosts.',
+        tryItOutProxyErrorDetail: 'Details: {detail}',
         tryItOutResponseTitle: 'Response',
         tryItOutResponseBodyTab: 'Body',
         tryItOutResponseHeadersTab: 'Headers',
@@ -207,10 +217,10 @@ describe('TryItOutForm', () => {
     }
   );
 
-  it('shows an error alert for proxy transport failures, not the response panel', async () => {
+  it('shows a proxy error panel for transport failures, not the success response panel', async () => {
     const user = userEvent.setup();
     const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(
-      new Response(JSON.stringify({ ok: false, error: 'Upstream request failed.' }), {
+      new Response(JSON.stringify({ ok: false, error: 'fetch failed', durationMs: 141 }), {
         status: 502,
         headers: { 'Content-Type': 'application/json' },
       })
@@ -221,10 +231,15 @@ describe('TryItOutForm', () => {
     await user.click(screen.getByRole('button', { name: 'Send' }));
 
     await waitFor(() => {
-      expect(screen.getByRole('alert')).toHaveTextContent('Upstream request failed.');
+      expect(screen.getByRole('status')).toHaveTextContent('502 Bad Gateway');
     });
 
-    expect(screen.queryByRole('region', { name: 'Response' })).not.toBeInTheDocument();
+    expect(screen.getByRole('alert')).toHaveTextContent(
+      /Could not reach the API server \(network error\)/
+    );
+    expect(screen.getByText('Details: fetch failed')).toBeInTheDocument();
+    expect(screen.getByText('Duration: 141ms')).toBeInTheDocument();
+    expect(screen.queryByText('200 OK')).not.toBeInTheDocument();
 
     fetchSpy.mockRestore();
   });

@@ -7,15 +7,16 @@ import type { RequestHistory } from '@/types/history';
 
 interface Props {
   searchParams: Promise<{ id?: string }>;
+  userId: string;
 }
 
-export default async function HistoryPage({ searchParams }: Props) {
+export default async function HistoryPage({ searchParams, userId }: Props) {
   const { id } = await searchParams;
   let requests: RequestHistory[] = [];
   let error: string | null = null;
 
   try {
-    requests = await db.query.requests.findMany();
+    requests = await db.query.requests.findMany(userId);
   } catch (_) {
     error = 'Failed to load history. Please try again later.';
   }

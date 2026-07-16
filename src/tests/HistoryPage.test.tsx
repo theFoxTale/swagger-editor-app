@@ -32,16 +32,17 @@ describe('HistoryPage', () => {
       },
     ]);
 
-    render(await HistoryPage({ searchParams: Promise.resolve({}) }));
+    render(await HistoryPage({ searchParams: Promise.resolve({}), userId: '1' }));
 
     expect(screen.getByText('History')).toBeInTheDocument();
     expect(screen.getByText('GET')).toBeInTheDocument();
+    expect(db.query.requests.findMany).toHaveBeenCalledWith('1');
   });
 
   it('shows error message', async () => {
     vi.mocked(db.query.requests.findMany).mockRejectedValue(new Error('DB error'));
 
-    render(await HistoryPage({ searchParams: Promise.resolve({}) }));
+    render(await HistoryPage({ searchParams: Promise.resolve({}), userId: '1' }));
 
     expect(screen.getByText(/Failed to load/)).toBeInTheDocument();
   });

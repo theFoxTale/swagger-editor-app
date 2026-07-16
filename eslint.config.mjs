@@ -26,6 +26,7 @@ export default defineConfig([
     '.vercel/**',
     '.github/**',
     '.idea/**',
+    'public/monaco/**',
   ]),
 
   // Основная конфигурация для TypeScript-файлов

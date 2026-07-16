@@ -20,6 +20,7 @@ export interface ProxySuccessResponse {
 export interface ProxyErrorResponse {
   ok: false;
   error: string;
+  durationMs: number;
 }
 
 export type ProxyResponse = ProxySuccessResponse | ProxyErrorResponse;

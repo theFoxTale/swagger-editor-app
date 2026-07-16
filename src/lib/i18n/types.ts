@@ -154,6 +154,13 @@ export interface ViewerTranslation {
   tryItOutSendDisabledHint: string;
   tryItOutNoServerUrl: string;
   tryItOutSendError: string;
+  tryItOutProxyErrorStatusText: string;
+  tryItOutProxyErrorGeneric: string;
+  tryItOutProxyErrorNetwork: string;
+  tryItOutProxyErrorDns: string;
+  tryItOutProxyErrorTimeout: string;
+  tryItOutProxyErrorHint: string;
+  tryItOutProxyErrorDetail: string;
   tryItOutResponseTitle: string;
   tryItOutResponseBodyTab: string;
   tryItOutResponseHeadersTab: string;

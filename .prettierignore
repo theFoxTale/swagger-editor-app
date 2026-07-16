@@ -9,3 +9,4 @@ coverage
 .idea
 .github
 next-env.d.ts
+public/monaco

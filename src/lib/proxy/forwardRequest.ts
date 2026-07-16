@@ -1,3 +1,4 @@
+import { getUpstreamErrorMessage } from './formatTransportError';
 import { HOP_BY_HOP_HEADERS, type ProxyRequestPayload, type ProxyResponse } from './types';
 
 export const sanitizeOutboundHeaders = (headers: Record<string, string> | undefined): Headers => {
@@ -62,11 +63,12 @@ export const forwardRequest = async (
       durationMs,
     };
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'Upstream request failed.';
+    const durationMs = Date.now() - startedAt;
 
     return {
       ok: false,
-      error: message,
+      error: getUpstreamErrorMessage(error),
+      durationMs,
     };
   }
 };
