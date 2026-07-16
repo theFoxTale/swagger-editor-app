@@ -1,0 +1,25 @@
+import type { EditorTranslation } from '../../types';
+
+export const editor: EditorTranslation = {
+  title: 'Editor',
+  tab: 'openapi.yaml',
+  format: 'Format',
+  validate: 'Validate',
+  saveSchema: 'Save Schema',
+  savedAgo: 'Saved {time} ago',
+  savedJustNow: 'Saved just now',
+  yaml: 'YAML',
+  json: 'JSON',
+  valid: 'Valid',
+  invalid: 'Invalid',
+  line: 'Ln',
+  column: 'Col',
+  spaces: 'Spaces',
+  encoding: 'UTF-8',
+  lineEnding: 'LF',
+  loginToSave: 'Sign in to save your schema',
+  errorsTitle: 'Validation errors',
+  newTab: 'New tab',
+  closeTab: 'Close tab',
+  tabsLabel: 'OpenAPI files',
+};

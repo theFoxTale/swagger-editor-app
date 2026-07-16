@@ -1,0 +1,12 @@
+node_modules
+.next
+out
+dist
+build
+*.log
+coverage
+.vercel
+.idea
+.github
+next-env.d.ts
+public/monaco

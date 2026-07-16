@@ -1,0 +1,139 @@
+.row {
+  overflow: hidden;
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-md);
+  background: var(--surface-elevated);
+}
+
+.expanded {
+  border-color: rgb(34 211 238 / 25%);
+  box-shadow: inset 0 0 0 1px rgb(34 211 238 / 8%);
+}
+
+.deprecated {
+  opacity: 0.65;
+}
+
+.toggle {
+  cursor: pointer;
+
+  display: grid;
+  grid-template-columns: auto minmax(0, max-content) minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  align-items: center;
+
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  border: none;
+
+  font: inherit;
+  color: var(--foreground);
+  text-align: left;
+
+  background: transparent;
+
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.toggle:hover {
+  background: var(--surface-hover);
+}
+
+.toggle:focus-visible {
+  outline: 2px solid var(--accent-cyan);
+  outline-offset: -2px;
+}
+
+.path {
+  overflow: hidden;
+
+  font-family: var(--font-geist-mono, Consolas, monospace);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--foreground);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.summary {
+  overflow: hidden;
+
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.trailing {
+  display: inline-flex;
+  flex-shrink: 0;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.lock {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 1rem;
+  height: 1rem;
+
+  color: var(--muted);
+}
+
+.lock svg,
+.chevron svg {
+  display: block;
+  width: 1rem;
+  height: 1rem;
+}
+
+.chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 1rem;
+  height: 1rem;
+
+  color: var(--muted);
+
+  transition: transform var(--transition-fast);
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+  color: var(--accent-cyan);
+}
+
+.details {
+  padding: 0 0.75rem 0.75rem;
+  border-top: 1px solid var(--panel-border);
+}
+
+@media (width <= 640px) {
+  .toggle {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 0.5rem 0.75rem;
+  }
+
+  .summary {
+    grid-column: 2 / -1;
+    white-space: normal;
+  }
+
+  .trailing {
+    grid-column: 3;
+    grid-row: 1;
+  }
+}
+
+[data-theme='light'] .expanded {
+  border-color: rgb(8 145 178 / 30%);
+  box-shadow: inset 0 0 0 1px rgb(8 145 178 / 8%);
+}
