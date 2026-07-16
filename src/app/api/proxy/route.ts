@@ -35,14 +35,12 @@ export async function POST(request: Request) {
       result,
     });
 
-    // Analytics must not block or break the Try It Out response.
-    void recordRequestAnalytics(supabase, record);
+    await recordRequestAnalytics(supabase, record);
   }
 
   if (!result.ok) {
     return NextResponse.json(result, { status: 502 });
   }
 
-  // Upstream status (including 4xx/5xx) is returned in the JSON body for the Response panel.
   return NextResponse.json(result, { status: 200 });
 }
