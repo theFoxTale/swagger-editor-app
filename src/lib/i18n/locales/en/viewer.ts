@@ -47,6 +47,9 @@ export const viewer: ViewerTranslation = {
   tryItOutSend: 'Send',
   tryItOutSending: 'Sending…',
   tryItOutClear: 'Clear',
+  tryItOutCopyCurl: 'Copy as cURL',
+  tryItOutCopiedCurl: 'Copied cURL',
+  tryItOutCopyCurlError: 'Could not copy the cURL command. Try again.',
   tryItOutSendDisabledHint:
     'Request execution will be available once the server proxy is connected.',
   tryItOutNoServerUrl: 'No server URL is defined in this schema.',

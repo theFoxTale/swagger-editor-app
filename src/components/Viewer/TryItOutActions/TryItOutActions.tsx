@@ -10,7 +10,11 @@ export interface TryItOutActionsProps {
   sendDisabledHint?: string;
   onSend?: () => void;
   onClear?: () => void;
+  onCopyCurl?: () => void;
   sending?: boolean;
+  copyCurlDisabled?: boolean;
+  copyingCurl?: boolean;
+  copyCurlSuccess?: boolean;
 }
 
 export const TryItOutActions = ({
@@ -18,7 +22,11 @@ export const TryItOutActions = ({
   sendDisabledHint,
   onSend,
   onClear,
+  onCopyCurl,
   sending = false,
+  copyCurlDisabled = false,
+  copyingCurl = false,
+  copyCurlSuccess = false,
 }: TryItOutActionsProps) => {
   const { viewerLang } = useTranslation();
   const disabledTitle = sendDisabled
@@ -36,6 +44,21 @@ export const TryItOutActions = ({
         title={disabledTitle}
       >
         {sending ? viewerLang.tryItOutSending : viewerLang.tryItOutSend}
+      </Button>
+
+      <Button
+        variant="secondary"
+        size="sm"
+        type="button"
+        disabled={copyCurlDisabled || copyingCurl || !onCopyCurl}
+        onClick={onCopyCurl}
+        title={copyCurlDisabled ? disabledTitle : undefined}
+      >
+        {copyingCurl
+          ? viewerLang.tryItOutCopyCurl
+          : copyCurlSuccess
+            ? viewerLang.tryItOutCopiedCurl
+            : viewerLang.tryItOutCopyCurl}
       </Button>
 
       <Button

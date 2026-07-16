@@ -36,6 +36,9 @@ vi.mock('@/hooks', async (importOriginal) => {
         tryItOutSend: 'Send',
         tryItOutSending: 'Sending…',
         tryItOutClear: 'Clear',
+        tryItOutCopyCurl: 'Copy as cURL',
+        tryItOutCopiedCurl: 'Copied cURL',
+        tryItOutCopyCurlError: 'Could not copy the cURL command. Try again.',
         tryItOutSendDisabledHint:
           'Request execution will be available once the server proxy is connected.',
         tryItOutNoServerUrl: 'No server URL is defined in this schema.',
@@ -88,6 +91,50 @@ describe('TryItOutForm', () => {
     render(<TryItOutForm operation={operation} serverUrl="https://api.example.com" />);
 
     expect(screen.getByRole('button', { name: 'Send' })).toBeEnabled();
+    expect(screen.getByRole('button', { name: 'Copy as cURL' })).toBeEnabled();
+  });
+
+  it('copies the current request as a cURL command', async () => {
+    const user = userEvent.setup();
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    Object.defineProperty(globalThis.navigator, 'clipboard', {
+      configurable: true,
+      value: { writeText },
+    });
+
+    render(<TryItOutForm operation={operation} serverUrl="https://api.example.com" />);
+
+    await user.selectOptions(screen.getByLabelText(/verbose/), 'true');
+    await user.type(screen.getByLabelText(/Authorization Value/i), 'Bearer secret');
+    await user.click(screen.getByRole('button', { name: 'Copy as cURL' }));
+
+    await waitFor(() => {
+      expect(writeText).toHaveBeenCalledWith(
+        "curl -X GET 'https://api.example.com/pets?verbose=true' -H 'Accept: application/json' -H 'Authorization: Bearer secret'"
+      );
+    });
+
+    expect(screen.getByRole('button', { name: 'Copied cURL' })).toBeInTheDocument();
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+  });
+
+  it('shows an alert when cURL copy fails', async () => {
+    const user = userEvent.setup();
+    const writeText = vi.fn().mockRejectedValue(new Error('denied'));
+    Object.defineProperty(globalThis.navigator, 'clipboard', {
+      configurable: true,
+      value: { writeText },
+    });
+
+    render(<TryItOutForm operation={operation} serverUrl="https://api.example.com" />);
+
+    await user.click(screen.getByRole('button', { name: 'Copy as cURL' }));
+
+    await waitFor(() => {
+      expect(screen.getByRole('alert')).toHaveTextContent(
+        'Could not copy the cURL command. Try again.'
+      );
+    });
   });
 
   it('sends through /api/proxy and shows the response panel', async () => {

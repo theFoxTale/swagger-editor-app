@@ -19,7 +19,10 @@ export {
   type BuildProxyPayloadInput,
   type BuildProxyPayloadResult,
 } from './buildProxyPayload';
+
+export { generateCurl } from './generateCurl';
 export { executeProxyRequest, PROXY_API_PATH } from './executeProxyRequest';
+
 export {
   forwardRequest,
   headersToRecord,

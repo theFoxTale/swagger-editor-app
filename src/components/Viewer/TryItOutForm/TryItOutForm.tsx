@@ -7,6 +7,7 @@ import type { Operation } from '@/lib/openapi';
 import {
   buildProxyPayload,
   executeProxyRequest,
+  generateCurl,
   isProxyTransportError,
   type ProxyResponse,
 } from '@/lib/proxy';
@@ -45,6 +46,8 @@ export const TryItOutForm = ({
   } = useTryItOutState({ operation, document });
 
   const [sending, setSending] = useState(false);
+  const [copyingCurl, setCopyingCurl] = useState(false);
+  const [copyCurlSuccess, setCopyCurlSuccess] = useState(false);
   const [sendError, setSendError] = useState<string | null>(null);
   const [lastResponse, setLastResponse] = useState<ProxyResponse | null>(null);
 
@@ -56,8 +59,47 @@ export const TryItOutForm = ({
 
   const handleClear = () => {
     clear();
+    setCopyCurlSuccess(false);
     setSendError(null);
     setLastResponse(null);
+  };
+
+  const handleCopyCurl = async () => {
+    if (!serverUrl || copyingCurl) {
+      return;
+    }
+
+    setCopyingCurl(true);
+    setCopyCurlSuccess(false);
+    setSendError(null);
+
+    const payloadResult = buildProxyPayload({
+      operation,
+      serverUrl,
+      snapshot: getSnapshot(),
+      origin: typeof window !== 'undefined' ? window.location.origin : undefined,
+    });
+
+    if (!payloadResult.ok) {
+      setSendError(payloadResult.error);
+      setCopyingCurl(false);
+      return;
+    }
+
+    if (!navigator.clipboard?.writeText) {
+      setSendError(viewerLang.tryItOutCopyCurlError);
+      setCopyingCurl(false);
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(generateCurl(payloadResult.payload));
+      setCopyCurlSuccess(true);
+    } catch {
+      setSendError(viewerLang.tryItOutCopyCurlError);
+    } finally {
+      setCopyingCurl(false);
+    }
   };
 
   const handleSend = async () => {
@@ -66,6 +108,7 @@ export const TryItOutForm = ({
     }
 
     setSending(true);
+    setCopyCurlSuccess(false);
     setSendError(null);
     setLastResponse(null);
 
@@ -113,8 +156,14 @@ export const TryItOutForm = ({
       <TryItOutActions
         sendDisabled={Boolean(sendDisabledReason)}
         sending={sending}
+        copyCurlDisabled={Boolean(sendDisabledReason)}
+        copyingCurl={copyingCurl}
+        copyCurlSuccess={copyCurlSuccess}
         onSend={() => {
           void handleSend();
+        }}
+        onCopyCurl={() => {
+          void handleCopyCurl();
         }}
         onClear={handleClear}
         sendDisabledHint={sendDisabledReason}

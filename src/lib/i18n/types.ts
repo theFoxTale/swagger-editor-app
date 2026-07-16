@@ -148,6 +148,9 @@ export interface ViewerTranslation {
   tryItOutSend: string;
   tryItOutSending: string;
   tryItOutClear: string;
+  tryItOutCopyCurl: string;
+  tryItOutCopiedCurl: string;
+  tryItOutCopyCurlError: string;
   tryItOutSendDisabledHint: string;
   tryItOutNoServerUrl: string;
   tryItOutSendError: string;

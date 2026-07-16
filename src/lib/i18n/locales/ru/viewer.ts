@@ -48,6 +48,9 @@ export const viewer: ViewerTranslation = {
   tryItOutSend: 'Отправить',
   tryItOutSending: 'Отправка…',
   tryItOutClear: 'Очистить',
+  tryItOutCopyCurl: 'Скопировать как cURL',
+  tryItOutCopiedCurl: 'cURL скопирован',
+  tryItOutCopyCurlError: 'Не удалось скопировать команду cURL. Попробуйте снова.',
   tryItOutSendDisabledHint:
     'Выполнение запроса станет доступно после подключения серверного прокси.',
   tryItOutNoServerUrl: 'В схеме не указан URL сервера.',
