@@ -9,7 +9,7 @@ const config = {
     'at-rule-no-unknown': [
       true,
       {
-        ignoreAtRules: ['tailwind', 'apply', 'variants', 'responsive', 'screen', 'theme'],
+        ignoreAtRules: ['tailwind', 'apply', 'variants', 'responsive', 'screen', 'theme', 'source'],
       },
     ],
     'selector-class-pattern': [
