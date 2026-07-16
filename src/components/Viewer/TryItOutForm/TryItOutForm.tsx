@@ -6,6 +6,7 @@ import { useTranslation, useTryItOutState } from '@/hooks';
 import type { Operation } from '@/lib/openapi';
 import { buildProxyPayload, executeProxyRequest, type ProxyResponse } from '@/lib/proxy';
 
+import { ResponsePanel } from '../ResponsePanel';
 import { TryItOutActions } from '../TryItOutActions';
 import { TryItOutBodyEditor } from '../TryItOutBodyEditor';
 import { TryItOutHeadersEditor } from '../TryItOutHeadersEditor';
@@ -119,11 +120,7 @@ export const TryItOutForm = ({
         </p>
       ) : null}
 
-      {lastResponse?.ok ? (
-        <p className={styles.status} role="status">
-          {lastResponse.status} {lastResponse.statusText} · {lastResponse.durationMs}ms
-        </p>
-      ) : null}
+      {lastResponse?.ok ? <ResponsePanel response={lastResponse} /> : null}
     </>
   );
 };

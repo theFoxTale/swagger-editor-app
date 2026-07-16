@@ -151,6 +151,12 @@ export interface ViewerTranslation {
   tryItOutSendDisabledHint: string;
   tryItOutNoServerUrl: string;
   tryItOutSendError: string;
+  tryItOutResponseTitle: string;
+  tryItOutResponseBodyTab: string;
+  tryItOutResponseHeadersTab: string;
+  tryItOutResponseDuration: string;
+  tryItOutResponseBodyEmpty: string;
+  tryItOutResponseHeadersEmpty: string;
   parametersTitle: string;
   parametersEmpty: string;
   parametersPath: string;

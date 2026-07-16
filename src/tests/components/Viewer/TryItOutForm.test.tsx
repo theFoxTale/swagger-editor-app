@@ -40,6 +40,12 @@ vi.mock('@/hooks', async (importOriginal) => {
           'Request execution will be available once the server proxy is connected.',
         tryItOutNoServerUrl: 'No server URL is defined in this schema.',
         tryItOutSendError: 'Request failed. Check the URL, parameters, and try again.',
+        tryItOutResponseTitle: 'Response',
+        tryItOutResponseBodyTab: 'Body',
+        tryItOutResponseHeadersTab: 'Headers',
+        tryItOutResponseDuration: 'Duration',
+        tryItOutResponseBodyEmpty: 'Empty response body.',
+        tryItOutResponseHeadersEmpty: 'No response headers.',
         requestBodyOptional: 'Optional',
         parametersPath: 'Path parameters',
         parametersQuery: 'Query parameters',
@@ -84,7 +90,7 @@ describe('TryItOutForm', () => {
     expect(screen.getByRole('button', { name: 'Send' })).toBeEnabled();
   });
 
-  it('sends through /api/proxy and shows status', async () => {
+  it('sends through /api/proxy and shows the response panel', async () => {
     const user = userEvent.setup();
     const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(
       new Response(
@@ -105,9 +111,11 @@ describe('TryItOutForm', () => {
     await user.click(screen.getByRole('button', { name: 'Send' }));
 
     await waitFor(() => {
-      expect(screen.getByRole('status')).toHaveTextContent('200 OK · 15ms');
+      expect(screen.getByRole('region', { name: 'Response' })).toBeInTheDocument();
     });
 
+    expect(screen.getByText('200 OK')).toBeInTheDocument();
+    expect(screen.getByText('Duration: 15ms')).toBeInTheDocument();
     expect(fetchSpy).toHaveBeenCalledWith(
       '/api/proxy',
       expect.objectContaining({ method: 'POST' })
