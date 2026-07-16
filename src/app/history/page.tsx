@@ -2,6 +2,8 @@ import dynamic from 'next/dynamic';
 import { redirect } from 'next/navigation';
 //import { cookies } from 'next/headers';
 
+import { createSupabaseServerClient } from '@/lib/supabase-server';
+
 const HistoryPage = dynamic(() => import('@/components/HistoryPage/HistoryPage'), { ssr: true });
 
 interface Props {
@@ -9,8 +11,13 @@ interface Props {
 }
 
 export default async function HistoryPageContainer({ searchParams }: Props) {
-  const isAuthenticated = true;
-  if (!isAuthenticated) {
+  const supabase = await createSupabaseServerClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
     redirect('/');
   }
 

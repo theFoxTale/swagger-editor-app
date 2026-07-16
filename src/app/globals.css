@@ -1,3 +1,7 @@
+@import 'tailwindcss';
+
+@source '../**/*.{js,ts,jsx,tsx}';
+
 :root,
 [data-theme='dark'] {
   --background: #0b0d11;
@@ -75,9 +79,8 @@
   padding: 0;
 }
 
-html,
-body {
-  height: 100%;
+html {
+  min-height: 100%;
 }
 
 body {
@@ -114,5 +117,9 @@ body {
   display: flex;
   flex: 1;
   flex-direction: column;
-  min-height: 0;
+}
+
+button,
+input {
+  font: inherit;
 }

@@ -48,6 +48,7 @@ const formatSavedTime = (timestamp: number | null, labels: { justNow: string; ag
 export const EditorToolbar = () => {
   const { editorLang } = useTranslation();
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const isLoading = useAuthStore((state) => state.isLoading);
   const user = useAuthStore((state) => state.user);
 
   const format = useEditorStore((state) => getActiveTab(state).format);
@@ -62,13 +63,17 @@ export const EditorToolbar = () => {
 
   const persistSchema = useSavedSchemaStore((state) => state.persistSchema);
 
-  const savedLabel = formatSavedTime(lastSavedAt, {
-    justNow: editorLang.savedJustNow,
-    ago: editorLang.savedAgo,
-  });
+  const savedLabel = isLoading
+    ? null
+    : formatSavedTime(lastSavedAt, {
+        justNow: editorLang.savedJustNow,
+        ago: editorLang.savedAgo,
+      });
+
+  const canSave = !isLoading && isAuthenticated;
 
   const handleSave = () => {
-    if (!isAuthenticated || !user?.email) {
+    if (!canSave || !user?.email) {
       return;
     }
 
@@ -110,20 +115,20 @@ export const EditorToolbar = () => {
       </div>
 
       <div className={styles.rightGroup}>
-        {savedLabel && (
+        {savedLabel ? (
           <span className={`${styles.savedStatus} ${isValid ? styles.savedValid : ''}`}>
             {isValid && <ValidateIcon />}
             {savedLabel}
           </span>
-        )}
+        ) : null}
 
         <Button
           variant="primary"
           size="sm"
           className={styles.saveBtn}
           onClick={handleSave}
-          disabled={!isAuthenticated}
-          title={!isAuthenticated ? editorLang.loginToSave : undefined}
+          disabled={!canSave}
+          title={!isLoading && !isAuthenticated ? editorLang.loginToSave : undefined}
         >
           <SaveIcon />
           <span>{editorLang.saveSchema}</span>

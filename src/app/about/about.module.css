@@ -1,0 +1,279 @@
+.page {
+  isolation: isolate;
+  position: relative;
+
+  overflow: hidden;
+  flex: 1;
+
+  min-height: calc(100vh - 8rem);
+  padding: 3rem 1.5rem;
+
+  background:
+    radial-gradient(circle at 15% 15%, rgb(0 212 255 / 8%), transparent 28%),
+    radial-gradient(circle at 85% 25%, rgb(139 92 246 / 10%), transparent 30%),
+    radial-gradient(circle at 50% 100%, rgb(37 99 235 / 8%), transparent 35%),
+    linear-gradient(135deg, #02050d 0%, #050816 50%, #02050d 100%);
+}
+
+.page::before {
+  pointer-events: none;
+  content: '';
+
+  position: absolute;
+  inset: 0;
+
+  opacity: 0.18;
+  background-image:
+    linear-gradient(rgb(34 211 238 / 5%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(139 92 246 / 5%) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+  max-width: 80rem;
+  margin: 0 auto;
+}
+
+.card {
+  overflow: hidden;
+
+  border: 1px solid rgb(6 182 212 / 30%);
+  border-radius: 1rem;
+
+  background: rgb(5 8 22 / 90%);
+  box-shadow: 0 0 40px rgb(34 211 238 / 8%);
+}
+
+.hero {
+  display: grid;
+  gap: 2.5rem;
+  padding: 2rem;
+  border-bottom: 1px solid #1e293b;
+}
+
+@media (width >= 768px) {
+  .hero {
+    grid-template-columns: 1.4fr 0.6fr;
+    padding: 3rem;
+  }
+}
+
+.eyebrow {
+  margin-bottom: 0.75rem;
+
+  font-size: 0.875rem;
+  color: #22d3ee;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+}
+
+.title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+@media (width >= 768px) {
+  .title {
+    font-size: 3rem;
+  }
+}
+
+.tagline {
+  max-width: 42rem;
+  margin-top: 1rem;
+  font-size: 1.125rem;
+  color: #67e8f9;
+}
+
+.description {
+  max-width: 42rem;
+  margin-top: 1.5rem;
+  line-height: 1.75;
+  color: #94a3b8;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.primaryLink,
+.secondaryLink {
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.primaryLink {
+  border: 1px solid rgb(34 211 238 / 50%);
+  color: #a5f3fc;
+}
+
+.primaryLink:hover {
+  background: rgb(34 211 238 / 10%);
+}
+
+.secondaryLink {
+  border: 1px solid rgb(168 85 247 / 40%);
+  color: #e9d5ff;
+}
+
+.secondaryLink:hover {
+  background: rgb(168 85 247 / 10%);
+}
+
+.courseCardWrap {
+  display: flex;
+  align-items: center;
+}
+
+.courseCard {
+  width: 100%;
+  padding: 2rem;
+  border: 1px solid rgb(168 85 247 / 40%);
+  border-radius: 1rem;
+
+  background: rgb(168 85 247 / 5%);
+  box-shadow: 0 0 30px rgb(139 92 246 / 8%);
+}
+
+.courseEyebrow {
+  font-size: 0.875rem;
+  color: #d8b4fe;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+}
+
+.courseTitle {
+  margin-top: 0.75rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.courseSubtitle {
+  margin-top: 0.5rem;
+  color: #94a3b8;
+}
+
+.body {
+  padding: 2rem;
+}
+
+@media (width >= 768px) {
+  .body {
+    padding: 3rem;
+  }
+}
+
+.sectionTitle {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.teamGrid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+@media (width >= 768px) {
+  .teamGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.memberCard {
+  padding: 1.5rem;
+  border: 1px solid rgb(6 182 212 / 20%);
+  border-radius: 0.75rem;
+
+  background: #080d1c;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.memberCard:hover {
+  border-color: rgb(34 211 238 / 50%);
+  box-shadow: 0 0 25px rgb(34 211 238 / 8%);
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 4rem;
+  height: 4rem;
+  margin-bottom: 1.25rem;
+  border: 1px solid rgb(192 132 252 / 60%);
+  border-radius: 9999px;
+
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #fff;
+
+  background: rgb(168 85 247 / 10%);
+}
+
+.memberName {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.memberRole {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: #22d3ee;
+}
+
+.memberLink {
+  display: inline-block;
+
+  margin-top: 1rem;
+
+  font-size: 0.875rem;
+  color: #64748b;
+  text-decoration: none;
+
+  transition: color 0.2s ease;
+}
+
+.memberLink:hover {
+  color: #fff;
+}
+
+.techSection {
+  margin-top: 3rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid #1e293b;
+}
+
+.techList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.techChip {
+  padding: 0.75rem 1rem;
+  border: 1px solid #334155;
+  border-radius: 0.5rem;
+
+  font-size: 0.875rem;
+  color: #cbd5e1;
+
+  background: #080d1c;
+}

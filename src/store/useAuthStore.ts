@@ -1,76 +1,69 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import { getAuthCookie, removeAuthCookie, setAuthCookie } from '@/lib';
+
+import { supabase } from '@/lib/supabase';
 
 interface AuthState {
   isAuthenticated: boolean;
   isLoading: boolean;
-
   user: { email: string } | null;
   token: string | null;
-
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
-  checkAuth: () => void;
+  checkAuth: () => Promise<void>;
 }
 
-export const useAuthStore = create<AuthState>()(
-  persist(
-    (set) => ({
+export const useAuthStore = create<AuthState>()((set) => ({
+  isAuthenticated: false,
+  isLoading: true,
+  user: null,
+  token: null,
+
+  login: async (email, password) => {
+    set({ isLoading: true });
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      set({ isLoading: false });
+      throw error;
+    }
+
+    set({
+      isAuthenticated: Boolean(data.session),
+      user: data.user?.email ? { email: data.user.email } : null,
+      token: data.session?.access_token ?? null,
+      isLoading: false,
+    });
+  },
+
+  logout: async () => {
+    set({ isLoading: true });
+
+    await supabase.auth.signOut();
+
+    set({
       isAuthenticated: false,
-      isLoading: true,
       user: null,
       token: null,
+      isLoading: false,
+    });
+  },
 
-      login: async (email) => {
-        set({ isLoading: true });
-        // TODO: переделать на реальный запрос к серверу
-        await new Promise((resolve) => setTimeout(resolve, 800));
+  checkAuth: async () => {
+    set({ isLoading: true });
 
-        const mockToken = 'mock-token-' + Date.now();
-        setAuthCookie(mockToken);
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
 
-        set({
-          isAuthenticated: true,
-          user: { email },
-          token: 'mock-token',
-          isLoading: false,
-        });
-      },
-
-      logout: async () => {
-        set({ isLoading: true });
-        // TODO: переделать на реальный запрос к серверу
-        await new Promise((resolve) => setTimeout(resolve, 800));
-
-        removeAuthCookie();
-
-        set({
-          isAuthenticated: false,
-          user: null,
-          token: null,
-          isLoading: false,
-        });
-      },
-
-      checkAuth: () => {
-        const token = getAuthCookie();
-        if (token) {
-          set({
-            isAuthenticated: true,
-            token,
-            isLoading: false,
-          });
-        } else {
-          set({ isLoading: false });
-        }
-      },
-    }),
-    {
-      name: 'swagger-auth-storage',
-      partialize: (state) => ({
-        user: state.user,
-      }),
-    }
-  )
-);
+    set({
+      isAuthenticated: Boolean(session),
+      user: session?.user.email ? { email: session.user.email } : null,
+      token: session?.access_token ?? null,
+      isLoading: false,
+    });
+  },
+}));
