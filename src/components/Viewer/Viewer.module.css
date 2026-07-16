@@ -4,8 +4,6 @@
   flex-direction: column;
 
   min-width: 0;
-  height: 100%;
-  min-height: 0;
   border: 1px solid var(--panel-border);
   border-radius: var(--radius-lg);
 
@@ -14,17 +12,12 @@
 }
 
 .scrollArea {
-  overflow: auto;
-  overscroll-behavior: contain;
   display: flex;
   flex: 1;
   flex-direction: column;
   gap: 1.25rem;
 
-  min-height: 0;
   padding: 1.25rem 1.5rem;
-
-  -webkit-overflow-scrolling: touch;
 }
 
 .placeholder {
@@ -40,7 +33,6 @@
   }
 
   .scrollArea {
-    touch-action: pan-y;
     gap: 1rem;
     padding: 1rem;
   }

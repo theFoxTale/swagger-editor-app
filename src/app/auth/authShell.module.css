@@ -1,0 +1,52 @@
+.shell {
+  isolation: isolate;
+  position: relative;
+
+  overflow: hidden;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+
+  min-height: calc(100vh - 8rem);
+  padding: 3rem 1rem;
+
+  background:
+    radial-gradient(circle at 15% 15%, rgb(0 212 255 / 8%), transparent 28%),
+    radial-gradient(circle at 85% 25%, rgb(139 92 246 / 10%), transparent 30%),
+    radial-gradient(circle at 50% 100%, rgb(37 99 235 / 8%), transparent 35%),
+    linear-gradient(135deg, #02050d 0%, #050816 50%, #02050d 100%);
+}
+
+.shell::before {
+  pointer-events: none;
+  content: '';
+
+  position: absolute;
+  inset: 0;
+
+  opacity: 0.18;
+  background-image:
+    linear-gradient(rgb(34 211 238 / 5%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(139 92 246 / 5%) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.glow {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 30% 30%, rgb(0 212 255 / 8%), transparent 35%),
+    radial-gradient(circle at 75% 65%, rgb(139 92 246 / 10%), transparent 35%);
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  justify-content: center;
+
+  width: 100%;
+}

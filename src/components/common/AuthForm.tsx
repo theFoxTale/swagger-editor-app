@@ -6,6 +6,8 @@ import { useState } from 'react';
 
 import { supabase } from '@/lib/supabase';
 
+import styles from './AuthForm.module.css';
+
 type AuthFormProps = {
   mode: 'signin' | 'signup';
 };
@@ -96,30 +98,26 @@ export const AuthForm = ({ mode }: AuthFormProps) => {
   };
 
   return (
-    <section className="relative mx-auto w-full max-w-xl overflow-hidden rounded-2xl border border-cyan-500/50 bg-[#050816]/95 p-8 shadow-[0_0_40px_rgba(0,212,255,0.15)]">
-      <div className="pointer-events-none absolute -left-24 -top-24 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-24 -right-24 h-56 w-56 rounded-full bg-purple-600/15 blur-3xl" />
+    <section className={styles.card}>
+      <div className={styles.glowTop} aria-hidden="true" />
+      <div className={styles.glowBottom} aria-hidden="true" />
 
-      <div className="relative">
-        <div className="mb-8 text-center">
-          <p className="mb-2 text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">
-            Swagger / OpenAPI UI
-          </p>
+      <div className={styles.inner}>
+        <div className={styles.header}>
+          <p className={styles.badge}>Swagger / OpenAPI UI</p>
 
-          <h1 className="text-3xl font-bold text-white">
-            {isSignUp ? 'Create your account' : 'Welcome back'}
-          </h1>
+          <h1 className={styles.title}>{isSignUp ? 'Create your account' : 'Welcome back'}</h1>
 
-          <p className="mt-3 text-sm text-slate-400">
+          <p className={styles.subtitle}>
             {isSignUp
               ? 'Join Swagger/OpenAPI UI and start building better APIs.'
               : 'Sign in to continue working with your API schemas.'}
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className={styles.form}>
           <div>
-            <label htmlFor="email" className="mb-2 block text-sm font-medium text-slate-300">
+            <label htmlFor="email" className={styles.fieldLabel}>
               Email address
             </label>
 
@@ -129,13 +127,13 @@ export const AuthForm = ({ mode }: AuthFormProps) => {
               autoComplete="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
-              className="w-full rounded-lg border border-slate-700 bg-[#080d1c] px-4 py-3 text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(34,211,238,0.15)]"
+              className={styles.input}
               placeholder="example@mail.com"
             />
           </div>
 
           <div>
-            <label htmlFor="password" className="mb-2 block text-sm font-medium text-slate-300">
+            <label htmlFor="password" className={styles.fieldLabel}>
               Password
             </label>
 
@@ -145,17 +143,14 @@ export const AuthForm = ({ mode }: AuthFormProps) => {
               autoComplete={isSignUp ? 'new-password' : 'current-password'}
               value={password}
               onChange={(event) => setPassword(event.target.value)}
-              className="w-full rounded-lg border border-slate-700 bg-[#080d1c] px-4 py-3 text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(34,211,238,0.15)]"
+              className={styles.input}
               placeholder="Enter your password"
             />
           </div>
 
-          {isSignUp && (
+          {isSignUp ? (
             <div>
-              <label
-                htmlFor="confirm-password"
-                className="mb-2 block text-sm font-medium text-slate-300"
-              >
+              <label htmlFor="confirm-password" className={styles.fieldLabel}>
                 Confirm password
               </label>
 
@@ -165,48 +160,34 @@ export const AuthForm = ({ mode }: AuthFormProps) => {
                 autoComplete="new-password"
                 value={confirmPassword}
                 onChange={(event) => setConfirmPassword(event.target.value)}
-                className="w-full rounded-lg border border-slate-700 bg-[#080d1c] px-4 py-3 text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(34,211,238,0.15)]"
+                className={styles.input}
                 placeholder="Repeat your password"
               />
             </div>
-          )}
+          ) : null}
 
-          {error && (
-            <p
-              role="alert"
-              className="rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300"
-            >
+          {error ? (
+            <p role="alert" className={styles.error}>
               {error}
             </p>
-          )}
+          ) : null}
 
-          {success && (
-            <p className="rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-300">
-              {success}
-            </p>
-          )}
+          {success ? <p className={styles.success}>{success}</p> : null}
 
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full cursor-pointer rounded-lg bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 py-3 font-semibold text-white shadow-[0_0_20px_rgba(34,211,238,0.25)] transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
-          >
+          <button type="submit" disabled={isLoading} className={styles.submit}>
             {isLoading ? 'Please wait...' : isSignUp ? 'Sign Up' : 'Sign In'}
           </button>
         </form>
 
-        <div className="my-6 flex items-center gap-4">
-          <div className="h-px flex-1 bg-slate-800" />
-          <span className="text-xs uppercase tracking-wider text-slate-600">OpenAPI</span>
-          <div className="h-px flex-1 bg-slate-800" />
+        <div className={styles.divider}>
+          <div className={styles.dividerLine} />
+          <span className={styles.dividerLabel}>OpenAPI</span>
+          <div className={styles.dividerLine} />
         </div>
 
-        <p className="text-center text-sm text-slate-400">
+        <p className={styles.footer}>
           {isSignUp ? 'Already have an account?' : "Don't have an account?"}{' '}
-          <Link
-            href={isSignUp ? '/auth/sign-in' : '/auth/sign-up'}
-            className="font-semibold text-cyan-400 transition hover:text-cyan-300"
-          >
+          <Link href={isSignUp ? '/auth/sign-in' : '/auth/sign-up'} className={styles.link}>
             {isSignUp ? 'Sign In' : 'Sign Up'}
           </Link>
         </p>
