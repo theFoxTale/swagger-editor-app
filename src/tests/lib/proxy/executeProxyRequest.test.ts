@@ -72,6 +72,6 @@ describe('executeProxyRequest', () => {
 
     await expect(
       executeProxyRequest({ method: 'get', url: 'https://api.example.com' }, fetchImpl)
-    ).resolves.toEqual({ ok: false, error: 'offline' });
+    ).resolves.toEqual({ ok: false, error: 'offline', durationMs: 0 });
   });
 });

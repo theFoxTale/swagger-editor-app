@@ -1,60 +1,35 @@
 import 'server-only';
-import { supabase } from './supabase';
 
-// const mockRequests = [
-//   {
-//     id: 1,
-//     method: 'GET',
-//     endpoint: '/users',
-//     status: 200,
-//     duration: 45,
-//     timestamp: '2026-07-04T10:00:00Z',
-//   },
-//   {
-//     id: 2,
-//     method: 'POST',
-//     endpoint: '/users',
-//     status: 201,
-//     duration: 120,
-//     timestamp: '2026-07-04T09:55:00Z',
-//   },
-//   {
-//     id: 3,
-//     method: 'DELETE',
-//     endpoint: '/users/5',
-//     status: 404,
-//     duration: 30,
-//     timestamp: '2026-07-04T09:50:00Z',
-//   },
-// ];
-
-// export const db = {
-//   query: {
-//     requests: {
-//       findMany: () => {
-//         return mockRequests;
-//       },
-//     },
-//   },
-// };
+import type { RequestHistoryInsert } from '@/lib/history/analytics';
+import { recordRequestAnalytics } from '@/lib/history/analytics';
+import { createSupabaseServerClient } from '@/lib/supabase-server';
+import type { RequestHistory } from '@/types/history';
 
 export const db = {
   query: {
     requests: {
-      findMany: async () => {
+      findMany: async (userId: string): Promise<RequestHistory[]> => {
         try {
+          const supabase = await createSupabaseServerClient();
           const { data, error } = await supabase
             .from('request_history')
-            //          .eq('user_id', userId)
             .select('*')
+            .eq('user_id', userId)
             .order('timestamp', { ascending: false });
 
-          if (error) throw new Error(error.message);
-          return data;
+          if (error) {
+            throw new Error(error.message);
+          }
+
+          return (data ?? []) as RequestHistory[];
         } catch (err) {
           console.error('Failed to fetch history:', err);
           return [];
         }
+      },
+      insert: async (record: RequestHistoryInsert): Promise<void> => {
+        const supabase = await createSupabaseServerClient();
+        await recordRequestAnalytics(supabase, record);
       },
     },
   },

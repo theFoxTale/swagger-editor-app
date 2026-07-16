@@ -1,6 +1,5 @@
 import dynamic from 'next/dynamic';
 import { redirect } from 'next/navigation';
-//import { cookies } from 'next/headers';
 
 import { createSupabaseServerClient } from '@/lib/supabase-server';
 
@@ -21,12 +20,5 @@ export default async function HistoryPageContainer({ searchParams }: Props) {
     redirect('/');
   }
 
-  // const cookieStore = await cookies();
-  // const userId = cookieStore.get('userId')?.value;
-
-  // if (!userId) {
-  //   redirect('/');
-  // }
-
-  return <HistoryPage searchParams={searchParams} />;
+  return <HistoryPage searchParams={searchParams} userId={user.id} />;
 }

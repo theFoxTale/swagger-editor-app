@@ -95,6 +95,9 @@ describe('forwardRequest', () => {
       fetchImpl
     );
 
-    expect(result).toEqual({ ok: false, error: 'network down' });
+    expect(result).toMatchObject({ ok: false, error: 'network down' });
+    if (!result.ok) {
+      expect(result.durationMs).toBeGreaterThanOrEqual(0);
+    }
   });
 });

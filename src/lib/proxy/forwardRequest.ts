@@ -63,10 +63,12 @@ export const forwardRequest = async (
     };
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Upstream request failed.';
+    const durationMs = Date.now() - startedAt;
 
     return {
       ok: false,
       error: message,
+      durationMs,
     };
   }
 };
