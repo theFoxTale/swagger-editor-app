@@ -1,11 +1,19 @@
 'use client';
 
-import MonacoEditor from '@monaco-editor/react';
+import MonacoEditor, { loader } from '@monaco-editor/react';
 import type { editor } from 'monaco-editor';
 
 import { useThemeStore } from '@/store';
 
 import styles from './EditorMonaco.module.css';
+
+// Serve Monaco from /public instead of the default CDN (jsDelivr),
+// which is often blocked and leaves the editor stuck on "Loading...".
+loader.config({
+  paths: {
+    vs: '/monaco/vs',
+  },
+});
 
 interface EditorMonacoProps {
   value: string;

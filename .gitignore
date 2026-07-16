@@ -80,6 +80,9 @@ typings/
 # Next.js build output
 .next
 
+# Monaco assets copied from node_modules on install/build
+public/monaco/
+
 # Nuxt.js build / generate output
 .nuxt
 dist
