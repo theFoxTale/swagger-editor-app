@@ -1,0 +1,149 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  padding-top: 0.75rem;
+}
+
+.title {
+  margin: 0;
+
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--foreground);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.groupTitle {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+
+  margin: 0;
+
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--muted);
+}
+
+.groupCount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 1.15rem;
+  padding: 0.05rem 0.35rem;
+  border-radius: 999px;
+
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--muted);
+
+  background: var(--surface-elevated);
+}
+
+.tableWrap {
+  overflow: auto;
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-md);
+}
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.8125rem;
+}
+
+.table th,
+.table td {
+  padding: 0.5rem 0.625rem;
+  border-bottom: 1px solid var(--panel-border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.table th {
+  font-weight: 600;
+  color: var(--muted);
+  white-space: nowrap;
+  background: var(--surface-elevated);
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.name,
+.type,
+.example {
+  font-family: var(--font-geist-mono, Consolas, monospace);
+  font-size: 0.75rem;
+}
+
+.name {
+  font-weight: 600;
+  color: var(--accent-cyan);
+}
+
+.type {
+  color: var(--foreground);
+}
+
+.example {
+  color: var(--muted);
+}
+
+.description {
+  color: var(--muted);
+}
+
+.required {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #f87171;
+}
+
+.optional {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.deprecated {
+  display: inline-block;
+
+  margin-left: 0.4rem;
+  padding: 0.05rem 0.35rem;
+  border-radius: var(--radius-sm);
+
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: #fb923c;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+
+  background: rgb(249 115 22 / 14%);
+}
+
+.empty {
+  margin: 0;
+  padding-top: 0.5rem;
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+[data-theme='light'] .required {
+  color: #b91c1c;
+}
+
+[data-theme='light'] .name {
+  color: var(--accent-cyan);
+}

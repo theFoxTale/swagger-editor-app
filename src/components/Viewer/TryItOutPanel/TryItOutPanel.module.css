@@ -1,0 +1,37 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  margin-bottom: 0.25rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--panel-border);
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  padding: 0.75rem;
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-md);
+
+  background: var(--surface-elevated);
+}
+
+.placeholder {
+  margin: 0;
+
+  font-size: 0.8125rem;
+  font-style: italic;
+  line-height: 1.45;
+  color: var(--muted);
+}
