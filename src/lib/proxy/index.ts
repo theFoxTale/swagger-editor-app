@@ -22,6 +22,12 @@ export {
 
 export { generateCurl } from './generateCurl';
 export { executeProxyRequest, PROXY_API_PATH } from './executeProxyRequest';
+export {
+  classifyProxyTransportError,
+  getProxyTransportErrorDetail,
+  getUpstreamErrorMessage,
+  type ProxyTransportErrorKind,
+} from './formatTransportError';
 
 export {
   forwardRequest,

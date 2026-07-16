@@ -55,6 +55,15 @@ export const viewer: ViewerTranslation = {
     'Выполнение запроса станет доступно после подключения серверного прокси.',
   tryItOutNoServerUrl: 'В схеме не указан URL сервера.',
   tryItOutSendError: 'Запрос не выполнен. Проверьте URL, параметры и попробуйте снова.',
+  tryItOutProxyErrorStatusText: 'Bad Gateway',
+  tryItOutProxyErrorGeneric: 'Прокси не смог выполнить запрос к API-серверу.',
+  tryItOutProxyErrorNetwork:
+    'Не удалось связаться с API-сервером (сетевая ошибка). Хост может быть временно недоступен.',
+  tryItOutProxyErrorDns: 'Хост API не найден (DNS). Проверьте URL сервера в схеме.',
+  tryItOutProxyErrorTimeout: 'API-сервер не ответил вовремя (таймаут).',
+  tryItOutProxyErrorHint:
+    'Проверьте базовый URL и попробуйте снова — повтор часто помогает при нестабильных хостах.',
+  tryItOutProxyErrorDetail: 'Подробности: {detail}',
   tryItOutResponseTitle: 'Ответ',
   tryItOutResponseBodyTab: 'Тело',
   tryItOutResponseHeadersTab: 'Заголовки',

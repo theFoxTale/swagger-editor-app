@@ -54,6 +54,16 @@ export const viewer: ViewerTranslation = {
     'Request execution will be available once the server proxy is connected.',
   tryItOutNoServerUrl: 'No server URL is defined in this schema.',
   tryItOutSendError: 'Request failed. Check the URL, parameters, and try again.',
+  tryItOutProxyErrorStatusText: 'Bad Gateway',
+  tryItOutProxyErrorGeneric: 'The proxy could not complete the request to the API server.',
+  tryItOutProxyErrorNetwork:
+    'Could not reach the API server (network error). The host may be temporarily unreachable.',
+  tryItOutProxyErrorDns:
+    'The API host could not be found (DNS). Check the server URL in the schema.',
+  tryItOutProxyErrorTimeout: 'The API server timed out before responding.',
+  tryItOutProxyErrorHint:
+    'Check the base URL and try again — retrying often helps with flaky hosts.',
+  tryItOutProxyErrorDetail: 'Details: {detail}',
   tryItOutResponseTitle: 'Response',
   tryItOutResponseBodyTab: 'Body',
   tryItOutResponseHeadersTab: 'Headers',
