@@ -11,7 +11,6 @@ import { useAuthStore, useLanguageStore } from '@/store';
 
 import styles from './Header.module.css';
 import { HeaderLogoutSkeleton } from './HeaderLogoutSkeleton';
-import { HeaderSignInSkeleton } from './HeaderSignInSkeleton';
 
 export const Header = () => {
   const router = useRouter();
@@ -53,11 +52,7 @@ export const Header = () => {
     router.refresh();
   };
 
-  if (isLoading && isAuthenticated) {
-    return <HeaderSignInSkeleton />;
-  }
-
-  if (isLoading && !isAuthenticated) {
+  if (isLoading) {
     return <HeaderLogoutSkeleton />;
   }
 

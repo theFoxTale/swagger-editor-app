@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 
 import { supabase } from '@/lib/supabase';
 
@@ -13,68 +12,58 @@ interface AuthState {
   checkAuth: () => Promise<void>;
 }
 
-export const useAuthStore = create<AuthState>()(
-  persist(
-    (set) => ({
+export const useAuthStore = create<AuthState>()((set) => ({
+  isAuthenticated: false,
+  isLoading: true,
+  user: null,
+  token: null,
+
+  login: async (email, password) => {
+    set({ isLoading: true });
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      set({ isLoading: false });
+      throw error;
+    }
+
+    set({
+      isAuthenticated: Boolean(data.session),
+      user: data.user?.email ? { email: data.user.email } : null,
+      token: data.session?.access_token ?? null,
+      isLoading: false,
+    });
+  },
+
+  logout: async () => {
+    set({ isLoading: true });
+
+    await supabase.auth.signOut();
+
+    set({
       isAuthenticated: false,
-      isLoading: true,
       user: null,
       token: null,
+      isLoading: false,
+    });
+  },
 
-      login: async (email, password) => {
-        set({ isLoading: true });
+  checkAuth: async () => {
+    set({ isLoading: true });
 
-        const { data, error } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
 
-        if (error) {
-          set({ isLoading: false });
-          throw error;
-        }
-
-        set({
-          isAuthenticated: Boolean(data.session),
-          user: data.user?.email ? { email: data.user.email } : null,
-          token: data.session?.access_token ?? null,
-          isLoading: false,
-        });
-      },
-
-      logout: async () => {
-        set({ isLoading: true });
-
-        await supabase.auth.signOut();
-
-        set({
-          isAuthenticated: false,
-          user: null,
-          token: null,
-          isLoading: false,
-        });
-      },
-
-      checkAuth: async () => {
-        set({ isLoading: true });
-
-        const {
-          data: { session },
-        } = await supabase.auth.getSession();
-
-        set({
-          isAuthenticated: Boolean(session),
-          user: session?.user.email ? { email: session.user.email } : null,
-          token: session?.access_token ?? null,
-          isLoading: false,
-        });
-      },
-    }),
-    {
-      name: 'swagger-auth-storage',
-      partialize: (state) => ({
-        user: state.user,
-      }),
-    }
-  )
-);
+    set({
+      isAuthenticated: Boolean(session),
+      user: session?.user.email ? { email: session.user.email } : null,
+      token: session?.access_token ?? null,
+      isLoading: false,
+    });
+  },
+}));
