@@ -17,7 +17,7 @@ export const Header = () => {
   const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
 
-  const { isAuthenticated, isLoading, login, logout } = useAuthStore();
+  const { isAuthenticated, isLoading, logout } = useAuthStore();
   const { language, setLanguage } = useLanguageStore();
   const { headerLang } = useTranslation();
 
@@ -39,9 +39,7 @@ export const Header = () => {
     [headerLang.nav, isAuthenticated]
   );
 
-  const handleSignIn = async () => {
-    // TODO: убрать когда будет реальная авторизация
-    await login('test@example.com', 'Test123!');
+  const handleSignIn = () => {
     void router.push('/auth/sign-in');
   };
 
@@ -49,9 +47,10 @@ export const Header = () => {
     void router.push('/auth/sign-up');
   };
 
-  const handleLogout = () => {
-    logout();
-    void router.push('/');
+  const handleLogout = async () => {
+    await logout();
+    router.push('/');
+    router.refresh();
   };
 
   if (isLoading && isAuthenticated) {
@@ -119,7 +118,7 @@ export const Header = () => {
               </Button>
             </>
           ) : (
-            <Button variant="danger" size="sm" onClick={handleLogout}>
+            <Button variant="danger" size="sm" onClick={() => void handleLogout()}>
               {headerLang.auth.logout}
             </Button>
           )}
