@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { useLanguageStore } from '@/store';
 import HistoryPage from '../components/HistoryPage/HistoryPage';
 
 vi.mock('../lib/db', () => ({
@@ -16,6 +17,10 @@ vi.mock('../lib/db', () => ({
 import { db } from '../lib/db';
 
 describe('HistoryPage', () => {
+  beforeEach(() => {
+    useLanguageStore.setState({ language: 'en' });
+  });
+
   it('renders history list', async () => {
     vi.mocked(db.query.requests.findMany).mockResolvedValue([
       {
@@ -34,7 +39,7 @@ describe('HistoryPage', () => {
 
     render(await HistoryPage({ searchParams: Promise.resolve({}), userId: '1' }));
 
-    expect(screen.getByText('History')).toBeInTheDocument();
+    expect(screen.getByText('History & Analytics')).toBeInTheDocument();
     expect(screen.getByText('GET')).toBeInTheDocument();
     expect(db.query.requests.findMany).toHaveBeenCalledWith('1');
   });
